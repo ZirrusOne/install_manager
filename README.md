@@ -4,4 +4,6 @@ An application for the management of  Field Installation technicians
 
 #### License
 
-MIT
+GNU GENERAL PUBLIC LICENSE
+
+Version 3

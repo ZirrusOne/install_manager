@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-07-28 05:18:47.078718",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "site_component",
+  "status",
+  "escalation_reason",
+  "non_compliant_reason",
+  "assigned_team",
+  "comment",
+  "installation_type",
+  "attach_image",
+  "data_collection_section",
+  "cool_work",
+  "heat_work",
+  "initial_measure_mode"
+ ],
+ "fields": [
+  {
+   "default": "JOB-.####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "JOB-.####",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "site_component",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Site Component",
+   "options": "Site Component",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Pending\nIn Progress\nEscalation - Field Lead\nEscalattion - Back Office\nEscalation - Vendor\nEscalation - Property\nCompleted",
+   "reqd": 1
+  },
+  {
+   "fieldname": "escalation_reason",
+   "fieldtype": "Select",
+   "label": "Escalation Reason",
+   "options": "\nHVAC\nLock Issue\nResident Issue\nThermostat Issue"
+  },
+  {
+   "fieldname": "non_compliant_reason",
+   "fieldtype": "Select",
+   "label": "Non-Compliant Reason",
+   "options": "\nUnable to Access with Vendor Key\nResident Refused\nDog\nSick\nSecurity Lock Must Be Moved"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "assigned_team",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Assigned Team",
+   "options": "Team",
+   "reqd": 1
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Comment"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "Standard",
+   "fieldname": "installation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Installation Type",
+   "options": "Standard\nPull Wire\nConnect Wire\nRelocate Thermostat\nAdd Wire\nInstall Thermostat Only\nService Visit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attach_image",
+   "fieldtype": "Attach Image",
+   "label": "Attach Image"
+  },
+  {
+   "fieldname": "data_collection_section",
+   "fieldtype": "Section Break",
+   "label": "Data Collection"
+  },
+  {
+   "default": "0",
+   "fieldname": "cool_work",
+   "fieldtype": "Check",
+   "label": "Cool Work"
+  },
+  {
+   "default": "0",
+   "fieldname": "heat_work",
+   "fieldtype": "Check",
+   "label": "Heat Work"
+  },
+  {
+   "fieldname": "initial_measure_mode",
+   "fieldtype": "Data",
+   "label": "Initial Measure Mode"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-07-30 03:57:46.507284",
+ "modified_by": "Administrator",
+ "module": "Crew Management",
+ "name": "Job",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

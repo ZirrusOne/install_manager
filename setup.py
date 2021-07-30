@@ -9,7 +9,7 @@ from crew_management import __version__ as version
 setup(
 	name='crew_management',
 	version=version,
-	description='An application for the management of  Field Installation technicians',
+	description='An application for the management of Field Installation technicians',
 	author='Zirrus One',
 	author_email='info@zirrusone.com',
 	packages=find_packages(),

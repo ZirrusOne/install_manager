@@ -3,11 +3,11 @@ from . import __version__ as app_version
 app_name = "crew_management"
 app_title = "Crew Management"
 app_publisher = "Zirrus One"
-app_description = "An application for the management of  Field Installation technicians"
+app_description = "An application for the management of Field Installation technicians"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "info@zirrusone.com"
-app_license = "MIT"
+app_license = "Proprietary"
 
 # Includes in <head>
 # ------------------
@@ -173,3 +173,7 @@ user_data_fields = [
 # 	"crew_management.auth.validate"
 # ]
 
+
+standard_queries = {
+	"Site Component": "crew_management.crew_management.doctype.site_component.site_component.site_component_query"
+}

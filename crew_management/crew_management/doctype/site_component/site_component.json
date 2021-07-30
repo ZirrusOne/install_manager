@@ -1,0 +1,121 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2021-07-27 03:51:21.365723",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "component_name",
+  "label",
+  "notes",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "full_name",
+  "section_break_9",
+  "parent_site_component",
+  "column_break_11",
+  "parent_site_component_name"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "component_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Name",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "label",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Label",
+   "options": "Unit\nRoom\nCage\nRack\nCloset\nOffice\nApartment\nSuite\nWall",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Notes"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Old Parent",
+   "options": "Site Component"
+  },
+  {
+   "fieldname": "parent_site_component",
+   "fieldtype": "Link",
+   "label": "Parent Site Component Code",
+   "options": "Site Component"
+  },
+  {
+   "fetch_from": "parent_site_component.full_name",
+   "fieldname": "parent_site_component_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Parent Site Component Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Full Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "is_tree": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-07-29 05:29:33.504403",
+ "modified_by": "Administrator",
+ "module": "Crew Management",
+ "name": "Site Component",
+ "nsm_parent_field": "parent_site_component",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
