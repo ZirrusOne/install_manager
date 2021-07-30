@@ -2,6 +2,8 @@
 
 An application for the management of  Field Installation technicians
 
+![Doctype relationship](crew-mgnt-ERD.png "Doctype relationship")
+
 ## Local development environment setup
 
 ### On the host machine (your PC / laptop) 
