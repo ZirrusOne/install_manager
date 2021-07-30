@@ -116,6 +116,14 @@ Note that: when the app is running, to rerun, you need to stop the frappe contai
 Account: Administrator/admin
 
 
+## To run migration
+From inside frappe container terminal
+
+```shell
+cd /workspace/development/frappe-bench
+bench --site z1n.local migrate
+```
+
 ## License
 
 GNU GENERAL PUBLIC LICENSE
