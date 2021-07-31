@@ -61,7 +61,7 @@ Back to the frappe container terminal
 
 ```shell
 cd /workspace/development/frappe-bench
-bench --site z1n.local install-app crew_managment
+bench --site z1n.local install-app crew_management
 ```
 
 ## Configure IntelliJ
@@ -124,6 +124,15 @@ From inside frappe container terminal
 ```shell
 cd /workspace/development/frappe-bench
 bench --site z1n.local migrate
+```
+
+## To reinstall a site, wipe all data and start over
+
+```shell
+cd /workspace/development/frappe-bench
+bench --site z1n.local reinstall --mariadb-root-password 123 --admin-password admin
+bench --site z1n.local install-app erpnext
+bench --site z1n.local install-app crew_management
 ```
 
 ## License
