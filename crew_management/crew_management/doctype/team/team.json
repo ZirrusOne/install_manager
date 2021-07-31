@@ -1,6 +1,8 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
+ "autoname": "field:team_name",
  "creation": "2021-07-28 03:30:36.323476",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -24,6 +26,7 @@
   {
    "allow_in_quick_entry": 1,
    "columns": 5,
+   "default": "Field Crew",
    "fieldname": "team_type",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -41,7 +44,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-07-30 05:31:18.702826",
+ "modified": "2021-07-31 03:02:21.203589",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Team",
