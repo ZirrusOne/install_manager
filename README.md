@@ -15,6 +15,11 @@ cd frappe_docker
 cp -R devcontainer-example .devcontainer
 ```
 
+Edit file `.devcontainer/docker-compose.yml`, add the following line to the volume mappings of service `frappe`
+```yaml
+      - ~/.ssh:/home/frappe/.ssh
+```
+
 Having IntelliJ open the folder `frappe_docker` above
 
 From IntelliJ, start the docker compose file `.devcontainer/docker-compose.yml`
@@ -49,18 +54,10 @@ bench --site z1n.local install-app erpnext
 ```
 
 ### Install Crew Management app
-From your host machine, clone the source code. Because this repository is private, it's better to clone it from your 
-host machine instead of using command `bench get-app` from inside the frappe container (you don't have your private key in that container)
-
-```shell
-cd <to/your/projects/directory>/frappe_docker/development/frappe-bench/apps
-git clone git@github.com:ZirrusOne/crew_management.git
-```
-
-Back to the frappe container terminal
 
 ```shell
 cd /workspace/development/frappe-bench
+bench get-app --branch develop crew_management git@github.com:ZirrusOne/crew_management.git
 bench --site z1n.local install-app crew_management
 ```
 
