@@ -59,6 +59,8 @@ bench --site z1n.local install-app erpnext
 cd /workspace/development/frappe-bench
 bench get-app --branch develop crew_management git@github.com:ZirrusOne/crew_management.git
 bench --site z1n.local install-app crew_management
+
+bench --site z1n.local migrate
 ```
 
 ## Configure IntelliJ
