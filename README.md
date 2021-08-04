@@ -54,7 +54,7 @@ host machine instead of using command `bench get-app` from inside the frappe con
 
 ```shell
 cd <to/your/projects/directory>/frappe_docker/development/frappe-bench/apps
-git clone git@github.com:ZirrusOne/crew_managment.git
+git clone git@github.com:ZirrusOne/crew_management.git
 ```
 
 Back to the frappe container terminal
