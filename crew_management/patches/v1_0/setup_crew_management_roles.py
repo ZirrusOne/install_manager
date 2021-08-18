@@ -9,6 +9,7 @@ def execute():
     _custom_system_settings()
     _add_users()
     _setup_user_roles()
+    # _setup_user_block_module()
 
 
 def _insert_custom_roles():
@@ -81,3 +82,11 @@ def _setup_user_roles():
 
     user = frappe.get_doc('User', 'lead@zirrusone.com')
     user.add_roles('Field Lead', 'Dashboard Manager', 'Website Manager')
+
+
+def _setup_user_block_module():
+    user = frappe.get_doc('User', 'backoffice@zirrusone.com')
+    default_block_module = {'Printing', 'Data Migration', 'Social', 'Event Streaming', 'CRM', 'Manufacturing',
+                            'Support', 'Shopping Cart', 'Regional', 'Restaurant'}
+    for b_module in default_block_module:
+        user.append("block_modules", {"module": b_module})

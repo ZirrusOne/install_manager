@@ -11,8 +11,8 @@ app_color = "grey"
 app_email = "info@zirrusone.com"
 app_license = "Proprietary"
 
-setup_wizard_requires = "assets/crew_management/js/setup_wizard.js"
-app_include_js = "assets/crew_management/js/redirect_page.js"
+setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
+app_include_js = "/assets/crew_management/js/crew_management.js"
 
 user_data_fields = [
     {
@@ -43,3 +43,9 @@ standard_queries = {
 domains = {
     'Crew Management': 'crew_management.domains.crew_management',
 }
+
+# doc_events = {
+#     "User": {
+#         "validate": "crew_management.patches.v1_0.user.user.user_add_block_modules"
+#     }
+# }
