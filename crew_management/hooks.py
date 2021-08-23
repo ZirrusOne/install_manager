@@ -12,7 +12,9 @@ app_email = "info@zirrusone.com"
 app_license = "Proprietary"
 
 setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
-app_include_js = "/assets/crew_management/js/crew_management.js"
+# app_include_js = "/assets/crew_management/js/crew_management.js"
+
+boot_session = "crew_management.startup.boot.boot_session"
 
 user_data_fields = [
     {
