@@ -6,7 +6,7 @@ frappe.ui.form.on('Team', {
         // frm.trigger('set_team_member_query')
         frm.set_query('team_member', function () {
             return {
-                query: "crew_management.crew_management.doctype.team.team.team_member_query",
+                query: "crew_management.crew_management.controllers.queries.team_member_query",
                 filters: {
                     'team_type': frm.doc.team_type
                 }
