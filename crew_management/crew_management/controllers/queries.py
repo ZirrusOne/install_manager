@@ -4,10 +4,9 @@
 from __future__ import unicode_literals
 
 import frappe
-from frappe.model.document import Document
 
 STANDARD_USERS = ("Guest", "Administrator")
-CREW_BACK_OFFICE_ROLES = ("BackOfficeStaff")
+CREW_BACK_OFFICE_ROLES = ("Back Office Staff")
 CREW_FIELD_ROLES = ("Field Lead", "Field Installer")
 
 @frappe.whitelist()
