@@ -7,18 +7,21 @@ from itertools import groupby
 
 
 @frappe.whitelist()
-def get_job_base_team():
-    current_user = frappe.get_doc('User', frappe.session.user)
+def get_job_base_team(searchValue):
     results = [];
+    searchValue = "%{}%".format(searchValue)
+
     query = frappe.db.sql("""
-        SELECT job.assigned_team , siteC.label, siteC.component_name, job.idx, job.status , job.parent
-        FROM `tabJob` job
-		INNER JOIN `tabSite Component` siteC ON (job.site_component = siteC.name) 
-		WHERE job.assigned_team in (Select distinct parent 
+        select job.assigned_team , sitec.label, sitec.component_name, job.idx, job.status , job.parent
+        from `tabJob` job
+		inner join `tabSite Component` sitec on (job.site_component = sitec.name) 
+		where 
+		    (sitec.label  like %(searchValue)s or concat_ws(' ', sitec.label , sitec.component_name ) like %(searchValue)s)
+		     and job.assigned_team in (select distinct parent 
                             from `tabTeam Member`
                             where member = %(member)s)
-		ORDER BY job.assigned_team
-    """, dict(member=current_user.email), as_dict=True)
+		order by job.assigned_team
+    """, dict(searchValue=searchValue, member=frappe.session.user), as_dict=True)
 
     groups = groupby(query, lambda content: content['assigned_team'])
     for key, group in groups:

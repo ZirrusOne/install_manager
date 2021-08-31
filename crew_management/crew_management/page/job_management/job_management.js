@@ -17,8 +17,13 @@ frappe.pages['job-management'].on_page_load = function (wrapper) {
 
 let get_data = function (aThis) {
     let content = "";
+    aThis.page.main.find('.job-wrapper').html('');
+
     frappe.call({
         'method': 'crew_management.crew_management.page.job_management.job_management.get_job_base_team',
+        args: {
+            searchValue: '',
+        },
         callback: function (r) {
             let data = JSON.parse(r.message);
             if (data.length) {
