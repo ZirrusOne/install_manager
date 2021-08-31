@@ -1,0 +1,37 @@
+.main-section {
+    height: 100%;
+}
+
+.job-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.team-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.team-wrapper .team-title {
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 1px solid orange;
+    padding-bottom: 5px;
+}
+
+.team-wrapper .list-job {
+    padding: 10px;
+}
+
+.team-wrapper .list-job .job-item {
+    background: whitesmoke;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.team-wrapper .list-job .job-item:last-child {
+    margin-bottom: 0;
+}
