@@ -22,7 +22,8 @@
   "customer",
   "sales_order",
   "organization_section",
-  "parent_company"
+  "parent_company",
+  "assignment_color"
  ],
  "fields": [
   {
@@ -133,11 +134,17 @@
    "fieldtype": "Table",
    "label": "Jobs",
    "options": "Job"
+  },
+  {
+   "fieldname": "assignment_color",
+   "fieldtype": "Color",
+   "label": "Assignment Color",
+   "options": "#000000"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-07-30 05:32:37.512959",
+ "modified": "2021-09-04 11:10:02.656341",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",

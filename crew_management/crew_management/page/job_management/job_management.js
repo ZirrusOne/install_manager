@@ -14,7 +14,10 @@ frappe.pages["job-management"].on_page_load = (wrapper) => {
 };
 
 class JobManagement {
+    isEscalationView = false;
+
     constructor(wrapper) {
+        let aThis = this;
         this.page = frappe.ui.make_app_page({
             parent: wrapper,
             title: 'Job Management',
@@ -22,6 +25,16 @@ class JobManagement {
         });
 
         $(frappe.render_template('job_management')).appendTo(this.page.body);
+
+
+        let searchField = this.page.add_field({
+            label: 'Search by name',
+            fieldtype: 'Data',
+            fieldname: 'search',
+            change() {
+                aThis.getData(searchField.get_value());
+            }
+        });
     }
 
     initData() {
@@ -36,14 +49,15 @@ class JobManagement {
             method: 'crew_management.crew_management.page.job_management.job_management.get_job_base_team',
             args: {
                 searchValue: filter,
+                isEscalation: this.isEscalationView
             },
             callback: (r) => {
                 let data = JSON.parse(r.message);
+                console.log(data);
                 if (data.length) {
-                    console.log(data)
                     let i;
                     for (i = 0; i < data.length; i++) {
-                        let teamWrapper = "<div class='team-wrapper'><div class='team-title'>" + data[i].team + "</div>"
+                        let teamWrapper = "<div class='team-wrapper'><div class='team-title' style='border-bottom-color: " + data[i].color + "'>" + data[i].team + ": " + data[i].assignment + "</div>"
                         const listJob = data[i].jobs;
                         if (listJob) {
                             let j;
