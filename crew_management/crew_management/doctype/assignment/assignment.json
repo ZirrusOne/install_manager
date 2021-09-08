@@ -17,13 +17,13 @@
   "assignment_type",
   "back_office_team",
   "pct_completion_method",
+  "assignment_color",
   "jobs",
   "customer_details_section",
   "customer",
   "sales_order",
   "organization_section",
-  "parent_company",
-  "assignment_color"
+  "parent_company"
  ],
  "fields": [
   {
@@ -118,6 +118,12 @@
    "options": "Sales Order"
   },
   {
+   "fieldname": "assignment_color",
+   "fieldtype": "Color",
+   "label": "Assignment Color",
+   "options": "#000000"
+  },
+  {
    "fieldname": "organization_section",
    "fieldtype": "Section Break",
    "label": "Organization"
@@ -134,17 +140,11 @@
    "fieldtype": "Table",
    "label": "Jobs",
    "options": "Job"
-  },
-  {
-   "fieldname": "assignment_color",
-   "fieldtype": "Color",
-   "label": "Assignment Color",
-   "options": "#000000"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-04 11:10:02.656341",
+ "modified": "2021-09-08 15:26:32.345783",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",
