@@ -1,2 +1,23 @@
 <div class="job-wrapper">
+    {% if result.length > 0%}
+    {% for item in result %}
+    <div class="team-wrapper">
+        <a class="team-title"
+           style="border-bottom-color:{{item.color}}"
+           onclick="job_management.toggleCollapse(this)">
+            <span>[{{item.team}}]</span> :: <span>{{item.assignment}}</span>
+        </a>
+        <div class="list-job">
+            {% for job in item.jobs %}
+            <a class="job-item" href="/app/job-management/{{item.assignment}}">
+                <span class="bold">{{job.label}} {{job.component_name}}</span> - <span
+                    class="italic">{{job.status}}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div>No result</div>
+    {% endif %}
 </div>

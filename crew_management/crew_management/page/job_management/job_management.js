@@ -24,8 +24,6 @@ class JobManagement {
             single_column: true
         });
 
-        $(frappe.render_template('job_management')).appendTo(this.page.body);
-
 
         let searchField = this.page.add_field({
             label: 'Search by name',
@@ -41,9 +39,14 @@ class JobManagement {
         this.getData('');
     }
 
+    toggleCollapse(element) {
+        $(element).toggleClass('collapsed')
+        let nextElementSibling = element.nextElementSibling;
+        $(nextElementSibling).toggleClass('collapsed')
+    }
+
     getData(filter) {
-        let content = "";
-        $(this.page.body).find('.job-wrapper').html('');
+        $(this.page.main).find('.job-wrapper').remove()
 
         frappe.call({
             method: 'crew_management.crew_management.page.job_management.job_management.get_job_base_team',
@@ -53,27 +56,9 @@ class JobManagement {
             },
             callback: (r) => {
                 let data = JSON.parse(r.message);
-                console.log(data);
-                if (data.length) {
-                    let i;
-                    for (i = 0; i < data.length; i++) {
-                        let teamWrapper = "<div class='team-wrapper'><div class='team-title' style='border-bottom-color: " + data[i].color + "'>" + data[i].team + ": " + data[i].assignment + "</div>"
-                        const listJob = data[i].jobs;
-                        if (listJob) {
-                            let j;
-                            teamWrapper += "<div class='list-job'>"
-                            for (j = 0; j < listJob.length; j++) {
-                                let jobItem = "<div class='job-item'>" + listJob[j].label + " " + listJob[j].component_name + " - " + listJob[j].status + "</div>"
-                                teamWrapper += jobItem;
-                            }
-                            teamWrapper += "</div></div>"
-                        }
-                        content += teamWrapper;
-                    }
-                    $(this.page.body).find('.job-wrapper').append(content);
-                } else {
-                    $(this.page.body).find('.job-wrapper').append('No result');
-                }
+                $(frappe.render_template('job_management', {
+                    result: data
+                })).appendTo($(this.page.main));
             }
         });
     }
