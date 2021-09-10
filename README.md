@@ -134,6 +134,12 @@ bench --site z1n.local install-app erpnext
 bench --site z1n.local install-app crew_management
 ```
 
+## To install pip packages
+
+```shell
+/workspace/development/frappe-bench/env/bin/python -m pip install -r requirements.txt
+```
+
 ## License
 
 GNU GENERAL PUBLIC LICENSE
