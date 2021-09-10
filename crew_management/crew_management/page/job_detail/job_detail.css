@@ -1,0 +1,68 @@
+:root {
+    --color-peru: #ed7d31;
+    --color-midnight-blue: #0042a0;
+    --color-dodger-blue: #169cd8;
+    --color-red: #9D3633;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+
+.main-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#body, #page-job-detail {
+    height: 100%
+}
+
+#page-job-detail .page-head {
+    background: white;
+    top: 38px;
+    position: sticky;
+    margin-bottom: 0;
+}
+
+#page-job-detail .page-head .page-head-content {
+    height: 70px;
+}
+
+
+#page-job-detail .page-actions {
+    flex-direction: row-reverse;
+}
+
+#page-job-detail .page-actions .menu-btn-group .icon-btn {
+    margin-left: 0;
+    margin-right: 10px;
+    height: 40px;
+    width: 40px;
+    border: 1px solid var(--color-peru);
+    border-radius: 0;
+}
+
+#page-job-detail .layout-main-section-wrapper {
+    margin-bottom: 0;
+}
+
+.page-container {
+    background: white;
+}
+
+.job-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+

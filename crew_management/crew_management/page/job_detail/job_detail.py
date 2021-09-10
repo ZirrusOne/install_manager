@@ -18,7 +18,7 @@ def get_job_base_team(searchValue, isEscalation):
         filterEscalation = "job.status not like '%%Escalation%%'"
 
     query = frappe.db.sql("""
-        select job.name, job.assigned_team , job.status, job.escalation_reason , sitec.label, sitec.component_name, assign.assignment_name, assign.assignment_color
+        select job.assigned_team , job.status, job.escalation_reason , sitec.label, sitec.component_name, assign.assignment_name, assign.assignment_color
         from `tabJob` job
 		inner join `tabSite Component` sitec on (job.site_component = sitec.name)
 		inner join `tabAssignment` assign  on (job.parent = assign.name)

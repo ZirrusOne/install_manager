@@ -12,7 +12,7 @@
     </a>
     <div class="list-job">
         {% for job in item.jobs %}
-        <a class="job-item" href="/app/job-management-detail/{{item.assignment}}">
+        <a class="job-item" href="/app/job-detail/{{job.name}}">
             <span class="bold">{{job.label}} {{job.component_name}}</span>
             <span> - </span>
             <span class="{{!isEscalation?" italic":""}}">{{isEscalation?job.escalation_reason === ""?"Not

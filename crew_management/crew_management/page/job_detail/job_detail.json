@@ -1,0 +1,26 @@
+{
+ "content": null,
+ "creation": "2021-09-11 00:02:10.368659",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2021-09-11 00:02:10.368659",
+ "modified_by": "Administrator",
+ "module": "Crew Management",
+ "name": "job-detail",
+ "owner": "Administrator",
+ "page_name": "job-detail",
+ "roles": [
+  {
+   "role": "Field Lead"
+  },
+  {
+   "role": "Field Installer"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Job Detail"
+}
