@@ -130,7 +130,6 @@
 .team-wrapper .list-job .job-item {
     border-bottom: 1px solid var(--border-color);
     padding: 10px;
-    margin-bottom: 10px;
     border-radius: 0;
 }
 
