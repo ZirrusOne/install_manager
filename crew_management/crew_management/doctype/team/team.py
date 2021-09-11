@@ -12,17 +12,11 @@ CREW_FIELD_ROLES = ("Field Lead", "Field Installer")
 
 class Team(Document):
 	def before_insert(self):
-		self.validate_duplicate()
+		if frappe.db.exists("Team", {"name": self.name}):
+			frappe.throw(_("Team '{0}' already existed").format(self.name))
 
 	def validate(self):
 		self.validate_team_members()
-
-	def validate_duplicate(self):
-		if frappe.db.exists("Team", {"name": self.name}):
-			frappe.msgprint(_("Team '{0}' already existed").format(self.name),
-					title='Error',
-					indicator='red',
-					raise_exception=1)
 		
 	def validate_team_members(self):
 		if self.team_type == "Back Office":
@@ -46,7 +40,4 @@ class Team(Document):
 
 		for p in self.team_member:
 			if p.member not in user_list:
-				frappe.msgprint(_("Team members not valid for team '{0}'").format(self.team_type),
-					title='Error',
-					indicator='red',
-					raise_exception=1)
+				frappe.throw(_("Team members not valid for team '{0}'").format(self.team_type))
