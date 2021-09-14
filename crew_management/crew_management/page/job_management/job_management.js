@@ -8,6 +8,7 @@ frappe.pages["job-management"].on_page_load = (wrapper) => {
     $('.navbar-home').attr("href", "/app/job-management")
     $(wrapper).bind('show', () => {
         job_management.initData();
+        job_management.isFirstTimeLoad = true;
     });
 
     window.job_management = job_management;
@@ -15,6 +16,7 @@ frappe.pages["job-management"].on_page_load = (wrapper) => {
 
 class JobManagement {
     isEscalationView;
+    isFirstTimeLoad;
     previousSearchField = '';
 
     constructor(wrapper) {
@@ -75,7 +77,7 @@ class JobManagement {
     }
 
     getData(filter) {
-        $(this.page.main).find('.job-wrapper').remove()
+        $(this.page.main).find('.job-wrapper').remove();
         frappe.call({
             method: 'crew_management.crew_management.page.job_management.job_management.get_job_base_team',
             args: {
@@ -84,10 +86,18 @@ class JobManagement {
             },
             callback: (r) => {
                 let data = JSON.parse(r.message);
-                $(frappe.render_template('job_management', {
-                    isEscalation: this.isEscalationView,
-                    result: data,
-                })).appendTo($(this.page.main));
+                if (this.isFirstTimeLoad && this.isEscalationView) {
+                    this.isFirstTimeLoad = false;
+                    if (data.length === 0) {
+                        this.isEscalationView = false;
+                        this.getData(filter)
+                    }
+                }else {
+                    $(frappe.render_template('job_management', {
+                        isEscalation: this.isEscalationView,
+                        result: data,
+                    })).appendTo($(this.page.main));
+                }
             }
         });
     }
