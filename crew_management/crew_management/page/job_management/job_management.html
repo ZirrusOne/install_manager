@@ -4,7 +4,7 @@
     {% if result.length > 0%}
     {% for item in result %}
     <div class="team-wrapper {{isEscalation?" escalation
-    ":""}}">
+    ":""}}" style="border-color:{{item.color}}">
     <a class="team-title"
        style="border-bottom-color:{{item.color}}"
        onclick="job_management.toggleCollapse(this)">
@@ -23,6 +23,6 @@
 </div>
 {% endfor %}
 {% else %}
-<div>No jobs found</div>
+<div>No {{ isEscalation? "escalated" :""}} jobs found</div>
 {% endif %}
 </div>
