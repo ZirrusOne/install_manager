@@ -21,9 +21,8 @@ class JobManagement {
         let aThis = this;
 
         let isFieldLead = frappe.user.has_role("Field Lead");
-        if (isFieldLead) {
-            this.isEscalationView = true;
-        }
+        this.isEscalationView = !!isFieldLead;
+
         this.page = frappe.ui.make_app_page({
             parent: wrapper,
             title: 'Job Management',
