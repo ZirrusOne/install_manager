@@ -12,8 +12,11 @@ app_email = "info@zirrusone.com"
 app_license = "Proprietary"
 app_logo_url = "/assets/crew_management/images/z1n-logo.png"
 setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
-# app_include_js = "/assets/crew_management/js/crew_management.js"
 
+website_context = {
+    "favicon": 	"/assets/crew_management/images/z1n-logo.png",
+    "splash_image": "/assets/crew_management/images/z1n-logo.png"
+}
 boot_session = "crew_management.startup.boot.boot_session"
 
 user_data_fields = [
