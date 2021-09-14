@@ -13,7 +13,7 @@
  "is_standard": 1,
  "label": "Crew Management",
  "links": [],
- "modified": "2021-08-16 12:09:54.658457",
+ "modified": "2021-09-14 15:46:22.686902",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Crew Management",
@@ -23,14 +23,20 @@
  "shortcuts": [
   {
    "doc_view": "List",
-   "label": "Site",
+   "label": "Sites",
    "link_to": "Site",
    "type": "DocType"
   },
   {
    "doc_view": "List",
-   "label": "Team",
+   "label": "Teams",
    "link_to": "Team",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Assignments",
+   "link_to": "Assignment",
    "type": "DocType"
   }
  ]
