@@ -13,7 +13,7 @@
  "is_standard": 1,
  "label": "Crew Management",
  "links": [],
- "modified": "2021-08-16 12:09:54.658457",
+ "modified": "2021-09-14 15:46:22.686902",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Crew Management",
@@ -31,6 +31,12 @@
    "doc_view": "List",
    "label": "Team",
    "link_to": "Team",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Assignment",
+   "link_to": "Assignment",
    "type": "DocType"
   }
  ]
