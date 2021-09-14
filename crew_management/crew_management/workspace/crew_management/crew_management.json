@@ -23,19 +23,19 @@
  "shortcuts": [
   {
    "doc_view": "List",
-   "label": "Site",
+   "label": "Sites",
    "link_to": "Site",
    "type": "DocType"
   },
   {
    "doc_view": "List",
-   "label": "Team",
+   "label": "Teams",
    "link_to": "Team",
    "type": "DocType"
   },
   {
    "doc_view": "List",
-   "label": "Assignment",
+   "label": "Assignments",
    "link_to": "Assignment",
    "type": "DocType"
   }
