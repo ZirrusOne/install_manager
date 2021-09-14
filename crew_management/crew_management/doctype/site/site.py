@@ -9,7 +9,7 @@ from crew_management.crew_management.controllers.states import POSTAL_CODES
 
 class Site(Document):
 	def validate(self):
-		self.validate_zip_code()
+		# self.validate_zip_code()
 		self.validate_site_contact()
 
 	def validate_zip_code(self):
