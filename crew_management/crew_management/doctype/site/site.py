@@ -7,11 +7,13 @@ from frappe.model.document import Document
 from frappe.utils import validate_email_address, validate_phone_number
 from crew_management.crew_management.controllers.states import POSTAL_CODES
 
+
 class Site(Document):
 	def validate(self):
-		self.validate_zip_code()
+		# self.validate_zip_code()
 		self.validate_site_contact()
 
+	# TODO to rework, this doesn't work correctly
 	def validate_zip_code(self):
 		zip_codes = [code for code in POSTAL_CODES if code[0] == self.state and code[1].lower() == self.city.strip().lower()]
 		for code in zip_codes:
@@ -41,6 +43,7 @@ class Site(Document):
 
 			if contact.mobile_phone:
 				validate_phone_number(contact.mobile_phone, True)
+
 
 @frappe.whitelist()
 def get_state_options():
