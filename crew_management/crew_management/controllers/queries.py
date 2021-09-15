@@ -75,34 +75,31 @@ def site_component_query(doctype, txt, searchfield, start, page_len, filters):
     parent_site = ''
     if filters and filters.get('parent_site'):
         parent_site = filters.get('parent_site')
-        site_component_children = 'AND parent = %(parent_id)s'
+        site_component_children = 'AND parent = %(parent_id)s AND name <> %(parent_id)s'
         filters.pop('parent_site')
-
-    self_component_cond = ''
-    self_id = ''
-    if filters and filters.get('self_id'):
-        self_id = filters.get('self_id')
-        self_component_cond = 'AND name <> %(self_id)s'
-        filters.pop('self_id')
 
     txt = "%{}%".format(txt)
 
     return frappe.db.sql("""
-        SELECT name
-        FROM `tabSite Component`
-        WHERE
-            docstatus < 2
-            {site_component_children}
-            {self_component_cond}
-            AND name LIKE %(txt)s
-            {fcond}
-            {mcond}
+        SELECT tblMain.component_name as `name`, tblMain.label, tblMain.parent 
+        FROM `tabSite Component` tblMain
+        INNER JOIN (
+            SELECT component_name, parent, label, name
+            FROM `tabSite Component`
+            WHERE
+                docstatus < 2
+                {site_component_children}
+                AND component_name LIKE %(txt)s
+                {fcond}
+                {mcond}
+            
+        ) AS tblSub ON tblMain.name = tblSub.name
+        ORDER BY tblMain.component_name
         LIMIT %(start)s, %(page_len)s
     """.format(
         site_component_children=site_component_children,
-        self_component_cond=self_component_cond,
         fcond=get_filters_cond(doctype, filters, conditions),
         mcond=get_match_cond(doctype)
     ),
-        dict(start=start, page_len=page_len, txt=txt, parent_id=parent_site, self_id=self_id)
+        dict(start=start, page_len=page_len, txt=txt, parent_id=parent_site)
     )

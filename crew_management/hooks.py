@@ -43,7 +43,7 @@ user_data_fields = [
 required_apps = ['erpnext']
 
 standard_queries = {
-    # "Site Component": "crew_management.crew_management.doctype.site_component.site_component.site_component_query"
+    "Site Component": "crew_management.crew_management.doctype.site_component.site_component.site_component_query"
 }
 domains = {
     'Crew Management': 'crew_management.domains.crew_management',
