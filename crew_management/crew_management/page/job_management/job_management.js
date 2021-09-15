@@ -91,6 +91,11 @@ class JobManagement {
                     if (data.length === 0) {
                         this.isEscalationView = false;
                         this.getData(filter)
+                    }else {
+                        $(frappe.render_template('job_management', {
+                            isEscalation: this.isEscalationView,
+                            result: data,
+                        })).appendTo($(this.page.main));
                     }
                 }else {
                     $(frappe.render_template('job_management', {
