@@ -9,7 +9,7 @@ frappe.ui.form.on('Assignment', {
     onload: function (frm) {
         filter_team_type(frm, 'Back Office')
         filter_job_assign_team(frm)
-        filter_job_site_component(frm)
+        // filter_job_site_component(frm)
     }
 });
 
