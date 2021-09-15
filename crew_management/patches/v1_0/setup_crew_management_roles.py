@@ -1,12 +1,10 @@
 from __future__ import unicode_literals
 import frappe
-import json
 
 
 def execute():
     _insert_custom_roles()
     _insert_custom_domain()
-    _custom_system_settings()
 
 
 def _insert_custom_roles():
@@ -40,8 +38,3 @@ def _insert_custom_domain():
             "domain": "Crew Management"
         })
         doc.insert(ignore_permissions=True)
-
-
-def _custom_system_settings():
-    frappe.db.set_value("System Settings", "System Settings", "enable_password_policy", 0)
-    frappe.db.set_value("System Settings", "System Settings", "allow_login_using_user_name", 1)
