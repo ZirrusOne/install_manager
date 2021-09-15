@@ -9,13 +9,21 @@ from frappe.model.document import Document
 class SiteComponent(Document):
 
     def db_update(self):
-        self.full_name = f'{self.label} {self.component_name}'
+        self.override_name()
         super(SiteComponent, self).db_update()
 
     def db_insert(self):
-        self.full_name = f'{self.label} {self.component_name}'
+        self.override_name()
         super(SiteComponent, self).db_insert()
 
+    def autoname(self):
+        self.override_name()
+
+    def override_name(self):
+        self.name = f'[{self.label}] {self.component_name}'
+        # self.full_name = self.name
+        # self.parent_site_component = self.name
+        # self.parent_site_component_name = self.name
 
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
