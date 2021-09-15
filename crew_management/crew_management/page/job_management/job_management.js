@@ -6,11 +6,11 @@
 frappe.pages["job-management"].on_page_load = (wrapper) => {
     const job_management = new JobManagement(wrapper);
     $('.navbar-home').attr("href", "/app/job-management")
+    $('#navbar-breadcrumbs').remove();
     $(wrapper).bind('show', () => {
         job_management.initData();
         job_management.isFirstTimeLoad = true;
     });
-
     window.job_management = job_management;
 };
 
@@ -56,7 +56,6 @@ class JobManagement {
         }
         $('.menu-btn-group-label').find('svg').remove();
         $('.menu-btn-group-label').append("<svg class=\"icon icon-md\"><use xlink:href=\"#icon-menu\"></use></svg>");
-
         $('.main-section').find('footer').remove();
         $('.page-head').find('.page-title').remove();
         $('.layout-main-section').find('.page-form').remove();
@@ -72,6 +71,7 @@ class JobManagement {
 
     toggleCollapse(element) {
         $(element).toggleClass('collapsed')
+        $(element).hasClass('collapsed') ? $(element).addClass('border-none') : $(element).removeClass('border-none')
         let nextElementSibling = element.nextElementSibling;
         $(nextElementSibling).toggleClass('collapsed')
     }
@@ -91,13 +91,15 @@ class JobManagement {
                     if (data.length === 0) {
                         this.isEscalationView = false;
                         this.getData(filter)
-                    }else {
+                    } else {
+                        this.setTitleView();
                         $(frappe.render_template('job_management', {
                             isEscalation: this.isEscalationView,
                             result: data,
                         })).appendTo($(this.page.main));
                     }
-                }else {
+                } else {
+                    this.setTitleView();
                     $(frappe.render_template('job_management', {
                         isEscalation: this.isEscalationView,
                         result: data,
@@ -105,5 +107,16 @@ class JobManagement {
                 }
             }
         });
+    }
+
+    setTitleView() {
+        let title = this.isEscalationView ? "Escalations" : "Assigned Jobs";
+        let element = $('.navbar .container').find('.job-title');
+        if (element.length > 0) {
+            $('.navbar .container .job-title').text(title);
+        } else {
+            $('.navbar .container a.navbar-brand').after("<div class='job-title'>" + title + "</div>");
+        }
+        this.isEscalationView ? $('.navbar .container .job-title').addClass('red') : $('.navbar .container .job-title').removeClass('red')
     }
 }
