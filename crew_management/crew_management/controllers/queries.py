@@ -81,20 +81,14 @@ def site_component_query(doctype, txt, searchfield, start, page_len, filters):
     txt = "%{}%".format(txt)
 
     return frappe.db.sql("""
-        SELECT tblMain.component_name as `name`, tblMain.label, tblMain.parent 
-        FROM `tabSite Component` tblMain
-        INNER JOIN (
-            SELECT component_name, parent, label, name
-            FROM `tabSite Component`
-            WHERE
-                docstatus < 2
-                {site_component_children}
-                AND component_name LIKE %(txt)s
-                {fcond}
-                {mcond}
-            
-        ) AS tblSub ON tblMain.name = tblSub.name
-        ORDER BY tblMain.component_name
+        SELECT name
+        FROM `tabSite Component`
+        WHERE
+            docstatus < 2
+            {site_component_children}
+            AND name LIKE %(txt)s
+            {fcond}
+            {mcond}
         LIMIT %(start)s, %(page_len)s
     """.format(
         site_component_children=site_component_children,

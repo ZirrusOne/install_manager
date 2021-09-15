@@ -20,10 +20,13 @@ class SiteComponent(Document):
         self.override_name()
 
     def override_name(self):
-        self.name = f'[{self.label}] {self.component_name}'
+        self.name = f'{self.label} {self.component_name}, {self.parent_doc.site_name}'
+        if self.parent_site_component is not None:
+            self.parent_site_component_name = self.parent_site_component
         # self.full_name = self.name
         # self.parent_site_component = self.name
         # self.parent_site_component_name = self.name
+
 
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
@@ -48,7 +51,8 @@ def site_component_query(doctype, txt, searchfield, start, page_len, filters):
 
     return frappe.db.sql("""
         SELECT name, label, component_name
-        FROM `tabSite Component`
+        FROM `tabSite Component` `siteCompo`
+        INNER JOIN `tabSite` `site` ON (site.name = siteCompo.parent)
         WHERE
             docstatus < 2
             {component_name_condition}
