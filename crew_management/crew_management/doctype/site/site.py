@@ -26,10 +26,10 @@ class Site(Document):
 		check_email_list = []
 		for contact in self.get('site_contact'):
 			if contact.first_name:
-				contact.first_name = contact.first_name.capitalize()
+				contact.first_name = contact.first_name.title()
 
 			if contact.last_name:
-				contact.last_name = contact.last_name.capitalize()
+				contact.last_name = contact.last_name.title()
 
 			if contact.email_address:
 				if contact.email_address not in check_email_list:
