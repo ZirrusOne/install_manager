@@ -129,9 +129,13 @@ bench --site z1n.local migrate
 
 ```shell
 cd /workspace/development/frappe-bench
-bench --site z1n.local reinstall --mariadb-root-password 123 --admin-password admin
+bench drop-site z1n.local
+bench new-site z1n.local --mariadb-root-password 123 --admin-password admin --no-mariadb-socket
+bench --site z1n.local set-config developer_mode 1
+bench --site z1n.local clear-cache
 bench --site z1n.local install-app erpnext
 bench --site z1n.local install-app crew_management
+bench --site z1n.local migrate
 ```
 
 ## To install pip packages
