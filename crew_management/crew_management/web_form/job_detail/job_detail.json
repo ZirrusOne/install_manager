@@ -73,7 +73,7 @@
    "label": "Status",
    "max_length": 0,
    "max_value": 0,
-   "options": "Pending\nIn Progress\nEscalation - Field Lead\nEscalattion - Back Office\nEscalation - Vendor\nEscalation - Property\nCompleted",
+   "options": "Pending\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nEscalation - Property\nCompleted",
    "read_only": 0,
    "reqd": 1,
    "show_in_filter": 0
