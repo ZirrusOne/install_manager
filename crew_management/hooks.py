@@ -49,6 +49,33 @@ domains = {
     'Crew Management': 'crew_management.domains.crew_management',
 }
 
+# This is NOT used during app installation. It is used to export data, which is created during development, into
+# folder fixtures/. The data will be applied when this app is installed into a site.
+# To export fixture files (json file), run: bench --site .... export-fixtures
+fixtures = [
+    {"dt": "Domain", "filters": [["name", "in", ["Crew Management"]]]},
+    {"dt": "Role", "filters": [
+        [
+            "name", "in", [
+                "Back Office Staff",
+                "Field Lead",
+                "Field Installer"
+            ]
+        ]
+    ]},
+    {"dt": "Custom DocPerm", "filters": [
+        [
+            "parent", "in", [
+                "User",
+                "Sales Order",
+                "Company",
+                "Customer"
+            ]
+        ],
+        ["role", "in", ["Back Office Staff"]]
+    ]}
+]
+
 # doc_events = {
 #     "User": {
 #         "validate": "crew_management.patches.v1_0.user.user.user_add_block_modules"
