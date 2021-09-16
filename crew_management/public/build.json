@@ -1,5 +1,9 @@
 {
-	"css/custom_crew.css": [
-		"public/css/custom_crew_management.scss"
-	]
+  "css/custom_crew.css": [
+    "public/css/custom_crew_management.scss"
+  ],
+  "js/custom_crew.js": [
+    "public/js/handle_route_change.js",
+    "public/js/custom_user_toolbar.js"
+  ]
 }

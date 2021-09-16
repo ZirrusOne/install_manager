@@ -24,7 +24,7 @@ app_include_css = "/assets/css/custom_crew.css"
 web_include_css = "/assets/css/custom_crew.css"
 
 app_include_js = [
-    "/assets/crew_management/js/handle_route_change.js"
+    "/assets/js/custom_crew.js"
 ]
 
 user_data_fields = [
@@ -65,20 +65,20 @@ fixtures = [
     {"dt": "Role", "filters": [
         [
             "name", "in", [
-                "Back Office Staff",
-                "Field Lead",
-                "Field Installer"
-            ]
+            "Back Office Staff",
+            "Field Lead",
+            "Field Installer"
+        ]
         ]
     ]},
     {"dt": "Custom DocPerm", "filters": [
         [
             "parent", "in", [
-                "User",
-                "Sales Order",
-                "Company",
-                "Customer"
-            ]
+            "User",
+            "Sales Order",
+            "Company",
+            "Customer"
+        ]
         ],
         ["role", "in", ["Back Office Staff"]]
     ]}

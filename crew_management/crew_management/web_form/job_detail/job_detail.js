@@ -34,5 +34,4 @@ function getJobDetail(id) {
             frappe.web_form.set_value('name', result.message.name);
         }
     });
-
 }
