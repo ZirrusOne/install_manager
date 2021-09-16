@@ -1,0 +1,5 @@
+{
+	"css/custom_crew.css": [
+		"public/css/custom_crew_management.scss"
+	]
+}

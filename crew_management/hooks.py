@@ -14,10 +14,18 @@ app_logo_url = "/assets/crew_management/images/z1n-logo.png"
 setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
 
 website_context = {
-    "favicon": 	"/assets/crew_management/images/z1n-logo.png",
+    "favicon": "/assets/crew_management/images/z1n-logo.png",
     "splash_image": "/assets/crew_management/images/z1n-logo.png"
 }
 boot_session = "crew_management.startup.boot.boot_session"
+
+app_include_css = "/assets/css/custom_crew.css"
+
+web_include_css = "/assets/css/custom_crew.css"
+
+app_include_js = [
+    "/assets/crew_management/js/handle_route_change.js"
+]
 
 user_data_fields = [
     {

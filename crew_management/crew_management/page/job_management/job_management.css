@@ -1,10 +1,3 @@
-:root {
-    --color-peru: #ed7d31;
-    --color-midnight-blue: #0042a0;
-    --color-dodger-blue: #169cd8;
-    --color-red: #9D3633;
-}
-
 .bold {
     font-weight: bold;
 }
@@ -13,21 +6,12 @@
     font-style: italic;
 }
 
-
-.main-section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
 #body, #page-job-management {
     height: 100%
 }
 
 #page-job-management .page-head {
     background: white;
-    top: 38px;
     position: sticky;
     margin-bottom: 0;
 }

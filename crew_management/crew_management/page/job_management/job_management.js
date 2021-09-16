@@ -5,8 +5,8 @@
 
 frappe.pages["job-management"].on_page_load = (wrapper) => {
     const job_management = new JobManagement(wrapper);
+    $('#navbar-breadcrumbs').addClass('hide-item');
     $('.navbar-home').attr("href", "/app/job-management")
-    $('#navbar-breadcrumbs').remove();
     $(wrapper).bind('show', () => {
         job_management.initData();
         job_management.isFirstTimeLoad = true;
