@@ -21,7 +21,7 @@
  "is_standard": 1,
  "login_required": 1,
  "max_attachment_size": 0,
- "modified": "2021-09-15 14:19:52.760445",
+ "modified": "2021-09-15 21:27:08.281945",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "job-detail",
@@ -73,7 +73,7 @@
    "label": "Status",
    "max_length": 0,
    "max_value": 0,
-   "options": "Pending\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nEscalation - Property\nCompleted",
+   "options": "Pending\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nEscalation - Property\nNon-compliant\nCompleted",
    "read_only": 0,
    "reqd": 1,
    "show_in_filter": 0
