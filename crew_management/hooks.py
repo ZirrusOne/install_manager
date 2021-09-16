@@ -21,10 +21,14 @@ boot_session = "crew_management.startup.boot.boot_session"
 
 app_include_css = "/assets/css/custom_crew.css"
 
-web_include_css = "/assets/css/custom_crew.css"
+web_include_css = "/assets/css/custom_crew_website.css"
 
 app_include_js = [
     "/assets/js/custom_crew.js"
+]
+
+web_include_js = [
+    "/assets/js/custom_website.js"
 ]
 
 user_data_fields = [

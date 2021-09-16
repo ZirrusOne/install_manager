@@ -2,8 +2,15 @@
   "css/custom_crew.css": [
     "public/css/custom_crew_management.scss"
   ],
+  "css/custom_crew_website.css": [
+    "public/css/custom_crew_management.scss",
+    "public/css/custom_website.scss"
+  ],
   "js/custom_crew.js": [
     "public/js/handle_route_change.js",
     "public/js/custom_user_toolbar.js"
+  ],
+  "js/custom_crew_website.js": [
+    "public/js/custom_website.js"
   ]
 }
