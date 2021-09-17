@@ -13,6 +13,8 @@ app_license = "Proprietary"
 app_logo_url = "/assets/crew_management/images/z1n-logo.png"
 setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
 
+home_page = "login"
+
 website_context = {
     "favicon": "/assets/crew_management/images/z1n-logo.png",
     "splash_image": "/assets/crew_management/images/z1n-logo.png"
@@ -28,7 +30,7 @@ app_include_js = [
 ]
 
 web_include_js = [
-    "/assets/js/custom_website.js"
+    "/assets/js/custom_crew_website.js"
 ]
 
 user_data_fields = [
