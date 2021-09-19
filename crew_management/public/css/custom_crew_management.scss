@@ -17,3 +17,45 @@ body {
 .page-head {
   top: 60px;
 }
+
+
+///
+// custom assigment-form
+
+#page-Assignment {
+  .layout-main-section .form-layout .form-page {
+    .form-section.visible-section:first-child {
+      .form-column.col-sm-12 {
+        padding-right: 0;
+      }
+
+      form {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: unset;
+        width: 100%;
+        flex-wrap: wrap;
+
+        .frappe-control {
+          width: 50%;
+
+          &[data-fieldname="back_office_team"] {
+            .control-input.form-control.table-multiselect {
+              padding: 3px 15px 0;
+
+              .link-field {
+                margin-top: 3px;
+              }
+            }
+          }
+
+          &[data-fieldname="assignment_color"] {
+            .selected-color {
+              top: calc(40% + 1px);
+            }
+          }
+        }
+      }
+    }
+  }
+}

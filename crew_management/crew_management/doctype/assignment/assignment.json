@@ -18,6 +18,7 @@
   "back_office_team",
   "pct_completion_method",
   "assignment_color",
+  "section_break_13",
   "jobs",
   "customer_details_section",
   "customer",
@@ -138,13 +139,17 @@
   {
    "fieldname": "jobs",
    "fieldtype": "Table",
-   "label": "Jobs",
    "options": "Job"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break",
+   "label": "Jobs"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-15 20:30:45.939035",
+ "modified": "2021-09-20 02:09:46.875437",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",
