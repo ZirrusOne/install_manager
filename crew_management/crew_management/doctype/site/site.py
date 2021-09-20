@@ -66,3 +66,9 @@ class Site(Document):
 		frappe.db.sql("UPDATE `tabSite Component` SET site_name =  %(site_name)s WHERE {conditions}".format(
 			conditions=conditions
 		), values, debug=False)
+
+		frappe.db.sql("""UPDATE tabJob SET site_name =  %(site_name)s 
+			WHERE assignment IN (SELECT tabAssignment.name FROM tabAssignment WHERE {conditions})
+			""".format(
+			conditions=conditions
+		), values, debug=False)
