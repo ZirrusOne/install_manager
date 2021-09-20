@@ -102,6 +102,7 @@
    "label": "Attach Image"
   },
   {
+   "depends_on": "eval: doc.status && doc.status.startsWith('Completed');",
    "fieldname": "data_collection_section",
    "fieldtype": "Section Break",
    "label": "Data Collection"
@@ -156,7 +157,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-20 02:00:49.598487",
+ "modified": "2021-09-20 18:23:51.559948",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Job",

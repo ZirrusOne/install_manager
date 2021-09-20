@@ -13,6 +13,10 @@ frappe.ui.form.on('Job', {
             $('.sidebar-toggle-btn').addClass('hide-item');
             $('.layout-side-section').addClass('hide-item');
             $('.menu-btn-group').addClass('hide-item');
+            if (frappe.user.has_role("Field Installer")) {
+                let statusField = frm.fields.find(item => item.df.fieldname === 'status')
+                statusField.df.options = ["Pending", "In Progress", "Non-compliant", "Completed"];
+            }
         }
-    }
+    },
 });
