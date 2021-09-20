@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "section_break_2",
   "assignment",
   "site_component",
   "column_break_13",
@@ -75,7 +76,7 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
+   "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
    "fieldname": "assigned_team",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -168,11 +169,16 @@
   {
    "fieldname": "column_break_13",
    "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-20 12:04:45.625540",
+ "modified": "2021-09-21 00:32:28.773783",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Job",
