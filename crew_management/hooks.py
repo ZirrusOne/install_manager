@@ -33,27 +33,6 @@ web_include_js = [
     "/assets/js/custom_crew_website.js"
 ]
 
-user_data_fields = [
-    {
-        "doctype": "{doctype_1}",
-        "filter_by": "{filter_by}",
-        "redact_fields": ["{field_1}", "{field_2}"],
-        "partial": 1,
-    },
-    {
-        "doctype": "{doctype_2}",
-        "filter_by": "{filter_by}",
-        "partial": 1,
-    },
-    {
-        "doctype": "{doctype_3}",
-        "strict": False,
-    },
-    {
-        "doctype": "{doctype_4}"
-    }
-]
-
 required_apps = ['erpnext']
 
 standard_queries = {
@@ -89,9 +68,3 @@ fixtures = [
         ["role", "in", ["Back Office Staff"]]
     ]}
 ]
-
-# doc_events = {
-#     "User": {
-#         "validate": "crew_management.patches.v1_0.user.user.user_add_block_modules"
-#     }
-# }

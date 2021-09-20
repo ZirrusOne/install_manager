@@ -12,12 +12,13 @@
   "city",
   "state",
   "zip_code",
+  "column_break_6",
   "mail_addr_line1",
   "mail_addr_line2",
   "mail_addr_city",
   "mail_addr_state",
-  "site_contact",
-  "component"
+  "section_break_11",
+  "site_contact"
  ],
  "fields": [
   {
@@ -88,15 +89,23 @@
    "options": "Site Contact"
   },
   {
-   "fieldname": "component",
-   "fieldtype": "Table",
-   "label": "Site Components",
-   "options": "Site Component"
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2021-09-15 20:29:36.325680",
+ "links": [
+  {
+   "group": "Components",
+   "link_doctype": "Site Component",
+   "link_fieldname": "site"
+  }
+ ],
+ "modified": "2021-09-20 02:36:34.811854",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Site",
@@ -130,6 +139,7 @@
   }
  ],
  "quick_entry": 1,
+ "search_fields": "site_name, city",
  "sort_field": "site_name",
  "sort_order": "ASC",
  "title_field": "site_name",

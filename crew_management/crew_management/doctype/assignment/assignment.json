@@ -9,17 +9,18 @@
  "field_order": [
   "naming_series",
   "assignment_name",
+  "site",
   "expected_start_date",
   "expected_end_date",
   "start_date",
   "end_date",
+  "column_break_9",
+  "site_name",
   "status",
   "assignment_type",
   "back_office_team",
   "pct_completion_method",
   "assignment_color",
-  "section_break_13",
-  "jobs",
   "customer_details_section",
   "customer",
   "sales_order",
@@ -29,12 +30,12 @@
  "fields": [
   {
    "allow_in_quick_entry": 1,
-   "default": "ASSIGN-.####",
+   "default": "ASSIGN-.#####",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "ASSIGN-.####",
+   "options": "ASSIGN-.#####",
    "reqd": 1
   },
   {
@@ -127,29 +128,47 @@
   {
    "fieldname": "organization_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Organization"
   },
   {
    "fieldname": "parent_company",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Parent",
-   "options": "Company",
+   "options": "Company"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Site ID",
+   "options": "Site",
+   "remember_last_selected_value": 1,
    "reqd": 1
   },
   {
-   "fieldname": "jobs",
-   "fieldtype": "Table",
-   "options": "Job"
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_13",
-   "fieldtype": "Section Break",
-   "label": "Jobs"
+   "fetch_from": "site.site_name",
+   "fieldname": "site_name",
+   "fieldtype": "Read Only",
+   "label": "Site name"
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2021-09-20 02:09:46.875437",
+ "links": [
+  {
+   "group": "Jobs",
+   "link_doctype": "Job",
+   "link_fieldname": "assignment"
+  }
+ ],
+ "modified": "2021-09-20 02:26:03.621656",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",
@@ -203,6 +222,7 @@
   }
  ],
  "quick_entry": 1,
+ "search_fields": "assignment_name",
  "sort_field": "assignment_name",
  "sort_order": "ASC",
  "title_field": "assignment_name",
