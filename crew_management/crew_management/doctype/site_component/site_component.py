@@ -8,13 +8,28 @@ from frappe.model.document import Document
 
 class SiteComponent(Document):
 
-    def db_update(self):
-        self.full_name = f'{self.label} {self.component_name}'
-        super(SiteComponent, self).db_update()
-
     def db_insert(self):
         self.full_name = f'{self.label} {self.component_name}'
         super(SiteComponent, self).db_insert()
+
+    def db_update(self):
+        self.full_name = f'{self.label} {self.component_name}'
+        is_full_name_changed = self.full_name != self.get_db_value('full_name')
+
+        super(SiteComponent, self).db_update()
+
+        if is_full_name_changed:
+            self._update_parent_site_component_name()
+
+    def _update_parent_site_component_name(self):
+        conditions, values = frappe.db.build_conditions({'parent_site_component': ('=', self.name)})
+
+        values['full_name'] = self.full_name
+
+        return frappe.db.sql("UPDATE `tab{doctype}` SET parent_site_component_name =  %(full_name)s WHERE {conditions}".format(
+            doctype=self.doctype,
+            conditions=conditions
+        ), values, debug=False)
 
 
 @frappe.whitelist()
