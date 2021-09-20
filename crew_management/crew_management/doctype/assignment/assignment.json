@@ -40,9 +40,11 @@
   },
   {
    "allow_in_quick_entry": 1,
+   "columns": 2,
    "fieldname": "assignment_name",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Assignment Name",
    "reqd": 1
   },
@@ -142,8 +144,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "site",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Site ID",
    "options": "Site",
    "remember_last_selected_value": 1,
@@ -154,9 +154,12 @@
    "fieldtype": "Column Break"
   },
   {
+   "columns": 4,
    "fetch_from": "site.site_name",
    "fieldname": "site_name",
    "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Site name"
   }
  ],
@@ -168,7 +171,7 @@
    "link_fieldname": "assignment"
   }
  ],
- "modified": "2021-09-20 02:26:03.621656",
+ "modified": "2021-09-20 06:02:15.368053",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",
@@ -223,7 +226,7 @@
  ],
  "quick_entry": 1,
  "search_fields": "assignment_name",
- "sort_field": "assignment_name",
+ "sort_field": "site_name ASC, assignment_name ASC",
  "sort_order": "ASC",
  "title_field": "assignment_name",
  "track_changes": 1

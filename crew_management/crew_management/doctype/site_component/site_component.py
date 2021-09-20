@@ -1,7 +1,6 @@
 # Copyright (c) 2021, Zirrus One and contributors
 # For license information, please see license.txt
 
-# import frappe
 import frappe
 from frappe.model.document import Document
 
@@ -36,54 +35,43 @@ class SiteComponent(Document):
 @frappe.validate_and_sanitize_search_inputs
 def site_component_query(doctype, keyword, searchfield, start, page_len, filters):
     """
-    Custom (override) default query for doctype Site Component
+    Custom (override) default query for doctype Site Component.
+    NOTE: name of parameter must be exactly like that, it must match what is sent from the client framework code!
+
     :param doctype:
     :param keyword:
-    :param searchfield:
+    :param searchfield: ignore
     :param start:
     :param page_len:
     :param filters:
     :return:
     """
-    from frappe.desk.reportview import get_match_cond
 
-    # filters is None when calling from the assignment's Job
+    if doctype != 'Site Component':
+        frappe.throw(f'In valid doctype in Site Component query: {doctype}')
 
-    site_uid = filters.get('site') if filters is not None else ''
-    component_of_same_site_condition = ''
-    if site_uid is not None and site_uid != '':
-        component_of_same_site_condition = 'AND site = %(site_uid)s'
+    sql_filter = {}
+    if filters is not None:
+        if filters.get('site', None) is not None:
+            sql_filter['site'] = ('=', filters.get('site'))
+        if filters.get('self_uid', None) is not None:
+            sql_filter['name'] = ('<>', filters.get('self_uid'))
 
-    exclude_current_component_condition = ''
-    current_component_uid = filters.get('self_uid') if filters is not None else ''
-    if current_component_uid is not None and current_component_uid != '':
-        exclude_current_component_condition = 'AND name <> %(current_component_uid)s'
-
-    component_name_condition = ''
     if keyword is not None and keyword != '':
-        component_name_condition = 'AND component_name LIKE %(keyword)s'
+        sql_filter['component_name'] = ('like', f'{keyword}%')
+
+    conditions, values = frappe.db.build_conditions(sql_filter)
+
+    values['start'] = start
+    values['page_len'] = page_len
 
     return frappe.db.sql("""
         SELECT name, full_name, site_name
         FROM `tabSite Component`
         WHERE
             docstatus < 2
-            {component_name_condition}
-            {component_of_same_site_condition}
-            {exclude_current_component_condition}
-            {mcond}
+            AND {conditions}
         ORDER BY
-            label, component_name
+            full_name, site_name
         LIMIT %(start)s, %(page_len)s
-    """.format(**{
-        'mcond': get_match_cond(doctype),
-        'exclude_current_component_condition': exclude_current_component_condition,
-        'component_of_same_site_condition': component_of_same_site_condition,
-        'component_name_condition': component_name_condition
-    }), {
-         'keyword': "%{}%".format(keyword),
-         'site_uid': site_uid,
-         'current_component_uid': current_component_uid,
-         'start': start,
-         'page_len': page_len
-         })
+    """.format(conditions=conditions), values=values, debug=False)

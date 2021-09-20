@@ -26,7 +26,7 @@
    "fieldname": "site_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Name",
+   "label": "Site name",
    "reqd": 1
   },
   {
@@ -105,7 +105,7 @@
    "link_fieldname": "site"
   }
  ],
- "modified": "2021-09-20 02:36:34.811854",
+ "modified": "2021-09-20 05:54:42.878111",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Site",

@@ -27,18 +27,21 @@
  "fields": [
   {
    "allow_in_quick_entry": 1,
+   "columns": 1,
    "fieldname": "component_name",
    "fieldtype": "Data",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "Name",
+   "label": "Component Name",
    "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
+   "columns": 1,
    "fieldname": "label",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Label",
    "options": "Unit\nRoom\nCage\nRack\nCloset\nOffice\nApartment\nSuite\nWall",
    "reqd": 1
@@ -46,7 +49,6 @@
   {
    "fieldname": "notes",
    "fieldtype": "Small Text",
-   "in_list_view": 1,
    "label": "Notes"
   },
   {
@@ -89,11 +91,11 @@
    "fetch_from": "parent_site_component.full_name",
    "fieldname": "parent_site_component_name",
    "fieldtype": "Read Only",
-   "in_list_view": 1,
    "label": "Parent Site Component Name",
    "read_only": 1
   },
   {
+   "columns": 2,
    "fieldname": "full_name",
    "fieldtype": "Data",
    "hidden": 1,
@@ -126,9 +128,11 @@
    "options": "COMP-.######"
   },
   {
+   "columns": 4,
    "fetch_from": "site.site_name",
    "fieldname": "site_name",
    "fieldtype": "Read Only",
+   "in_list_view": 1,
    "label": "Site name"
   },
   {
@@ -138,7 +142,7 @@
  ],
  "is_tree": 1,
  "links": [],
- "modified": "2021-09-20 04:16:22.555706",
+ "modified": "2021-09-20 05:52:09.061145",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Site Component",
@@ -172,8 +176,8 @@
   }
  ],
  "quick_entry": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "site_name ASC, full_name ASC",
+ "sort_order": "ASC",
  "title_field": "full_name",
  "track_changes": 1
 }
