@@ -19,7 +19,17 @@ class SiteComponent(Document):
 
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
-def site_component_query(doctype, txt, searchfield, start, page_len, filters):
+def site_component_query(doctype, keyword, searchfield, start, page_len, filters):
+    """
+    Custom (override) default query for doctype Site Component
+    :param doctype:
+    :param keyword:
+    :param searchfield:
+    :param start:
+    :param page_len:
+    :param filters:
+    :return:
+    """
     from frappe.desk.reportview import get_match_cond
 
     # filters is None when calling from the assignment's Job
@@ -27,7 +37,7 @@ def site_component_query(doctype, txt, searchfield, start, page_len, filters):
     site_uid = filters.get('site') if filters is not None else ''
     component_of_same_site_condition = ''
     if site_uid is not None and site_uid != '':
-        component_of_same_site_condition = 'AND parent = %(site_uid)s'
+        component_of_same_site_condition = 'AND site = %(site_uid)s'
 
     exclude_current_component_condition = ''
     current_component_uid = filters.get('self_uid') if filters is not None else ''
@@ -35,11 +45,11 @@ def site_component_query(doctype, txt, searchfield, start, page_len, filters):
         exclude_current_component_condition = 'AND name <> %(current_component_uid)s'
 
     component_name_condition = ''
-    if txt is not None and txt != '':
-        component_name_condition = 'AND component_name LIKE %(txt)s'
+    if keyword is not None and keyword != '':
+        component_name_condition = 'AND component_name LIKE %(keyword)s'
 
     return frappe.db.sql("""
-        SELECT name, label, component_name
+        SELECT name, full_name, site_name
         FROM `tabSite Component`
         WHERE
             docstatus < 2
@@ -56,7 +66,7 @@ def site_component_query(doctype, txt, searchfield, start, page_len, filters):
         'component_of_same_site_condition': component_of_same_site_condition,
         'component_name_condition': component_name_condition
     }), {
-         'txt': "%{}%".format(txt),
+         'keyword': "%{}%".format(keyword),
          'site_uid': site_uid,
          'current_component_uid': current_component_uid,
          'start': start,

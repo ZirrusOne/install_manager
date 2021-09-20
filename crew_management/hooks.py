@@ -35,9 +35,11 @@ web_include_js = [
 
 required_apps = ['erpnext']
 
+# this is to override default filter of a doctype
 standard_queries = {
     "Site Component": "crew_management.crew_management.doctype.site_component.site_component.site_component_query"
 }
+
 domains = {
     'Crew Management': 'crew_management.domains.crew_management',
 }
