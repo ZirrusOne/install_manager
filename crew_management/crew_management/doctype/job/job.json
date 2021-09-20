@@ -41,9 +41,6 @@
    "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
    "fieldname": "site_component",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
    "label": "Component ID",
    "options": "Site Component",
    "remember_last_selected_value": 1,
@@ -55,6 +52,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "Pending\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nEscalation - Property\nNon-compliant\nCompleted",
    "reqd": 1
@@ -81,6 +79,7 @@
    "fieldname": "assigned_team",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Assigned Team",
    "options": "Team",
    "reqd": 1
@@ -133,18 +132,18 @@
    "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
    "fieldname": "assignment",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
    "label": "Assignment ID",
    "options": "Assignment",
    "remember_last_selected_value": 1,
    "reqd": 1
   },
   {
+   "columns": 2,
    "fetch_from": "assignment.assignment_name",
    "fieldname": "assignment_name",
    "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Assignment name"
   },
   {
@@ -154,9 +153,12 @@
    "label": "Site"
   },
   {
+   "columns": 1,
    "fetch_from": "site_component.full_name",
    "fieldname": "component_name",
    "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Component name"
   },
   {
@@ -170,7 +172,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-20 10:31:09.464926",
+ "modified": "2021-09-20 23:58:09.464926",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Job",
@@ -223,7 +225,8 @@
   }
  ],
  "quick_entry": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "component_name",
+ "sort_order": "ASC",
+ "title_field": "component_name",
  "track_changes": 1
 }
