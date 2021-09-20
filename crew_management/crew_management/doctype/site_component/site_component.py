@@ -59,6 +59,11 @@ def site_component_query(doctype, keyword, searchfield, start, page_len, filters
             sql_filter['site'] = ('=', filters.get('site'))
         if filters.get('self_uid', None) is not None:
             sql_filter['name'] = ('<>', filters.get('self_uid'))
+        if filters.get('assignment', None) is not None:
+            if filters.get('assignment') == '':
+                return []
+            site_id = frappe.db.get_value('Assignment', {'name': filters.get('assignment')}, 'site')
+            sql_filter['site'] = ('=', site_id)
 
     if keyword is not None and keyword != '':
         sql_filter['component_name'] = ('like', f'{keyword}%')

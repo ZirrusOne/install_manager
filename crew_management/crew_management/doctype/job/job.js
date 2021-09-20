@@ -2,6 +2,17 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Job', {
+    setup: function(jobCompForm) {
+        jobCompForm.set_query('site_component',
+            function(frm, doctypeName /* it is "Job" */, currentJobUid) {
+                return {
+                    filters: {
+                        assignment: jobCompForm.doc.assignment || '', // sent empty string when the assignment is not selected
+                    }
+                }
+            });
+    },
+
     onload: function (frm) {
         if (frappe.user.has_role("System Manager") || frappe.user.has_role("Administrator")) {
             $('#navbar-breadcrumbs').removeClass('hide-item');
