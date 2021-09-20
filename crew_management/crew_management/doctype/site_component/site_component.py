@@ -22,10 +22,14 @@ class SiteComponent(Document):
 
     def _update_parent_site_component_name(self):
         conditions, values = frappe.db.build_conditions({'parent_site_component': ('=', self.name)})
-
         values['full_name'] = self.full_name
-
         frappe.db.sql("UPDATE `tabSite Component` SET parent_site_component_name =  %(full_name)s WHERE {conditions}".format(
+            conditions=conditions
+        ), values, debug=False)
+
+        conditions, values = frappe.db.build_conditions({'site_component': ('=', self.name)})
+        values['full_name'] = self.full_name
+        frappe.db.sql("UPDATE `tabJob` SET component_name =  %(full_name)s WHERE {conditions}".format(
             conditions=conditions
         ), values, debug=False)
 
