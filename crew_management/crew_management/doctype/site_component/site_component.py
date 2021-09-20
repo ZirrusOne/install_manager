@@ -60,6 +60,8 @@ def site_component_query(doctype, keyword, searchfield, start, page_len, filters
         sql_filter['component_name'] = ('like', f'{keyword}%')
 
     conditions, values = frappe.db.build_conditions(sql_filter)
+    if conditions != '':
+        conditions = f'AND {conditions}'
 
     values['start'] = start
     values['page_len'] = page_len
@@ -69,7 +71,7 @@ def site_component_query(doctype, keyword, searchfield, start, page_len, filters
         FROM `tabSite Component`
         WHERE
             docstatus < 2
-            AND {conditions}
+            {conditions}
         ORDER BY
             full_name, site_name
         LIMIT %(start)s, %(page_len)s
