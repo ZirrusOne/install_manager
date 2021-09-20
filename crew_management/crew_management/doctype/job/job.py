@@ -9,11 +9,13 @@ from frappe.model.document import Document
 class Job(Document):
 
 	def db_update(self):
+		self._validate_site_component()
 		self._handle_escalation()
 		self._handle_non_compliant()
 		super(Job, self).db_update()
 
 	def db_insert(self):
+		self._validate_site_component()
 		self._handle_escalation()
 		self._handle_non_compliant()
 		super(Job, self).db_insert()
@@ -38,7 +40,7 @@ class Job(Document):
 				# It does not generate notifications and no further action is required.
 				pass
 			else:
-				frappe.log(f'Unknown sscalation status {self.status}')
+				frappe.log(f'Unknown escalation status {self.status}')
 
 	def _is_status_changed(self) -> bool:
 		if self.get("__islocal") or not self.name:  # reference: super.db_update
@@ -46,3 +48,15 @@ class Job(Document):
 
 		old_status = self.get_db_value('status')
 		return self.status != old_status
+
+	def _validate_site_component(self):
+		if self.assignment is None or self.assignment == '':
+			frappe.throw("Missing Assignment")
+		if self.site_component is None or self.site_component == '':
+			frappe.throw("Missing Site Component")
+
+		assignment_site_id = frappe.db.get_value('Assignment', {'name': self.assignment}, 'site')
+		component_site_id = frappe.db.get_value('Site Component', {'name': self.site_component}, 'site')
+		if assignment_site_id != component_site_id:
+			frappe.throw(f'Component ID {self.site_component} does not belong to '
+						 f'the same Site as the Assignment {self.assignment}')
