@@ -28,12 +28,12 @@
  ],
  "fields": [
   {
-   "default": "JOB-.####",
+   "default": "JOB-.######",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "JOB-.####",
+   "options": "JOB-.######",
    "reqd": 1
   },
   {
@@ -172,7 +172,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-20 23:58:09.464926",
+ "modified": "2021-09-20 12:03:45.423577",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Job",
