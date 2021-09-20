@@ -18,17 +18,8 @@ frappe.ui.form.on('Site Component', {
 
     // on field changed
     parent_site_component: function(siteComponentForm, doctypeName, currentSiteComponentUid) {
-        // void the field so that user won't confuse
-        frappe.model.set_value(doctypeName, currentSiteComponentUid, 'parent_site_component_name', undefined);
-
-        // update the parent component full name
-        let new_parent_component_uid = locals[doctypeName][currentSiteComponentUid].parent_site_component;
-        if (new_parent_component_uid != null && new_parent_component_uid !== '') {
-            let parent_compo = frappe.model.get_doc(doctypeName, new_parent_component_uid);
-            if (parent_compo) {
-                frappe.model.set_value(doctypeName, currentSiteComponentUid, 'parent_site_component_name',
-                    parent_compo.full_name);
-            }
+        if (!siteComponentForm.doc.parent_site_component) {
+            frappe.model.set_value(doctypeName, currentSiteComponentUid, 'parent_site_component_name', undefined);
         }
     }
 });
