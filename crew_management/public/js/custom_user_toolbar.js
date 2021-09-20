@@ -1,10 +1,13 @@
 $(document).ready(function () {
-    if (frappe.user.has_role("System Manager") || frappe.user.has_role("Administrator")) {
-        $('.navbar-home').attr("href", "/app")
-    } else if (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) {
+    let is_field_crew = (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Back Office Staff");
+    let is_back_office_staff = frappe.user.has_role("Back Office Staff");
+
+    if (is_field_crew) {
         $('.navbar-home').attr("href", "/app/job-management")
-    } else if (frappe.user.has_role("Back Office Staff")) {
+    } else if (is_back_office_staff) {
         // set default url for back office staff
+    } else {
+        $('.navbar-home').attr("href", "/app")
     }
 
     $("#toolbar-user .dropdown-item:contains('Session Defaults')").remove();
