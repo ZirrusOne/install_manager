@@ -16,7 +16,10 @@ class Site(Document):
 	def db_update(self):
 		self._validate_zip_code()
 		self._validate_site_contact()
+		is_site_name_change = self.site_name != self.get_db_value('site_name')
 		super(Site, self).db_update()
+		if is_site_name_change:
+			self._update_linked_site_names()
 
 	def db_insert(self):
 		self._validate_zip_code()
@@ -51,3 +54,15 @@ class Site(Document):
 
 			if contact.mobile_phone:
 				validate_phone_number(contact.mobile_phone, True)
+
+	def _update_linked_site_names(self):
+		conditions, values = frappe.db.build_conditions({'site': ('=', self.name)})
+		values['site_name'] = self.site_name
+
+		frappe.db.sql("UPDATE `tabAssignment` SET site_name =  %(site_name)s WHERE {conditions}".format(
+			conditions=conditions
+		), values, debug=False)
+
+		frappe.db.sql("UPDATE `tabSite Component` SET site_name =  %(site_name)s WHERE {conditions}".format(
+			conditions=conditions
+		), values, debug=False)

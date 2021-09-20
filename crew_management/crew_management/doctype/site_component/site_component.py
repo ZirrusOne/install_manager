@@ -25,8 +25,7 @@ class SiteComponent(Document):
 
         values['full_name'] = self.full_name
 
-        return frappe.db.sql("UPDATE `tab{doctype}` SET parent_site_component_name =  %(full_name)s WHERE {conditions}".format(
-            doctype=self.doctype,
+        frappe.db.sql("UPDATE `tabSite Component` SET parent_site_component_name =  %(full_name)s WHERE {conditions}".format(
             conditions=conditions
         ), values, debug=False)
 
