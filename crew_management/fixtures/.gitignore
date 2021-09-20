@@ -1,1 +1,2 @@
-./dummy_*
+dummy_*
+!dummies/dummy_*
