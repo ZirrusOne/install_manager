@@ -2,27 +2,35 @@
 # For license information, please see license.txt
 
 import frappe
+import re
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import validate_email_address, validate_phone_number
-from crew_management.crew_management.controllers.states import POSTAL_CODES
+
+
+zipcode_regular_expression = re.compile('(^[0-9]{5}$)|(^[0-9]{5}-[0-9]{4}$)')
 
 
 class Site(Document):
-	def validate(self):
-		# self.validate_zip_code()
-		self.validate_site_contact()
 
-	# TODO to rework, this doesn't work correctly
-	def validate_zip_code(self):
-		zip_codes = [code for code in POSTAL_CODES if code[0] == self.state and code[1].lower() == self.city.strip().lower()]
-		for code in zip_codes:
-			if self.zip_code >= code[2] and self.zip_code <= code[3]:
-				return
+	def db_update(self):
+		self._validate_zip_code()
+		self._validate_site_contact()
+		super(Site, self).db_update()
 
-		frappe.throw(_("Zip code invalid. ({0})").format(self.zip_code))
+	def db_insert(self):
+		self._validate_zip_code()
+		self._validate_site_contact()
+		super(Site, self).db_insert()
 
-	def validate_site_contact(self):
+	def _validate_zip_code(self):
+		if self.zip_code is None or self.zip_code == '':
+			frappe.throw("Missing ZIP code")
+
+		if not zipcode_regular_expression.match(self.zip_code):
+			frappe.throw(f'Zip code invalid: {self.zip_code}')
+
+	def _validate_site_contact(self):
 		check_email_list = []
 		for contact in self.get('site_contact'):
 			if contact.first_name:
@@ -43,14 +51,3 @@ class Site(Document):
 
 			if contact.mobile_phone:
 				validate_phone_number(contact.mobile_phone, True)
-
-
-@frappe.whitelist()
-def get_state_options():
-	states = []
-	states.append('')
-	for code in POSTAL_CODES:
-		if code[0] not in states:
-			states.append(code[0])
-	return states
-

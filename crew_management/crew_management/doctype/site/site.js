@@ -13,14 +13,6 @@ frappe.ui.form.on('Site', {
         //             }
         //         });
 	},
-    onload: function (frm) {
-        // frappe.call({
-        //     method: 'crew_management.crew_management.doctype.site.site.get_state_options',
-        //     callback: function (r) {
-        //         set_field_options('state', r.message)
-        //     }
-        // });
-    }
 });
 
 // frappe.ui.form.on('Site Component', {
