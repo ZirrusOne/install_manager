@@ -30,4 +30,19 @@ frappe.ui.form.on('Job', {
             }
         }
     },
+
+    // on field changed
+    assignment: function(jobForm, doctypeName, currentJobUid) {
+        if (!jobForm.doc.assignment) {
+            frappe.model.set_value(doctypeName, currentJobUid, 'assignment_name', undefined);
+            frappe.model.set_value(doctypeName, currentJobUid, 'site_name', undefined);
+            frappe.model.set_value(doctypeName, currentJobUid, 'site_component', undefined);
+        }
+    },
+
+    site_component: function(jobForm, doctypeName, currentJobUid) {
+        if (!jobForm.doc.site_component) {
+            frappe.model.set_value(doctypeName, currentJobUid, 'component_name', undefined);
+        }
+    }
 });
