@@ -1,0 +1,90 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Team",
+  "modified": "2021-09-17 18:21:12.884654",
+  "name": "BO team 1",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "team_member": [
+   {
+    "member": "backoffice1@example.com",
+    "parent": "BO team 1",
+    "parentfield": "team_member",
+    "parenttype": "Team"
+   }
+  ],
+  "team_name": "BO team 1",
+  "team_type": "Back Office"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Team",
+  "modified": "2021-09-17 18:21:50.105388",
+  "name": "BO team 2",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "team_member": [
+   {
+    "member": "backoffice2@example.com",
+    "parent": "BO team 2",
+    "parentfield": "team_member",
+    "parenttype": "Team"
+   }
+  ],
+  "team_name": "BO team 2",
+  "team_type": "Back Office"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Team",
+  "modified": "2021-09-17 18:22:45.436633",
+  "name": "Field Crew team 1",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "team_member": [
+   {
+    "member": "fieldlead1@example.com",
+    "parent": "Field Crew team 1",
+    "parentfield": "team_member",
+    "parenttype": "Team"
+   },
+   {
+    "member": "installer1@example.com",
+    "parent": "Field Crew team 1",
+    "parentfield": "team_member",
+    "parenttype": "Team"
+   }
+  ],
+  "team_name": "Field Crew team 1",
+  "team_type": "Field Crew"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Team",
+  "modified": "2021-09-17 18:22:29.761710",
+  "name": "Field Crew team 2",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "team_member": [
+   {
+    "member": "fieldlead2@example.com",
+    "parent": "Field Crew team 2",
+    "parentfield": "team_member",
+    "parenttype": "Team"
+   },
+   {
+    "member": "installer2@example.com",
+    "parent": "Field Crew team 2",
+    "parentfield": "team_member",
+    "parenttype": "Team"
+   }
+  ],
+  "team_name": "Field Crew team 2",
+  "team_type": "Field Crew"
+ }
+]
