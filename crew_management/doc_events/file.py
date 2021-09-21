@@ -16,3 +16,5 @@ def before_insert(self, method):
                         "file_url": quote(frappe.safe_encode(self.file_url)) if self.file_url else self.file_name
                     }))
             )
+        else:
+            frappe.throw('Only image files are allowed')
