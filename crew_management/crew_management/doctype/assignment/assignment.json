@@ -171,7 +171,7 @@
    "link_fieldname": "assignment"
   }
  ],
- "modified": "2021-09-21 02:23:42.546807",
+ "modified": "2021-09-21 04:53:14.801282",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",
@@ -224,7 +224,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "search_fields": "assignment_name",
  "sort_field": "site_name ASC, assignment_name ASC",
  "sort_order": "ASC",
