@@ -58,7 +58,7 @@ def site_component_query(doctype, keyword, searchfield, start, page_len, filters
         if filters.get('site', None) is not None:
             sql_filter['site'] = ('=', filters.get('site'))
         if filters.get('self_uid', None) is not None:
-            sql_filter['name'] = ('<>', filters.get('self_uid'))
+            sql_filter['name'] = ('!=', filters.get('self_uid'))
         if filters.get('assignment', None) is not None:
             if filters.get('assignment') == '':
                 return []
@@ -70,7 +70,11 @@ def site_component_query(doctype, keyword, searchfield, start, page_len, filters
 
     conditions, values = frappe.db.build_conditions(sql_filter)
     if conditions != '':
-        conditions = f'AND {conditions}'
+        if filters.get('self_uid', None) is not None:
+            conditions = f'AND ({conditions} AND (parent_site_component is null OR parent_site_component <> %(parent_site_component)s))'
+            values['parent_site_component'] = filters.get('self_uid', None)
+        else:
+            conditions = f'AND {conditions}'
 
     values['start'] = start
     values['page_len'] = page_len
