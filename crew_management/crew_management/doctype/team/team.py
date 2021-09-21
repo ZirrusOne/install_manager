@@ -96,7 +96,7 @@ def team_member_query(doctype, txt, searchfield, start, page_len, filters):
             {conditions}
         ORDER BY full_name ASC
         LIMIT %(start)s, %(page_len)s
-    """.format(conditions=conditions), values=values, debug=True)
+    """.format(conditions=conditions), values=values, debug=False)
 
 
 def _in_clause(items) -> str:
