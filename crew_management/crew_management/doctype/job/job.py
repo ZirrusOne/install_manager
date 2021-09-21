@@ -10,12 +10,14 @@ class Job(Document):
 
 	def db_update(self):
 		self._validate_site_component()
+		self._validate_team_type()
 		self._handle_escalation()
 		self._handle_non_compliant()
 		super(Job, self).db_update()
 
 	def db_insert(self):
 		self._validate_site_component()
+		self._validate_team_type()
 		self._handle_escalation()
 		self._handle_non_compliant()
 		super(Job, self).db_insert()
@@ -60,3 +62,9 @@ class Job(Document):
 		if assignment_site_id != component_site_id:
 			frappe.throw(f'Component ID {self.site_component} does not belong to '
 						 f'the same Site as the Assignment {self.assignment}')
+
+	def _validate_team_type(self):
+		if self.assigned_team and self.assigned_team != '':
+			team_type = frappe.db.get_value('Team', {'name': self.assigned_team}, 'team_type')
+			if team_type != 'Field Crew':
+				frappe.throw(f'Team type of team {self.assigned_team} is not Few Crew')
