@@ -24,7 +24,7 @@ frappe.ui.form.on('Job', {
             $('.menu-btn-group').addClass('hide-item');
             if (frappe.user.has_role("Field Installer")) {
                 let statusField = frm.fields.find(item => item.df.fieldname === 'status')
-                statusField.df.options = ["Pending", "In Progress", "Non-compliant", "Completed"];
+                statusField.df.options = ["Pending", "In Progress", "Escalation - Field Lead", "Non-compliant", "Completed"];
             }
         } else {
             $('#navbar-breadcrumbs').removeClass('hide-item');
