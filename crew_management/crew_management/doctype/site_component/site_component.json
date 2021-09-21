@@ -142,7 +142,7 @@
  ],
  "is_tree": 1,
  "links": [],
- "modified": "2021-09-20 05:52:09.061145",
+ "modified": "2021-09-21 04:54:09.417515",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Site Component",
@@ -175,7 +175,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "site_name ASC, full_name ASC",
  "sort_order": "ASC",
  "title_field": "full_name",
