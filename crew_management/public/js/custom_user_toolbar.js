@@ -5,7 +5,7 @@ $(document).ready(function () {
     if (is_field_crew) {
         $('.navbar-home').attr("href", "/app/job-management")
     } else if (is_back_office_staff) {
-        // set default url for back office staff
+        $('.navbar-home').attr("href", "/app/crew-management")
     } else {
         $('.navbar-home').attr("href", "/app")
     }
