@@ -18,10 +18,11 @@ frappe.ui.form.on('Job', {
         let is_back_office_staff = frappe.user.has_role("Back Office Staff");
 
         if (is_field_crew) {
-            $('#navbar-breadcrumbs').addClass('hide-item');
-            $('.sidebar-toggle-btn').addClass('hide-item');
-            $('.layout-side-section').addClass('hide-item');
-            $('.menu-btn-group').addClass('hide-item');
+            // TODO to show only attachment
+            // $('#navbar-breadcrumbs').addClass('hide-item');
+            // $('.sidebar-toggle-btn').addClass('hide-item');
+            // $('.layout-side-section').addClass('hide-item');
+            // $('.menu-btn-group').addClass('hide-item');
             if (frappe.user.has_role("Field Installer")) {
                 let statusField = frm.fields.find(item => item.df.fieldname === 'status')
                 statusField.df.options = ["Pending", "In Progress", "Escalation - Field Lead", "Non-compliant", "Completed"];

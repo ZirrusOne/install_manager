@@ -21,7 +21,6 @@
   "installation_type",
   "assigned_team",
   "comment",
-  "attach_image",
   "data_collection_section",
   "cool_work",
   "heat_work",
@@ -88,7 +87,7 @@
   {
    "fieldname": "comment",
    "fieldtype": "Small Text",
-   "label": "Comment"
+   "label": "Note"
   },
   {
    "allow_in_quick_entry": 1,
@@ -99,11 +98,6 @@
    "label": "Installation Type",
    "options": "Standard\nPull Wire\nConnect Wire\nRelocate Thermostat\nAdd Wire\nInstall Thermostat Only\nService Visit",
    "reqd": 1
-  },
-  {
-   "fieldname": "attach_image",
-   "fieldtype": "Attach Image",
-   "label": "Attach Image"
   },
   {
    "depends_on": "eval: doc.status && doc.status.startsWith('Completed');",
@@ -178,7 +172,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-21 00:32:28.773783",
+ "modified": "2021-09-20 23:01:57.327036",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Job",
