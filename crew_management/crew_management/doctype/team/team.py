@@ -4,15 +4,11 @@
 from __future__ import unicode_literals
 
 import frappe
-from frappe import _
-from frappe.model.document import Document
 import frappe.permissions
+from frappe.model.document import Document
+
 
 class Team(Document):
-    def before_insert(self):
-        # TODO to remove
-        if frappe.db.exists("Team", {"name": self.name}):
-            frappe.throw(_("Team '{0}' already existed").format(self.name))
 
     def validate(self):
         self._validate_team_members()
