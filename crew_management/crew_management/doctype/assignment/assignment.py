@@ -8,14 +8,15 @@ from frappe.model.document import Document
 
 class Assignment(Document):
 
+	def validate(self):
+		self._validate_team_type()
+
 	def db_insert(self):
 		self._fill_default_company()
-		self._validate_team_type()
 		super(Assignment, self).db_insert()
 
 	def db_update(self):
 		self._fill_default_company()
-		self._validate_team_type()
 		is_assignment_name_change = self.assignment_name != self.get_db_value('assignment_name')
 
 		super(Assignment, self).db_update()

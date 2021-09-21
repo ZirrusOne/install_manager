@@ -13,17 +13,17 @@ zipcode_regular_expression = re.compile('(^[0-9]{5}$)|(^[0-9]{5}-[0-9]{4}$)')
 
 class Site(Document):
 
-	def db_update(self):
+	def validate(self):
 		self._validate_zip_code()
 		self._validate_site_contact()
+
+	def db_update(self):
 		is_site_name_change = self.site_name != self.get_db_value('site_name')
 		super(Site, self).db_update()
 		if is_site_name_change:
 			self._update_linked_site_names()
 
 	def db_insert(self):
-		self._validate_zip_code()
-		self._validate_site_contact()
 		super(Site, self).db_insert()
 
 	def _validate_zip_code(self):

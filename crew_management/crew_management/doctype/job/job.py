@@ -8,16 +8,16 @@ from frappe.model.document import Document
 
 class Job(Document):
 
-	def db_update(self):
+	def validate(self):
 		self._validate_site_component()
 		self._validate_team_type()
+
+	def db_update(self):
 		self._handle_escalation()
 		self._handle_non_compliant()
 		super(Job, self).db_update()
 
 	def db_insert(self):
-		self._validate_site_component()
-		self._validate_team_type()
 		self._handle_escalation()
 		self._handle_non_compliant()
 		super(Job, self).db_insert()
