@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
-
+import frappe.permissions
 
 class Team(Document):
     def before_insert(self):
@@ -18,28 +18,32 @@ class Team(Document):
         self._validate_team_members()
         
     def _validate_team_members(self):
-        if self.team_type == "Back Office":
-            team_roles = ", ".join([frappe.db.escape("Back Office Staff")])
-        elif self.team_type == "Field Crew":
-            team_roles = ", ".join([frappe.db.escape(u) for u in ('Field Lead', 'Field Installer')])
-        else:
-            team_roles = ''
+        # team_member is a list of TeamMember (doctype)
+        for tm in self.team_member:
+            username = tm.member
+            roles = frappe.permissions.get_roles(username)
+            if roles is None or len(roles) == 0:
+                frappe.throw(f'User {username} has no role')
+            has_back_office = 'Back Office Staff' in roles
+            has_field_lead = 'Field Lead' in roles
+            has_field_installer = 'Field Installer' in roles
+            if has_back_office and has_field_lead:
+                frappe.throw(f'User {username} must not have both role "Back Office Staff" and "Field Lead"')
+            if has_back_office and has_field_installer:
+                frappe.throw(f'User {username} must not have both role "Back Office Staff" and "Field Installer"')
+            if has_field_lead and has_field_installer:
+                frappe.throw(f'User {username} must not have both role "Field Lead" and "Field Installer"')
 
-        users = frappe.db.sql("""
-            SELECT DISTINCT usr.name
-            FROM `tabUser` usr
-            INNER JOIN `tabHas Role` usr_role ON (usr.name = usr_role.parent) 
-            WHERE `enabled`=1
-                AND usr_role.role IN ({team_roles})
-            """.format(
-                team_roles=team_roles
-            ), as_dict=True)
-
-        user_list = [d.name for d in users]
-
-        for p in self.team_member:
-            if p.member not in user_list:
-                frappe.throw(_("Team members not valid for team '{0}'").format(self.team_type))
+            if self.team_type == 'Back Office':
+                if not has_back_office:
+                    frappe.throw(f'User {username} must have both role '
+                                 f'"Back Office Staff" to join {self.team_type} team')
+            elif self.team_type == 'Field Crew':
+                if not has_field_lead and not has_field_installer:
+                    frappe.throw(f'User {username} must have either role "Field Lead" '
+                                 f'or "Field Installer to join {self.team_type} team')
+            else:
+                frappe.throw(f'Unknown team {self.team_type}')
 
 
 @frappe.whitelist()
