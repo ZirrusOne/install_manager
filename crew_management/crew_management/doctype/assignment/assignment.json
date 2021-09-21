@@ -122,10 +122,10 @@
    "options": "Sales Order"
   },
   {
+   "default": "#169cd8",
    "fieldname": "assignment_color",
    "fieldtype": "Color",
-   "label": "Assignment Color",
-   "options": "#000000"
+   "label": "Assignment Color"
   },
   {
    "fieldname": "organization_section",
@@ -171,7 +171,7 @@
    "link_fieldname": "assignment"
   }
  ],
- "modified": "2021-09-20 06:02:15.368053",
+ "modified": "2021-09-21 02:23:42.546807",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Assignment",
