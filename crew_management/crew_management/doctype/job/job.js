@@ -12,8 +12,8 @@ frappe.ui.form.on('Job', {
                 }
             });
         jobCompForm.set_query('assigned_team',
-            function (){
-                return { filters: { 'team_type': 'Field Crew' } }
+            function () {
+                return {filters: {'team_type': 'Field Crew'}}
             });
     },
 
@@ -42,7 +42,12 @@ frappe.ui.form.on('Job', {
             }
         }
     },
-
+    refresh: function (jobForm) {
+        updateJobActivity()
+    },
+    timeline_refresh: function (jobForm) {
+        updateJobActivity()
+    },
     // on field changed
     assignment: function (jobForm, doctypeName, currentJobUid) {
         if (!jobForm.doc.assignment) {
@@ -58,3 +63,10 @@ frappe.ui.form.on('Job', {
         }
     }
 });
+
+function updateJobActivity() {
+    let timelineItem = $('.job-activity-image').closest('div.timeline-item')
+    $(timelineItem).find('.timeline-badge').addClass('hide-item');
+    $(timelineItem).find('.timeline-content a').addClass('hide-item');
+    $(timelineItem).find('.timeline-content span').addClass('hide-item');
+}
