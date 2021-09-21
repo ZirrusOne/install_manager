@@ -11,6 +11,10 @@ frappe.ui.form.on('Job', {
                     }
                 }
             });
+        jobCompForm.set_query('assigned_team',
+            function (){
+                return { filters: { 'team_type': 'Field Crew' } }
+            });
     },
 
     onload: function (frm) {
