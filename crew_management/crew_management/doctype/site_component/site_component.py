@@ -36,13 +36,13 @@ class SiteComponent(Document):
 
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
-def site_component_query(doctype, keyword, searchfield, start, page_len, filters):
+def site_component_query(doctype, txt, searchfield, start, page_len, filters):
     """
     Custom (override) default query for doctype Site Component.
     NOTE: name of parameter must be exactly like that, it must match what is sent from the client framework code!
 
     :param doctype:
-    :param keyword:
+    :param txt: search keyword
     :param searchfield: ignore
     :param start:
     :param page_len:
@@ -65,8 +65,8 @@ def site_component_query(doctype, keyword, searchfield, start, page_len, filters
             site_id = frappe.db.get_value('Assignment', {'name': filters.get('assignment')}, 'site')
             sql_filter['site'] = ('=', site_id)
 
-    if keyword is not None and keyword != '':
-        sql_filter['component_name'] = ('like', f'{keyword}%')
+    if txt is not None and txt != '':
+        sql_filter['component_name'] = ('like', f'{txt}%')
 
     conditions, values = frappe.db.build_conditions(sql_filter)
     if conditions != '':
