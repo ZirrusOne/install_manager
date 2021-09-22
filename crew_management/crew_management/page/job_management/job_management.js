@@ -7,23 +7,28 @@ frappe.pages["job-management"].on_page_load = (wrapper) => {
     const job_management = new JobManagement(wrapper);
     $('#navbar-breadcrumbs').addClass('hide-item');
     $(wrapper).bind('show', () => {
-        job_management.initData();
+        let isFieldLead = frappe.user.has_role("Field Lead");
+        job_management.isFieldLead = isFieldLead;
+        job_management.isEscalationView = !!isFieldLead;
         job_management.isFirstTimeLoad = true;
+        job_management.initData(wrapper);
     });
     window.job_management = job_management;
 };
 
 class JobManagement {
+    isFieldLead;
     isEscalationView;
     isFirstTimeLoad;
     previousSearchField = '';
 
     constructor(wrapper) {
+
+    }
+
+    initData(wrapper) {
         let aThis = this;
-
-        let isFieldLead = frappe.user.has_role("Field Lead");
-        this.isEscalationView = !!isFieldLead;
-
+        $(wrapper).empty();
         this.page = frappe.ui.make_app_page({
             parent: wrapper,
             title: 'Job Management',
@@ -43,7 +48,7 @@ class JobManagement {
             }
         }, this.page.custom_actions);
 
-        if (isFieldLead) {
+        if (this.isFieldLead) {
             this.page.add_menu_item("Field Lead View", function () {
                 aThis.isEscalationView = true;
                 aThis.getData('');
@@ -53,6 +58,7 @@ class JobManagement {
                 aThis.getData('');
             }, "Menu");
         }
+
         $('.menu-btn-group-label').find('svg').remove();
         $('.menu-btn-group-label').append("<svg class=\"icon icon-md\"><use xlink:href=\"#icon-menu\"></use></svg>");
         $('.main-section').find('footer').remove();
@@ -62,9 +68,7 @@ class JobManagement {
         $('.page-head .page-actions .custom-actions').find('.form-group').removeClass('col-md-2');
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
-    }
 
-    initData() {
         this.getData('');
     }
 
