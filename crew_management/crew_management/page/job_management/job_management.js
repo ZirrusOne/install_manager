@@ -68,6 +68,7 @@ class JobManagement {
         $('.page-head .page-actions .custom-actions').find('.form-group').removeClass('col-md-2');
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
+        $('.page-head .page-actions .menu-btn-group button.btn-default.icon-btn').removeAttr('data-original-title');
 
         this.getData('');
     }
