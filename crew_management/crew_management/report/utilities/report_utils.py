@@ -10,10 +10,10 @@ def join_job_with_assignment_back_office_on_team(job_alias='tabJob',
     current_username = frappe.session.user
     teams = frappe.db.get_values('Team Member', {'member': current_username}, 'parent')
 
-    if len(teams) > 0:
+    if len(teams) > 0 and len(teams[0]) > 0:
         return f"""inner join `tabAssignment Back Office` {assignment_back_office_alias}
             on {assignment_back_office_alias}.parent = {job_alias}.assignment 
-               and {assignment_back_office_alias}.team IN {db_utils.in_clause(teams)}'
+               and {assignment_back_office_alias}.team IN {db_utils.in_clause(teams[0])}
         """
     return ''
 
