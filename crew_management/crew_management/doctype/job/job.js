@@ -21,6 +21,7 @@ frappe.ui.form.on('Job', {
         let is_field_crew = (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Back Office Staff");
 
         if (is_field_crew) {
+            $('#page-Job').addClass("field-crew-job");
             $('#navbar-breadcrumbs').addClass('hide-item');
             $('.layout-side-section ul.user-actions').addClass('hide-item');
             $('.layout-side-section ul.sidebar-image-section').addClass('hide-item');
@@ -35,6 +36,7 @@ frappe.ui.form.on('Job', {
             $('.form-footer .timeline-actions').addClass('hide-item');
             $('.standard-actions .menu-btn-group').addClass('hide-item');
             $('.standard-actions .page-icon-group').addClass('hide-item');
+            $('.layout-side-section ul.form-attachments .attachment-row button a svg').remove();
 
             if (frappe.user.has_role("Field Installer")) {
                 let statusField = jobForm.fields.find(item => item.df.fieldname === 'status')
