@@ -13,6 +13,7 @@ app_license = "Proprietary"
 app_logo_url = "/assets/crew_management/images/z1n-logo.png"
 setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
 
+after_migrate = ["crew_management.after_migrate.install.execute"]
 home_page = "login"
 
 website_context = {
