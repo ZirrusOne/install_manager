@@ -7,6 +7,8 @@ import frappe
 import frappe.permissions
 from frappe.model.document import Document
 
+from crew_management.crew_management.utilities import db_utils
+
 
 class Team(Document):
 
@@ -61,11 +63,11 @@ def team_member_query(doctype, txt, searchfield, start, page_len, filters):
     values = {'start': start, 'page_len': page_len}
 
     ignore_usernames = ('Guest', 'Administrator')
-    conditions.append(f'tabUser.name NOT IN {_in_clause(ignore_usernames)}')
+    conditions.append(f'tabUser.name NOT IN {db_utils.in_clause(ignore_usernames)}')
 
     if filters is None or filters.get('team_type') is None:
         all_roles = ('in', ('Back Office Staff', 'Field Lead', 'Field Installer'))
-        conditions.append(f'usrRole.role IN {_in_clause(all_roles)}')
+        conditions.append(f'usrRole.role IN {db_utils.in_clause(all_roles)}')
 
     else:
         team_type = filters.get('team_type')
@@ -74,7 +76,7 @@ def team_member_query(doctype, txt, searchfield, start, page_len, filters):
             values['rol_name'] = 'Back Office Staff'
         elif team_type == 'Field Crew':
             field_crew_roles = ('Field Lead', 'Field Installer')
-            conditions.append(f'usrRole.role IN {_in_clause(field_crew_roles)}')
+            conditions.append(f'usrRole.role IN {db_utils.in_clause(field_crew_roles)}')
         else:
             frappe.log(f'Unknown Team Type: {team_type}')
             return []
@@ -97,7 +99,3 @@ def team_member_query(doctype, txt, searchfield, start, page_len, filters):
         ORDER BY full_name ASC
         LIMIT %(start)s, %(page_len)s
     """.format(conditions=conditions), values=values, debug=False)
-
-
-def _in_clause(items) -> str:
-    return "({0})".format(", ".join([frappe.db.escape(v) for v in items]))
