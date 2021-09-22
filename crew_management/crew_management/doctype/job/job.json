@@ -20,7 +20,6 @@
   "non_compliant_reason",
   "installation_type",
   "assigned_team",
-  "comment",
   "data_collection_section",
   "cool_work",
   "heat_work",
@@ -83,11 +82,6 @@
    "label": "Assigned Team",
    "options": "Team",
    "reqd": 1
-  },
-  {
-   "fieldname": "comment",
-   "fieldtype": "Small Text",
-   "label": "Note"
   },
   {
    "allow_in_quick_entry": 1,
@@ -172,7 +166,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-20 23:01:57.327036",
+ "modified": "2021-09-21 21:10:02.013741",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Job",
