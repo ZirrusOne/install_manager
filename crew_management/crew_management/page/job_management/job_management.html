@@ -6,7 +6,7 @@
     <a class="team-title"
        style="border-bottom-color:{{item.color}}"
        onclick="job_management.toggleCollapse(this)">
-        <span>[{{item.team}}]</span> :: <span>{{item.assignment}}</span>
+        <span><span>[{{item.team}}]</span> :: <span>{{item.assignment}}</span></span>
     </a>
     <div class="list-job">
         {% for job in item.jobs %}
