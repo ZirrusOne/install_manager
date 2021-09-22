@@ -7,7 +7,7 @@ def execute():
 
 
 def setup_system_setting():
-    frappe.db.set_value('System Settings', None, 'app_name', 'Zirrus One')
+    frappe.db.set_value('System Settings', None, 'app_name', 'Crew Management')
 
 
 def setup_website():
