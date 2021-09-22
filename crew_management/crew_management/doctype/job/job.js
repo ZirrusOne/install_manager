@@ -37,6 +37,7 @@ frappe.ui.form.on('Job', {
             $('.standard-actions .menu-btn-group').addClass('hide-item');
             $('.standard-actions .page-icon-group').addClass('hide-item');
             $('.layout-side-section ul.form-attachments .attachment-row button a svg').remove();
+            $('.layout-side-section ul.form-attachments .attachment-row .remove-btn').remove();
 
             if (frappe.user.has_role("Field Installer")) {
                 let statusField = jobForm.fields.find(item => item.df.fieldname === 'status')
