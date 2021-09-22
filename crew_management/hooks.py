@@ -70,7 +70,8 @@ fixtures = [
             "User",
             "Sales Order",
             "Company",
-            "Customer"
+            "Customer",
+            "File"
         ]
         ],
         ["role", "in", ["Back Office Staff"]]
