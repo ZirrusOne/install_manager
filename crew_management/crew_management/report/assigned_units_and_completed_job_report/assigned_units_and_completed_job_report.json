@@ -1,0 +1,48 @@
+{
+ "add_total_row": 0,
+ "columns": [
+  {
+   "fieldname": "total_active_assignments",
+   "fieldtype": "Int",
+   "label": "Total active Assignments",
+   "width": 0
+  },
+  {
+   "fieldname": "total_units",
+   "fieldtype": "Int",
+   "label": "Total Units in Assignments",
+   "width": 0
+  },
+  {
+   "fieldname": "total_completed_jobs",
+   "fieldtype": "Int",
+   "label": "Total completed Jobs",
+   "width": 0
+  }
+ ],
+ "creation": "2021-09-22 04:11:15.142817",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2021-09-22 04:11:15.142817",
+ "modified_by": "Administrator",
+ "module": "Crew Management",
+ "name": "Assigned Units and completed Job report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Assignment",
+ "report_name": "Assigned Units and completed Job report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Back Office Staff"
+  }
+ ]
+}
