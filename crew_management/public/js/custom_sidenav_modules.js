@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    let is_crew_role = frappe.user.has_role("Back Office Staff") && !frappe.user.has_role("Administrator");
+    let is_back_office = frappe.user.has_role("Back Office Staff") && !frappe.user.has_role("Administrator");
     let module_node = $('.standard-sidebar-label:contains("Modules")');
 
-    if (is_crew_role && module_node) {
+    if (is_back_office && module_node) {
         module_node.parent().each(function(){
             let remove_items = [];
             this.childNodes.forEach(item => {
