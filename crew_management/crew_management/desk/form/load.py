@@ -20,7 +20,8 @@ def getdoctype(doctype, with_parent=False, cached_timestamp=None):
 
     is_field_lead = 'Field Lead' in frappe.permissions.get_roles(frappe.session.user)
     is_field_installer = 'Field Installer' in frappe.permissions.get_roles(frappe.session.user)
-    is_field_crew = (is_field_installer and not is_field_lead) or (not is_field_installer and is_field_lead)
+    is_back_office = 'Back Office Staff' in frappe.permissions.get_roles(frappe.session.user)
+    is_field_crew = not is_back_office and (is_field_installer or is_field_lead)
 
     for doc in frappe.response.docs:
         if doc.name != 'User':
