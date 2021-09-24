@@ -17,7 +17,6 @@ document.body.addEventListener('click', () => {
                 $('.navbar .container .job-title').removeClass('hide-item')
                 $('#navbar-breadcrumbs').addClass('hide-item');
             }
-            console.log('change')
         }
     });
 }, true);
