@@ -25,7 +25,7 @@ function checkFieldCrewWhiteList() {
     const field_crew_url_white_list = [
         "app/user-profile",
         "app/job-management",
-        "app/user",
+        "app/user/",
         "app/job/JOB-",
     ]
     if ((frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Back Office Staff")) {
