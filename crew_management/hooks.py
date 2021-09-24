@@ -77,3 +77,7 @@ fixtures = [
         ["role", "in", ["Back Office Staff"]]
     ]}
 ]
+
+override_whitelisted_methods = {
+    "frappe.desk.form.load.getdoctype": "crew_management.crew_management.desk.form.load.getdoctype"
+}
