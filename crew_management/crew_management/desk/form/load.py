@@ -13,15 +13,16 @@ def getdoctype(doctype, with_parent=False, cached_timestamp=None):
 
     load.getdoctype(doctype, with_parent, cached_timestamp)
 
-    if 'Administrator' == frappe.session.user or doctype != 'User':
+    if doctype != 'User':
         return
     if frappe.session.user is None or frappe.session.user == '':
         return
 
+    is_default_administrator = 'Administrator' == frappe.session.user
     is_field_lead = 'Field Lead' in frappe.permissions.get_roles(frappe.session.user)
     is_field_installer = 'Field Installer' in frappe.permissions.get_roles(frappe.session.user)
     is_back_office = 'Back Office Staff' in frappe.permissions.get_roles(frappe.session.user)
-    is_field_crew = not is_back_office and (is_field_installer or is_field_lead)
+    is_field_crew = not is_default_administrator and  not is_back_office and (is_field_installer or is_field_lead)
 
     for doc in frappe.response.docs:
         if doc.name != 'User':
@@ -41,9 +42,6 @@ def getdoctype(doctype, with_parent=False, cached_timestamp=None):
 
         _move_field(fields=doc.fields, field_name_to_move='language', to_before_field='username')
         _move_field(fields=doc.fields, field_name_to_move='time_zone', to_before_field='language')
-
-        for field in doc.fields:
-            print(field.fieldname)
 
         if is_field_crew:
             doc.allow_rename = 0
