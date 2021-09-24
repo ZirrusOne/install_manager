@@ -1,4 +1,5 @@
 {
+ "cards_label": "Exports",
  "category": "Modules",
  "charts": [
   {
@@ -20,8 +21,18 @@
  "is_default": 0,
  "is_standard": 1,
  "label": "Crew Management",
- "links": [],
- "modified": "2021-09-22 05:18:59.309569",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Export Assignments",
+   "link_to": "Assignment export",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2021-09-24 04:38:00.455234",
  "modified_by": "Administrator",
  "module": "Crew Management",
  "name": "Crew Management",

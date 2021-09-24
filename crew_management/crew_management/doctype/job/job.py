@@ -10,6 +10,8 @@ from frappe import msgprint
 from frappe.core.doctype.sms_settings import sms_settings
 from frappe.model.document import Document
 
+from crew_management.crew_management.utilities import common_utils
+
 _sms_not_configured_message = 'SMS is not configured. SMS notification will not be sent. ' \
                               'Please tell your system administrator to update SMS Settings'
 # TODO email reply-to address
@@ -198,12 +200,9 @@ class Job(Document):
     def _get_phone_number_for_sms(self, user) -> Optional[str]:
         if user is None:
             return None
-        if self._is_not_blank(user.mobile_no):
+        if common_utils.is_not_blank(user.mobile_no):
             return user.mobile_no
-        return user.phone if self._is_not_blank(user.phone) else None
-
-    def _is_not_blank(self, s: str) -> bool:
-        return s is not None and s.strip() != ''
+        return user.phone if common_utils.is_not_blank(user.phone) else None
 
     def _has_role(self, username: str, role: str) -> bool:
         return role in frappe.permissions.get_roles(username)
@@ -271,8 +270,8 @@ class Job(Document):
 
     def _get_person_name_email_phone(self, username: str) -> str:
         user = frappe.db.get(doctype='User', filters={'name': username})
-        email = user.email if self._is_not_blank(user.email) else ''
-        phone = user.mobile_no if self._is_not_blank(user.mobile_no) else user.phone
+        email = user.email if common_utils.is_not_blank(user.email) else ''
+        phone = user.mobile_no if common_utils.is_not_blank(user.mobile_no) else user.phone
         if phone is None:
             phone = ''
 
@@ -292,7 +291,7 @@ class Job(Document):
 
             user = frappe.db.get(doctype='User', filters={'name': tm.member})
 
-            if self._is_not_blank(user.email):
+            if common_utils.is_not_blank(user.email):
                 email_addresses.append(user.email)
             else:
                 users_has_email.append(user.name)
@@ -315,7 +314,7 @@ class Job(Document):
 
         emails = []
         for contact in site.site_contact:
-            if self._is_not_blank(contact.email_address):
+            if common_utils.is_not_blank(contact.email_address):
                 emails.append(contact.email_address)
 
         if len(emails) == 0:
