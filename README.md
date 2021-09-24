@@ -60,6 +60,8 @@ cd /workspace/development/frappe-bench
 bench get-app --branch develop crew_management git@github.com:ZirrusOne/crew_management.git
 bench --site z1n.local install-app crew_management
 
+cp apps/crew_management/crew_management/fixtures/dummies/dummy_*.json apps/crew_management/crew_management/fixtures/
+
 bench --site z1n.local migrate
 ```
 
@@ -127,21 +129,45 @@ bench --site z1n.local migrate
 
 ## To reinstall a site, wipe all data and start over
 
+Hint: put the following script in a bash script file and save it in `/workspace/development/`
+
 ```shell
 cd /workspace/development/frappe-bench
+
 bench drop-site z1n.local
 bench new-site z1n.local --mariadb-root-password 123 --admin-password admin --no-mariadb-socket
 bench --site z1n.local set-config developer_mode 1
 bench --site z1n.local clear-cache
 bench --site z1n.local install-app erpnext
 bench --site z1n.local install-app crew_management
+
+DB_NAME=$(bench --site z1n.local show-config -f json | grep "db_name" | awk -F\: '{print $2}' | awk -F'"' '{print $2}')
+echo "DB_NAME: ${DB_NAME}"
+mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/crew_management/crew_management/fixtures/dummies/dummy_auth.sql
+```
+
+## Scripts to run after pulling new code from crew_management
+
+Hint: put the following script in a bash script file and save it in `/workspace/development/`
+
+```shell
+cd /workspace/development/frappe-bench
+
+bench --site z1n.local clear-cache
+bench build
 bench --site z1n.local migrate
+
+DB_NAME=$(bench --site z1n.local show-config -f json | grep "db_name" | awk -F\: '{print $2}' | awk -F'"' '{print $2}')
+echo "DB_NAME: ${DB_NAME}"
+mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/crew_management/crew_management/fixtures/dummies/dummy_auth.sql
 ```
 
 ## To install pip packages
 
 ```shell
-/workspace/development/frappe-bench/env/bin/python -m pip install -r requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/frappe/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/erpnext/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/crew_management/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
 ```
 
 ## License
