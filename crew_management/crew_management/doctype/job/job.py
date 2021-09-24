@@ -29,12 +29,31 @@ class Job(Document):
         self._validate_team_type()
 
     def db_update(self):
+        self._authorize_update()
         is_status_changed = self._is_status_changed()
         self._handle_escalation()
         self._handle_non_compliant()
         super(Job, self).db_update()
         if is_status_changed:
             self._send_escalation_notification()
+
+    def onload(self):
+        self._authorize_update()
+
+    def _authorize_update(self):
+        if frappe.session.user == 'Administrator':
+            return
+        if not self._has_role(username=frappe.session.user, role='Field Lead') \
+                and not self._has_role(username=frappe.session.user, role='Field Installer'):
+            return
+        if self.assigned_team is None or self.assigned_team == '':
+            frappe.throw('This Job is not assigned to your team. You could not work on it')
+
+        team = frappe.get_doc('Team', self.assigned_team)
+        for tm in team.team_member:
+            if tm.member == frappe.session.user:
+                return
+        frappe.throw('This Job is not assigned to your team. You could not work it')
 
     def db_insert(self):
         self._handle_escalation()
