@@ -9,7 +9,7 @@ app_description = "An application for the management of Field Installation techn
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "info@zirrusone.com"
-app_license = "Proprietary"
+app_license = "GNU General Public License (v3)"
 app_logo_url = "/assets/crew_management/images/z1n-logo.png"
 setup_wizard_requires = "/assets/crew_management/js/setup_wizard.js"
 
