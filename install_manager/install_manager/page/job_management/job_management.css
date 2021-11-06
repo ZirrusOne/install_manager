@@ -1,0 +1,164 @@
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+#body, #page-job-management {
+    height: 100%
+}
+
+#page-job-management .page-head {
+    position: sticky;
+    margin-bottom: 0;
+}
+
+.navbar .job-title {
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 20px;
+    border-left: 1px solid var(--color-midnight-blue);
+    color: var(--color-midnight-blue);
+}
+
+.red {
+    color: var(--color-red) !important;
+    border-left: 1px solid var(--color-red) !important;
+}
+
+#page-job-management .page-head .page-head-content {
+    height: 70px;
+}
+
+#page-job-management .page-head .page-head-content .custom-actions .input-with-feedback {
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-midnight-blue);
+    border-radius: 0;
+    min-width: 350px;
+}
+
+#page-job-management .page-actions {
+    flex-direction: row-reverse;
+}
+
+#page-job-management .page-actions .menu-btn-group .icon-btn {
+    margin-left: 0;
+    margin-right: 10px;
+    height: 40px;
+    width: 40px;
+    border: 1px solid var(--color-peru);
+    border-radius: 0;
+}
+
+#page-job-management .layout-main-section-wrapper {
+    margin-bottom: 0;
+}
+
+.page-container {
+}
+
+.job-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+
+}
+
+.team-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-bottom: 0;
+    border: 1px solid var(--color-midnight-blue)
+}
+
+.team-wrapper.escalation {
+    border: 1px solid var(--color-red)
+}
+
+.team-wrapper .team-title {
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 1px solid;
+    padding-bottom: 15px;
+    padding-top: 5px;
+    color: var(--color-midnight-blue);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.team-wrapper .team-title .escalated-label {
+    font-weight: bold;
+    color: var(--color-red);
+}
+
+.border-none {
+    border: none !important;
+}
+
+.team-wrapper .team-title::before {
+    content: ''; /* Unicode character for "plus" sign (+) */
+    float: left;
+    margin-left: 5px;
+    margin-right: 10px;
+    width: 0;
+    height: 0;
+    margin-top: 5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid var(--color-peru);
+    border-bottom: 0;
+}
+
+.team-wrapper .team-title.collapsed::before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid var(--color-peru);
+    border-top: 0;
+}
+
+.team-wrapper .list-job {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.team-wrapper .list-job.collapsed {
+    display: none;
+}
+
+.team-wrapper .list-job .job-item {
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 0;
+}
+
+.team-wrapper .list-job .job-item:last-child {
+    border: none;
+}
+
+.team-wrapper .list-job .job-item:last-child {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 540px) {
+    #page-job-management .page-head .page-head-content .custom-actions {
+        width: 100%;
+    }
+
+    #page-job-management .page-head .page-head-content .custom-actions .form-group {
+        width: 100%;
+    }
+
+    #page-job-management .page-head .page-head-content .custom-actions .input-with-feedback {
+        min-width: 100%;
+    }
+}

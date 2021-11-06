@@ -4,15 +4,15 @@ include *.json
 include *.md
 include *.py
 include *.txt
-recursive-include crew_management *.css
-recursive-include crew_management *.csv
-recursive-include crew_management *.html
-recursive-include crew_management *.ico
-recursive-include crew_management *.js
-recursive-include crew_management *.json
-recursive-include crew_management *.md
-recursive-include crew_management *.png
-recursive-include crew_management *.py
-recursive-include crew_management *.svg
-recursive-include crew_management *.txt
-recursive-exclude crew_management *.pyc
+recursive-include install_manager *.css
+recursive-include install_manager *.csv
+recursive-include install_manager *.html
+recursive-include install_manager *.ico
+recursive-include install_manager *.js
+recursive-include install_manager *.json
+recursive-include install_manager *.md
+recursive-include install_manager *.png
+recursive-include install_manager *.py
+recursive-include install_manager *.svg
+recursive-include install_manager *.txt
+recursive-exclude install_manager *.pyc

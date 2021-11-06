@@ -1,0 +1,91 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:team_name",
+ "creation": "2021-07-28 03:30:36.323476",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "team_name",
+  "team_type",
+  "technical_partner",
+  "team_member"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "columns": 6,
+   "fieldname": "team_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "columns": 5,
+   "default": "Level I Team",
+   "fieldname": "team_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Team type",
+   "options": "Level I Team\nLevel II Team\nLevel III Team",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "team_member",
+   "fieldtype": "Table MultiSelect",
+   "label": "Team members",
+   "options": "Team Member"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "technical_partner",
+   "fieldtype": "Data",
+   "label": "Technical Partner"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-11-05 23:41:10.981089",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Team",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Back Office Staff",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "team_name",
+ "sort_order": "ASC",
+ "title_field": "team_name",
+ "track_changes": 1
+}

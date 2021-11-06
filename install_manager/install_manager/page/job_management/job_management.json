@@ -1,0 +1,26 @@
+{
+ "content": null,
+ "creation": "2021-08-23 10:34:01.336376",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2021-08-31 10:24:57.450568",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "job-management",
+ "owner": "Administrator",
+ "page_name": "job-management",
+ "roles": [
+  {
+   "role": "Field Lead"
+  },
+  {
+   "role": "Field Installer"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Job Management"
+}

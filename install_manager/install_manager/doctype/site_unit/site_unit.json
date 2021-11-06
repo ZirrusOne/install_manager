@@ -1,0 +1,204 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "naming_series:",
+ "creation": "2021-07-27 03:51:21.365723",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "site",
+  "unit_name",
+  "label",
+  "building_number",
+  "floor_number",
+  "column_break_4",
+  "site_name",
+  "notes",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "full_name",
+  "section_break_9",
+  "parent_site_unit",
+  "column_break_11",
+  "parent_site_unit_name",
+  "unique_key"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "columns": 1,
+   "fieldname": "unit_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Unit Name",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "columns": 1,
+   "fieldname": "label",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Label",
+   "options": "Unit\nRoom\nCage\nRack\nCloset\nOffice\nApartment\nSuite\nWall",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Old Parent",
+   "options": "Site Unit"
+  },
+  {
+   "fieldname": "parent_site_unit",
+   "fieldtype": "Link",
+   "label": "Parent Site Unit Code",
+   "options": "Site Unit"
+  },
+  {
+   "fetch_from": "parent_site_unit.full_name",
+   "fieldname": "parent_site_unit_name",
+   "fieldtype": "Read Only",
+   "label": "Parent Site Unit Name",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Full Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site ID",
+   "options": "Site",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "UNIT-.######",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "UNIT-.######"
+  },
+  {
+   "columns": 4,
+   "fetch_from": "site.site_name",
+   "fieldname": "site_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "label": "Site name"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "building_number",
+   "fieldtype": "Int",
+   "label": "Building Number"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "floor_number",
+   "fieldtype": "Int",
+   "label": "Floor Number"
+  },
+  {
+   "fieldname": "unique_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Unique Key",
+   "unique": 1
+  }
+ ],
+ "is_tree": 1,
+ "links": [],
+ "modified": "2021-11-06 05:11:50.048872",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Site Unit",
+ "nsm_parent_field": "parent_site_unit",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Back Office Staff",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "site_name ASC, full_name ASC",
+ "sort_order": "ASC",
+ "title_field": "full_name",
+ "track_changes": 1
+}

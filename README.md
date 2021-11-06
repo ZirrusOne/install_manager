@@ -1,8 +1,7 @@
-## Crew Management
+## Install Manager
 
 An application for the management of  Field Installation technicians
 
-![Doctype relationship](crew-mgnt-ERD.png "Doctype relationship")
 
 ## Local development environment setup
 
@@ -53,14 +52,14 @@ bench get-app --branch version-13 erpnext https://github.com/frappe/erpnext.git
 bench --site z1n.local install-app erpnext
 ```
 
-### Install Crew Management app
+### Install Install Manager app
 
 ```shell
 cd /workspace/development/frappe-bench
-bench get-app --branch develop crew_management git@github.com:ZirrusOne/crew_management.git
-bench --site z1n.local install-app crew_management
+bench get-app --branch develop install_manager git@github.com:ZirrusOne/install_manager.git
+bench --site z1n.local install-app install_manager
 
-cp apps/crew_management/crew_management/fixtures/dummies/dummy_*.json apps/crew_management/crew_management/fixtures/
+cp apps/install_manager/install_manager/fixtures/dummies/dummy_*.json apps/install_manager/install_manager/fixtures/
 
 bench --site z1n.local migrate
 ```
@@ -81,13 +80,13 @@ Right click on project root, Click=> Open Module Settings
 * Project settings / Modules
   * (+) ==> Import Module => select folder: `development/frappe-bench/apps/frappe` => "Create module from external source"
   * Do the same for folder `development/frappe-bench/apps/erpnext`
-  * Do the same for folder `development/frappe-bench/apps/crew_management`
+  * Do the same for folder `development/frappe-bench/apps/install_manager`
   * Configure module dependency:
     * Select module `erpnext`
         * Select tab `Dependencies`
         * (+) => Module Dependency...
         * Select module `frappe`
-    * Select module `crew_management`
+    * Select module `install_manager`
       * Select tab `Dependencies`
       * (+) => Module Dependency...
       * Select module `frappe`
@@ -139,14 +138,14 @@ bench new-site z1n.local --mariadb-root-password 123 --admin-password admin --no
 bench --site z1n.local set-config developer_mode 1
 bench --site z1n.local clear-cache
 bench --site z1n.local install-app erpnext
-bench --site z1n.local install-app crew_management
+bench --site z1n.local install-app install_manager
 
 DB_NAME=$(bench --site z1n.local show-config -f json | grep "db_name" | awk -F\: '{print $2}' | awk -F'"' '{print $2}')
 echo "DB_NAME: ${DB_NAME}"
-mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/crew_management/crew_management/fixtures/dummies/dummy_auth.sql
+mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/install_manager/install_manager/fixtures/dummies/dummy_auth.sql
 ```
 
-## Scripts to run after pulling new code from crew_management
+## Scripts to run after pulling new code from install_manager
 
 Hint: put the following script in a bash script file and save it in `/workspace/development/`
 
@@ -159,7 +158,7 @@ bench --site z1n.local migrate
 
 DB_NAME=$(bench --site z1n.local show-config -f json | grep "db_name" | awk -F\: '{print $2}' | awk -F'"' '{print $2}')
 echo "DB_NAME: ${DB_NAME}"
-mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/crew_management/crew_management/fixtures/dummies/dummy_auth.sql
+mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/install_manager/install_manager/fixtures/dummies/dummy_auth.sql
 ```
 
 ## To install pip packages
@@ -167,7 +166,7 @@ mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/crew_management/
 ```shell
 /workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/frappe/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
 /workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/erpnext/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
-/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/crew_management/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/install_manager/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
 ```
 
 ## License

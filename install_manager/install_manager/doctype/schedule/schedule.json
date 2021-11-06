@@ -1,0 +1,232 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "naming_series:",
+ "creation": "2021-07-28 22:43:53.970484",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "schedule_name",
+  "site",
+  "expected_start_date",
+  "expected_end_date",
+  "start_date",
+  "end_date",
+  "column_break_9",
+  "site_name",
+  "status",
+  "schedule_type",
+  "assigned_teams",
+  "pct_completion_method",
+  "schedule_color",
+  "customer_details_section",
+  "customer",
+  "sales_order",
+  "organization_section",
+  "parent_company"
+ ],
+ "fields": [
+  {
+   "allow_in_quick_entry": 1,
+   "default": "ASSIGN-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "ASSIGN-.#####",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "columns": 2,
+   "fieldname": "schedule_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Schedule Name",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expected Start Date"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "expected_end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expected End Date"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nIn Progress\nOn-Hold\nCompleted\nCancelled",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "Installation",
+   "fieldname": "schedule_type",
+   "fieldtype": "Select",
+   "label": "Schedule Type",
+   "options": "Installation\nRepair\nUpgrade\nRe-Work",
+   "reqd": 1
+  },
+  {
+   "default": "Job Completion",
+   "fieldname": "pct_completion_method",
+   "fieldtype": "Select",
+   "label": "% Complete Method",
+   "options": "Manual\nJob Completion\nJob Progress\nJob Weight",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "default": "#169cd8",
+   "fieldname": "schedule_color",
+   "fieldtype": "Color",
+   "label": "Schedule Color"
+  },
+  {
+   "fieldname": "organization_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Organization"
+  },
+  {
+   "fieldname": "parent_company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Parent",
+   "options": "Company"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site ID",
+   "options": "Site",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 4,
+   "fetch_from": "site.site_name",
+   "fieldname": "site_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Site name"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "assigned_teams",
+   "fieldtype": "Table MultiSelect",
+   "label": "Assigned Teams",
+   "options": "Schedule Teams"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "group": "Jobs",
+   "link_doctype": "Job",
+   "link_fieldname": "schedule"
+  }
+ ],
+ "modified": "2021-11-06 01:32:02.109570",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Schedule",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Back Office Staff",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Installer",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Lead",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "schedule_name",
+ "sort_field": "site_name ASC, schedule_name ASC",
+ "sort_order": "ASC",
+ "title_field": "schedule_name",
+ "track_changes": 1
+}

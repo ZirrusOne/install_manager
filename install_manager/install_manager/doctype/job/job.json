@@ -1,0 +1,225 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-07-28 05:18:47.078718",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "section_break_2",
+  "schedule",
+  "site_unit",
+  "column_break_13",
+  "schedule_name",
+  "unit_name",
+  "site_name",
+  "section_break_3",
+  "status",
+  "escalation_reason",
+  "non_compliant_reason",
+  "installation_type",
+  "assigned_team",
+  "data_collection_section",
+  "cool_work",
+  "heat_work",
+  "initial_measure_mode"
+ ],
+ "fields": [
+  {
+   "default": "JOB-.######",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "JOB-.######",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
+   "fieldname": "site_unit",
+   "fieldtype": "Link",
+   "label": "Unit ID",
+   "options": "Site Unit",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "Ready",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Ready\nPending\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nNon-compliant\nCompleted",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval: doc.status && doc.status.startsWith('Escalation');",
+   "fieldname": "escalation_reason",
+   "fieldtype": "Select",
+   "label": "Escalation Reason",
+   "mandatory_depends_on": "eval: doc.status && doc.status.startsWith('Escalation');",
+   "options": "\nHVAC\nLock Issue\nResident Issue\nThermostat Issue"
+  },
+  {
+   "depends_on": "eval: doc.status == 'Non-compliant';",
+   "fieldname": "non_compliant_reason",
+   "fieldtype": "Select",
+   "label": "Non-Compliant Reason",
+   "mandatory_depends_on": "eval: doc.status == 'Non-compliant';",
+   "options": "\nUnable to Access with Vendor Key\nResident Refused\nDog\nSick\nSecurity Lock Must Be Moved"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
+   "fieldname": "assigned_team",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Assigned Team",
+   "options": "Team",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "Standard",
+   "fieldname": "installation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Installation Type",
+   "options": "Standard\nPull Wire\nConnect Wire\nRelocate Thermostat\nAdd Wire\nInstall Thermostat Only\nService Visit",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval: doc.status && doc.status.startsWith('Completed');",
+   "fieldname": "data_collection_section",
+   "fieldtype": "Section Break",
+   "label": "Data Collection"
+  },
+  {
+   "default": "0",
+   "fieldname": "cool_work",
+   "fieldtype": "Check",
+   "label": "Cool Work"
+  },
+  {
+   "default": "0",
+   "fieldname": "heat_work",
+   "fieldtype": "Check",
+   "label": "Heat Work"
+  },
+  {
+   "fieldname": "initial_measure_mode",
+   "fieldtype": "Data",
+   "label": "Initial Measure Mode"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
+   "fieldname": "schedule",
+   "fieldtype": "Link",
+   "label": "Schedule ID",
+   "options": "Schedule",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "schedule.schedule_name",
+   "fieldname": "schedule_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Schedule name"
+  },
+  {
+   "fetch_from": "schedule.site_name",
+   "fieldname": "site_name",
+   "fieldtype": "Read Only",
+   "label": "Site"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "site_unit.full_name",
+   "fieldname": "unit_name",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Unit name"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-11-06 00:40:14.684297",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Job",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Back Office Staff",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Lead",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Installer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "unit_name",
+ "sort_order": "ASC",
+ "title_field": "unit_name",
+ "track_changes": 1
+}

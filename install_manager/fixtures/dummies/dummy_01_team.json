@@ -1,0 +1,114 @@
+[
+  {
+    "docstatus": 0,
+    "doctype": "Team",
+    "modified": "2021-11-06 17:21:15.165193",
+    "name": "Level-III team 1",
+    "parent": null,
+    "parentfield": null,
+    "parenttype": null,
+    "team_member": [
+      {
+        "member": "powner_1@example.com",
+        "parent": "Level-III team 1",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      }
+    ],
+    "team_name": "Level-III team 1",
+    "team_type": "Level III Team",
+    "technical_partner": null
+  },
+  {
+    "docstatus": 0,
+    "doctype": "Team",
+    "modified": "2021-09-17 18:21:12.884654",
+    "name": "Level-II Team 1",
+    "parent": null,
+    "parentfield": null,
+    "parenttype": null,
+    "team_member": [
+      {
+        "member": "backoffice1@example.com",
+        "parent": "Level-II Team 1",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      }
+    ],
+    "team_name": "Level-II Team 1",
+    "team_type": "Level II Team",
+    "technical_partner": null
+  },
+  {
+    "docstatus": 0,
+    "doctype": "Team",
+    "modified": "2021-09-17 18:21:50.105388",
+    "name": "Level-II Team 2",
+    "parent": null,
+    "parentfield": null,
+    "parenttype": null,
+    "team_member": [
+      {
+        "member": "backoffice2@example.com",
+        "parent": "Level-II Team 2",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      }
+    ],
+    "team_name": "Level-II Team 2",
+    "team_type": "Level II Team",
+    "technical_partner": null
+  },
+  {
+    "docstatus": 0,
+    "doctype": "Team",
+    "modified": "2021-09-17 18:22:45.436633",
+    "name": "Level-I Team 1",
+    "parent": null,
+    "parentfield": null,
+    "parenttype": null,
+    "team_member": [
+      {
+        "member": "fieldlead1@example.com",
+        "parent": "Level-I Team 1",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      },
+      {
+        "member": "installer1@example.com",
+        "parent": "Level-I Team 1",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      }
+    ],
+    "team_name": "Level-I Team 1",
+    "team_type": "Level I Team",
+    "technical_partner": null
+  },
+  {
+    "docstatus": 0,
+    "doctype": "Team",
+    "modified": "2021-09-17 18:22:29.761710",
+    "name": "Level-I Team 2",
+    "parent": null,
+    "parentfield": null,
+    "parenttype": null,
+    "team_member": [
+      {
+        "member": "fieldlead2@example.com",
+        "parent": "Level-I Team 2",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      },
+      {
+        "member": "installer2@example.com",
+        "parent": "Level-I Team 2",
+        "parentfield": "team_member",
+        "parenttype": "Team"
+      }
+    ],
+    "team_name": "Level-I Team 2",
+    "team_type": "Level I Team",
+    "technical_partner": null
+  }
+]
