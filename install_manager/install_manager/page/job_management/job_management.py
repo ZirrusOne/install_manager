@@ -8,6 +8,15 @@ from itertools import groupby
 
 
 @frappe.whitelist()
+def get_teams():
+    return frappe.db.sql("""
+    select teamM.parent as teamName
+    from `tabTeam Member` teamM 
+    where member = %(member)s
+     """,dict(member=frappe.session.user), as_dict=True)
+
+
+@frappe.whitelist()
 def get_job_base_team(searchValue, isEscalation):
     results = [];
     searchValue = "%{}%".format(searchValue)
@@ -34,8 +43,10 @@ def get_job_base_team(searchValue, isEscalation):
     """.format(filterEscalation=filterEscalation),
                           dict(searchValue=searchValue, member=frappe.session.user),
                           as_dict=True)
-    sort_query = sorted(query, key = lambda content: (content['assigned_team'], content['schedule_name'], content['schedule_color']))
-    teams = groupby(sort_query, key=  lambda content: (content['assigned_team'], content['schedule_name'], content['schedule_color']))
+    sort_query = sorted(query, key=lambda content: (
+        content['assigned_team'], content['schedule_name'], content['schedule_color']))
+    teams = groupby(sort_query,
+                    key=lambda content: (content['assigned_team'], content['schedule_name'], content['schedule_color']))
     for key, items in teams:
         item = {'team': key[0],
                 'schedule': key[1],

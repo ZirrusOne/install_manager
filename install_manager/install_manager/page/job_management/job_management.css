@@ -1,3 +1,33 @@
+.status-in-progress {
+    background-color: rgb(250, 172, 77);
+    border-color: rgb(241, 194, 50);
+    color: black;
+}
+
+.status-resolve-ready {
+    background-color: rgb(255, 255, 51);
+    border-color: rgb(255, 255, 51);
+    color: black;
+}
+
+.status-non-complaint {
+    background-color: rgb(116, 62, 226);
+    border-color: rgb(116, 62, 226);
+    color: white;
+}
+
+.status-escalate {
+    background-color: rgb(255, 88, 88);
+    border-color: rgb(255, 88, 88);
+    color: white;
+}
+
+.status-ready {
+    background-color: rgb(0, 153, 0);
+    border-color: rgb(0, 153, 0);
+    color: white;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -20,13 +50,8 @@
     font-size: 16px;
     font-weight: bold;
     padding-left: 20px;
-    border-left: 1px solid var(--color-midnight-blue);
-    color: var(--color-midnight-blue);
-}
-
-.red {
-    color: var(--color-red) !important;
-    border-left: 1px solid var(--color-red) !important;
+    border-left: 1px solid #E3C14F;
+    color: #E3C14F;
 }
 
 #page-job-management .page-head .page-head-content {
@@ -68,6 +93,135 @@
     border-top: 1px solid var(--border-color);
     padding-top: 20px;
 
+}
+
+.filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.filter-wrapper .filter-by-team {
+    display: flex;
+    border-radius: 20px;
+    border: 1px solid rgb(102, 102, 102);
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(51, 51, 51);
+    margin-right: 30px;
+}
+
+.filter-wrapper .filter-by-team label {
+    color: rgb(255, 255, 51);
+    border-right: 1px solid rgb(102, 102, 102);
+    margin-bottom: 0;
+    padding: 5px 30px;
+}
+
+.filter-wrapper .filter-by-team a {
+    padding: 5px 30px;
+    display: block;
+}
+
+.filter-wrapper .all-filter {
+    border-radius: 20px;
+    border: 1px solid rgb(102, 102, 102);
+    background: rgb(51, 51, 51);
+}
+
+.filter-wrapper .all-filter a {
+    padding: 5px 30px;
+    display: block;
+    color: rgb(255, 255, 51);
+}
+
+.result-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid rgb(153, 0, 0);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+.result-wrapper .job-item {
+    border: 1px solid rgb(102, 102, 102);
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #363636;
+    margin-bottom: 20px;
+}
+
+.result-wrapper .job-item .job-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.result-wrapper .job-item .job-header .job-title {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.result-wrapper .job-item .job-header .job-timer {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.result-wrapper .job-item .job-header .job-timer.in-progress {
+    color: rgb(250, 172, 77);
+}
+
+.result-wrapper .job-item .job-header .job-timer.resolve-ready {
+    color: rgb(255, 255, 51);
+}
+
+.result-wrapper .job-item .job-header .job-timer.non-complaint {
+    color: rgb(116, 62, 226);
+}
+
+.result-wrapper .job-item .job-header .job-timer.escalate {
+    color: rgb(255, 88, 88);
+}
+
+.result-wrapper .job-item .job-status {
+    margin-bottom: 10px;
+    padding: 7px 20px;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.result-wrapper .job-item .job-reason {
+    text-align: center;
+    color: rgb(255, 255, 51);
+}
+
+.team-filter-modal .modal-content {
+    background-color: black;
+    border-radius: 8px;
+}
+.team-filter-modal .modal-title {
+    color: rgb(255, 255, 51);
+    text-transform: uppercase;
+}
+.team-filter-modal button.close {
+    background-color: rgb(0, 255, 0);
+    border-radius: 65px;
+    padding: 5px 8px;
+    margin-top: 0px;
+    color: black;
+    margin-right: 0px;
+}
+
+.team-filter-modal button.close span {
+    color: black;
 }
 
 .team-wrapper {
@@ -149,6 +303,7 @@
     margin-bottom: 0;
 }
 
+
 @media screen and (max-width: 540px) {
     #page-job-management .page-head .page-head-content .custom-actions {
         width: 100%;
@@ -162,3 +317,4 @@
         min-width: 100%;
     }
 }
+
