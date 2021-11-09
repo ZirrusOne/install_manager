@@ -164,9 +164,9 @@ mariadb -u root --password=123 -h mariadb -D  ${DB_NAME} < apps/install_manager/
 ## To install pip packages
 
 ```shell
-/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/frappe/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
-/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/erpnext/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
-/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/install_manager/requirements.txt /workspace/development/frappe-bench/apps/frappe/requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/frappe/requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/erpnext/requirements.txt
+/workspace/development/frappe-bench/env/bin/python -m pip install -r  /workspace/development/frappe-bench/apps/install_manager/requirements.txt
 ```
 
 ## License
