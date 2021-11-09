@@ -5,6 +5,8 @@
 import frappe
 from frappe.model.document import Document
 
+from install_manager.install_manager.doctype.team.team_type import LEVEL_2, LEVEL_3
+
 
 class Schedule(Document):
 
@@ -42,12 +44,12 @@ class Schedule(Document):
             count_level_3 = 0
             for scheduleBo in self.assigned_teams:
                 team_type = frappe.db.get_value('Team', {'name': scheduleBo.team}, 'team_type')
-                if team_type == 'Level II Team':
+                if team_type == LEVEL_2:
                     count_level_2 = count_level_2 + 1
-                if team_type == 'Level III Team':
+                if team_type == LEVEL_3:
                     count_level_3 = count_level_3 + 1
 
             if count_level_2 > 1:
-                frappe.throw(f'Only one Level II Team can be assigned. Found {count_level_2}')
+                frappe.throw(f'Only one {LEVEL_2} can be assigned. Found {count_level_2}')
             if count_level_3 > 1:
-                frappe.throw(f'Only one Level III Team can be assigned. Found {count_level_3}')
+                frappe.throw(f'Only one {LEVEL_3} can be assigned. Found {count_level_3}')

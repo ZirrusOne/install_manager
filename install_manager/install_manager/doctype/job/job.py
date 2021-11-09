@@ -10,6 +10,7 @@ from frappe import msgprint
 from frappe.core.doctype.sms_settings import sms_settings
 from frappe.model.document import Document
 
+from install_manager.install_manager.doctype.team.team_type import LEVEL_1, LEVEL_2
 from install_manager.install_manager.utilities import common_utils
 
 _sms_not_configured_message = 'SMS is not configured. SMS notification will not be sent. ' \
@@ -96,8 +97,8 @@ class Job(Document):
     def _validate_team_type(self):
         if self.assigned_team and self.assigned_team != '':
             team_type = frappe.db.get_value('Team', {'name': self.assigned_team}, 'team_type')
-            if team_type != 'Level I Team':
-                frappe.throw(f'Team type of team {self.assigned_team} is not Level I Team')
+            if team_type != LEVEL_1:
+                frappe.throw(f'Team type of team {self.assigned_team} is not {LEVEL_1}')
 
     def _send_escalation_notification(self):
         if not self.status.startswith('Escalation'):
@@ -132,7 +133,7 @@ class Job(Document):
     def _send_notification_to_back_office(self):
         schedule = frappe.get_doc('Schedule', self.schedule)
         if not schedule.assigned_teams:
-            self._show_messages_to_user(["No Level II Team assigned to this job. No notification will be sent"])
+            self._show_messages_to_user([f"No {LEVEL_2} assigned to this job. No notification will be sent"])
             return
 
         error_messages = []
@@ -230,7 +231,7 @@ class Job(Document):
         # TODO  Notes: [Escalation Note]
         escalation_note_to_set = ''
         sms_settings.send_sms(receiver_list=phone_numbers,
-                              msg=f"{self.unit_name} escalated to Level II Team by "
+                              msg=f"{self.unit_name} escalated to {LEVEL_2} by "
                                   f"{self._get_person_name(frappe.session.user)}. "
                                   f"Reason: {self.escalation_reason}. {escalation_note_to_set}")
         return messages
@@ -252,10 +253,10 @@ class Job(Document):
 
         url_to_job_page = f"{frappe.utils.get_url(full_address=True)}{frappe.utils.get_absolute_url('Job', self.name)}"
 
-        email_subject = f"{schedule.schedule_name} - {self.unit_name} Escalated to Level II Team"
+        email_subject = f"{schedule.schedule_name} - {self.unit_name} Escalated to {LEVEL_2}"
         email_body = f"""<html><body> 
                      <p>Schedule activity for {schedule.site_name} - {self.unit_name} 
-                     was escalated to Level II Team at {current_datetime.strftime('%HH:%M')} 
+                     was escalated to {LEVEL_2} at {current_datetime.strftime('%HH:%M')} 
                      on {current_datetime.strftime('%m/%d/%Y')} with the following details:</p> 
                      <p>
                      <br>Reason: {self.escalation_reason}
