@@ -3,6 +3,8 @@
 
 from __future__ import unicode_literals
 
+from typing import List
+
 import frappe
 import frappe.permissions
 from frappe.model.document import Document
@@ -48,6 +50,17 @@ class Team(Document):
 
         if self.team_type == LEVEL_1 and not has_at_least_one_field_lead:
             frappe.throw(f'There must be at least one Field Lead in {self.team_type}')
+
+
+    @staticmethod
+    def get_teams_of_current_user() -> List['Team']:
+        username = frappe.session.user
+        team_members = frappe.db.get_list(doctype='Team Member', filters={'member': username}, fields=['parent'])
+        teams = []
+        if team_members is not None:
+            for tm in team_members:
+                teams.append(frappe.get_doc('Team', tm.parent))
+        return teams
 
 
 @frappe.whitelist()

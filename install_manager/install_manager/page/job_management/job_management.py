@@ -2,45 +2,198 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
+
+from functools import cmp_to_key
+from typing import Optional, List, Dict, Set
+
 import frappe
 import json
-from itertools import groupby
+
+from install_manager.install_manager.doctype.job.job_status import READY, PENDING, IN_PROGRESS, ESCALATE_LEVEL_1
+from install_manager.install_manager.doctype.team.team import Team
+from install_manager.install_manager.doctype.team.team_type import LEVEL_1
+from install_manager.install_manager.doctype.team.user_role import INSTALLER, FIELD_LEAD
+from install_manager.install_manager.utilities import db_utils, common_utils
 
 
-@frappe.whitelist()
-def get_job_base_team(searchValue, isEscalation):
-    results = [];
-    searchValue = "%{}%".format(searchValue)
-    filterEscalation = ''
-    if json.loads(isEscalation.lower()):
-        filterEscalation = "job.status like '%%Escalation%%'"
+@frappe.whitelist(methods='GET')
+def get_list_filter_options():
+    _check_access_right()
+
+    meta_list = _query_jobs(select_list="""
+                               distinct 
+                               schedule.name as schedule_id,
+                               job.assigned_team as team_id,
+                               unit.building_number,
+                               job.status as job_status
+                               """,
+                            order_clause="""
+                               order by schedule.start_date ASC, schedule.site, job.assigned_team, unit.building_number,
+                                        unit.floor_number, unit.full_name 
+                               """)
+    team_ids = set()
+    statuses = set()
+    schedule_ids = set()
+    building_ids: Dict[str, Set[int]] = {}
+    for meta in meta_list:
+        statuses.add(meta['job_status'])
+        schedule_ids.add(meta['schedule_id'])
+        if meta.get('building_number') is not None:
+            if building_ids.get(meta['schedule_id']) is None:
+                building_ids[meta['schedule_id']] = set()
+            building_ids[meta['schedule_id']].add(meta['building_number'])
+        if meta.get('team_id') is not None:
+            team_ids.add(meta['team_id'])
+
+    status_list = list(statuses)
+    reference_sort_order = _get_default_statuses()
+    def status_compare(s1, s2) -> int:
+        idx1 = reference_sort_order.index(s1)
+        idx2 = reference_sort_order.index(s2)
+        idx1 = len(reference_sort_order) if idx1 < 0 else idx1
+        idx2 = len(reference_sort_order) if idx2 < 0 else idx2
+        return idx1 - idx2
+    status_list.sort(key=cmp_to_key(status_compare))
+
+    teams = []
+    for team_id in team_ids:
+        team = frappe.get_doc('Team', team_id)
+        teams.append({
+            'id': team.name,
+            'label': team.team_name
+        })
+    teams.sort(key=lambda item: item['label'])
+
+    schedules = []
+    for schedule_id in schedule_ids:
+        schedule = frappe.get_doc('Schedule', schedule_id)
+        schedules.append({
+            'id': schedule.name,
+            'label': schedule.schedule_name
+        })
+    schedules.sort(key=lambda item: item['label'])
+
+    for schedule in schedules:
+        bids = building_ids.get(schedule['id'])
+        if bids is not None:
+            schedule['buildings'] = sorted(list(map(lambda num: {'id': num, 'label': f'Building {num}'}, bids)),
+                                           key=lambda item: item['label'])
+
+    return {
+        'teams': teams,
+        'job_statuses': map(lambda s: {'id': s, 'label': s}, status_list),
+        'schedules': schedules
+    }
+
+
+@frappe.whitelist(methods='POST')
+def list_active_jobs(*args, **kwargs):
+    request_json = json.loads(frappe.request.data)
+    team_id: Optional[str] = request_json.get('team_id')
+    statuses: Optional[List[str]] = request_json.get('statuses')
+    building_numbers: Optional[List[int]] = request_json.get('building_numbers')
+    schedule_ids: Optional[List[str]] = request_json.get('schedule_ids')
+
+    _check_access_right()
+    return _query_jobs(select_list="""
+                           schedule.name as schedule_id,
+                           schedule.schedule_color,
+                           unit.full_name as site_unit_full_name,
+                           unit.building_number,
+                           job.name as job_id,
+                           job.assigned_team as team_id,
+                           job.status as job_status,
+                           job.escalation_reason,
+                           job.non_compliant_reason
+                           """,
+                       order_clause="""
+                       order by schedule.start_date ASC, schedule.site, job.assigned_team, unit.building_number,
+                                unit.floor_number, unit.full_name 
+                       """,
+                       team_id=team_id,
+                       statuses=statuses,
+                       building_numbers=building_numbers,
+                       schedule_ids=schedule_ids)
+
+
+def _query_jobs(select_list: str,
+                order_clause: str,
+                team_id: Optional[str] = None,
+                statuses: Optional[List[str]] = None,
+                building_numbers: Optional[List[int]] = None,
+                schedule_ids: Optional[List[str]] = None) -> List[dict]:
+
+    default_statuses = _get_default_statuses()
+    filter_statuses = default_statuses
+    if statuses is not None:
+        for s in statuses:
+            if s not in default_statuses:
+                frappe.throw(f'Invalid filter status: {s}')
+        filter_statuses = statuses
+
+    team_ids = []
+    if common_utils.is_not_blank(team_id):
+        team_ids.append(team_id)
     else:
-        filterEscalation = "job.status not like '%%Escalation%%'"
+        team_ids = _get_default_team_ids()
+    if len(team_ids) == 0:
+        frappe.throw(f'You do not belong to any {LEVEL_1}')
+    team_condition = f'AND job.assigned_team in {db_utils.in_clause(team_ids)}'
 
-    query = frappe.db.sql("""
-        select job.name, job.assigned_team , job.status, job.escalation_reason , sitec.label, sitec.unit_name, assign.schedule_name, assign.schedule_color
-        from `tabJob` job
-		inner join `tabSite Unit` sitec on (job.site_unit = sitec.name)
-		inner join `tabSchedule` assign  on (job.schedule = assign.name)
-		where 
-		    (sitec.label  like %(searchValue)s or concat_ws(' ', sitec.label , sitec.unit_name ) like %(searchValue)s)
-		     and 
-		     job.assigned_team in (select distinct parent 
-                            from `tabTeam Member`
-                            where member = %(member)s)
-            and 
-            {filterEscalation}
-		order by job.assigned_team
-    """.format(filterEscalation=filterEscalation),
-                          dict(searchValue=searchValue, member=frappe.session.user),
-                          as_dict=True)
-    sort_query = sorted(query, key = lambda content: (content['assigned_team'], content['schedule_name'], content['schedule_color']))
-    teams = groupby(sort_query, key=  lambda content: (content['assigned_team'], content['schedule_name'], content['schedule_color']))
-    for key, items in teams:
-        item = {'team': key[0],
-                'schedule': key[1],
-                'color': key[2],
-                'jobs': list(items)}
-        results.append(item)
+    building_condition = ''
+    if building_numbers is not None and len(building_numbers) > 0:
+        building_condition = f'AND unit.building_number in {db_utils.in_clause(building_numbers)}'
 
-    return frappe.as_json(results)
+    schedule_condition = ''
+    if schedule_ids is not None and len(schedule_ids) > 0:
+        schedule_condition = f'AND schedule.name in {db_utils.in_clause(schedule_ids)}'
+
+    result_list = frappe.db.sql("""
+            select {select_list}
+            from `tabJob` job 
+            inner join `tabSchedule` schedule on job.schedule = schedule.name
+            inner join `tabSite Unit` unit on unit.name = job.site_unit
+    		where 
+    		    schedule.start_date <= %(current_date)s
+    		    {job_status_condition}
+    		    {team_condition}
+    		    {building_condition}
+    		    {schedule_condition}
+    		{order_clause}
+        """.format(select_list=select_list,
+                   order_clause=order_clause,
+                   job_status_condition=f'AND job.status in {db_utils.in_clause(filter_statuses)}',
+                   team_condition=team_condition,
+                   building_condition=building_condition,
+                   schedule_condition=schedule_condition
+                   ),
+                                values={'current_date': frappe.utils.nowdate()},
+                                debug=False,
+                                as_dict=True)
+    return result_list
+
+
+def _check_access_right():
+    current_roles = frappe.get_roles(frappe.session.user)
+    if INSTALLER not in current_roles and FIELD_LEAD not in current_roles:
+        frappe.errprint(f'Denied user {frappe.session.user} having roles {current_roles}')
+        frappe.throw('Permission denied! This page is not available for your role')
+
+
+def _get_default_statuses() -> List[str]:
+    """
+    :return: sorted list
+    """
+    default_statuses = [READY, PENDING, IN_PROGRESS]
+    current_roles = frappe.get_roles(frappe.session.user)
+    if FIELD_LEAD in current_roles:
+        default_statuses.append(ESCALATE_LEVEL_1)
+    return default_statuses
+
+def _get_default_team_ids() -> List[str]:
+    team_ids = []
+    teams = Team.get_teams_of_current_user()
+    for tm in teams:
+        if tm.team_type == LEVEL_1:
+            team_ids.append(tm.name)
+    return team_ids
