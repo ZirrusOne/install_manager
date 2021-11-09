@@ -79,10 +79,6 @@ class JobManagement {
                 } else {
                     this.displayFilterTeamName = 'Unassigned';
                 }
-                $(frappe.render_template('team_filter', {
-                    teams: this.teams,
-                    selectedTeam: this.selectedTeam.teamName
-                })).appendTo($(this.page.main));
             }
         })
     }
@@ -134,7 +130,22 @@ class JobManagement {
     }
 
     openTeamFilter() {
+        $(this.page.main).find('.team-filter-modal').remove();
+
+        $(frappe.render_template('team_filter', {
+            teams: this.teams,
+            selectedTeam: this.selectedTeam.teamName
+        })).appendTo($(this.page.main));
+
         $('#teamFilterModal').modal('show');
+    }
+
+    openAllFilters() {
+        $(this.page.main).find('.all-filter-modal').remove();
+        $(frappe.render_template('all_filter')).appendTo($(this.page.main));
+
+        $('#allFilterModal').modal('show');
+
     }
 
     changeTeam(element) {
@@ -143,9 +154,9 @@ class JobManagement {
             this.selectedTeam = this.teams.find(item => item.teamName === teamName)
             this.displayFilterTeamName = teamName;
         }
+
+        $('#teamFilterModal').modal('hide');
     }
 
-    openAllFilters() {
 
-    }
 }

@@ -1,10 +1,10 @@
-<div class="modal fade filter-modal team-filter-modal" id="teamFilterModal" tabindex="-1" role="dialog"
-     aria-labelledby="teamFilterModal"
+<div class="modal fade filter-modal all-filter-modal" id="allFilterModal" tabindex="-1" role="dialog"
+     aria-labelledby="allFilterModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Team</h5>
+                <h5 class="modal-title">FILTER</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,11 +16,7 @@
                         <span>Teams</span>
                     </div>
                     <div class="filter-content">
-                        {% for item in teams %}
-                        <a onclick="job_management.changeTeam(this)"
-                           class="team-item {{selectedTeam === item.teamName?" active":""}}"
-                        data-value="{{item.teamName}}">{{item.teamName}}</a>
-                        {% endfor %}
+
                     </div>
                 </div>
 
