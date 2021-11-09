@@ -20,7 +20,10 @@ class JobManagement {
     isFieldLead;
     isEscalationView;
     isFirstTimeLoad;
+    teams = [];
+    selectedTeam;
     previousSearchField = '';
+    displayFilterTeamName = 'Test';
 
     constructor(wrapper) {
 
@@ -35,32 +38,8 @@ class JobManagement {
             single_column: true
         });
 
-        let searchField = this.page.add_field({
-            label: 'Unit Search',
-            fieldtype: 'Data',
-            fieldname: 'search',
-            className: 'search-job',
-            change() {
-                if (aThis.previousSearchField !== searchField.get_value()) {
-                    aThis.previousSearchField = searchField.get_value();
-                    aThis.getData(searchField.get_value());
-                }
-            }
-        }, this.page.custom_actions);
+        $('.page-head-content').remove();
 
-        if (this.isFieldLead) {
-            this.page.add_menu_item("Field Lead View", function () {
-                aThis.isEscalationView = true;
-                aThis.getData('');
-            }, "Menu");
-            this.page.add_menu_item("Installer View", function () {
-                aThis.isEscalationView = false;
-                aThis.getData('');
-            }, "Menu");
-        }
-
-        $('.menu-btn-group-label').find('svg').remove();
-        $('.menu-btn-group-label').append("<svg class=\"icon icon-md\"><use xlink:href=\"#icon-menu\"></use></svg>");
         $('.main-section').find('footer').remove();
         $('.page-head').find('.page-title').remove();
         $('.layout-main-section').find('.page-form').remove();
@@ -69,7 +48,7 @@ class JobManagement {
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
         $('.page-head .page-actions .menu-btn-group button.btn-default.icon-btn').removeAttr('data-original-title');
-
+        this.getTeams();
         this.getData('');
     }
 
@@ -80,8 +59,33 @@ class JobManagement {
         $(nextElementSibling).toggleClass('collapsed')
     }
 
+    changeView() {
+        this.isEscalationView = !this.isEscalationView;
+        this.getData('');
+    }
+
+    getTeams() {
+        frappe.call({
+            method: 'install_manager.install_manager.page.job_management.job_management.get_teams',
+            callback: (result) => {
+                this.teams = result.message;
+                if (this.teams.length > 0) {
+                    this.selectedTeam = this.teams[0];
+                } else {
+                    this.selectedTeam = null;
+                }
+                if (this.selectedTeam) {
+                    this.displayFilterTeamName = this.selectedTeam.teamName
+                } else {
+                    this.displayFilterTeamName = 'Unassigned';
+                }
+            }
+        })
+    }
+
     getData(filter) {
         $(this.page.main).find('.job-wrapper').remove();
+
         frappe.call({
             method: 'install_manager.install_manager.page.job_management.job_management.get_job_base_team',
             args: {
@@ -100,12 +104,14 @@ class JobManagement {
                         $(frappe.render_template('job_management', {
                             isEscalation: this.isEscalationView,
                             result: data,
+                            displayFilterTeamName: this.displayFilterTeamName,
                         })).appendTo($(this.page.main));
                     }
                 } else {
                     this.setTitleView();
                     $(frappe.render_template('job_management', {
                         isEscalation: this.isEscalationView,
+                        displayFilterTeamName: this.displayFilterTeamName,
                         result: data,
                     })).appendTo($(this.page.main));
                 }
@@ -114,13 +120,43 @@ class JobManagement {
     }
 
     setTitleView() {
-        let title = this.isEscalationView ? "Escalations" : "Assigned Jobs";
+        let title = this.isEscalationView ? "Escalations" : "Jobs";
         let element = $('.navbar .container').find('.job-title');
         if (element.length > 0) {
             $('.navbar .container .job-title').text(title);
         } else {
-            $('.navbar .container a.navbar-brand').after("<div class='job-title'>" + title + "</div>");
+            $('.navbar .container a.navbar-brand').after("<a class='job-title' onclick='job_management.changeView()'>" + title + "</a>");
         }
-        this.isEscalationView ? $('.navbar .container .job-title').addClass('red') : $('.navbar .container .job-title').removeClass('red')
     }
+
+    openTeamFilter() {
+        $(this.page.main).find('.team-filter-modal').remove();
+
+        $(frappe.render_template('team_filter', {
+            teams: this.teams,
+            selectedTeam: this.selectedTeam.teamName
+        })).appendTo($(this.page.main));
+
+        $('#teamFilterModal').modal('show');
+    }
+
+    openAllFilters() {
+        $(this.page.main).find('.all-filter-modal').remove();
+        $(frappe.render_template('all_filter')).appendTo($(this.page.main));
+
+        $('#allFilterModal').modal('show');
+
+    }
+
+    changeTeam(element) {
+        let teamName = $(element).attr('data-value');
+        if (!this.selectedTeam.teamName === teamName) {
+            this.selectedTeam = this.teams.find(item => item.teamName === teamName)
+            this.displayFilterTeamName = teamName;
+        }
+
+        $('#teamFilterModal').modal('hide');
+    }
+
+
 }

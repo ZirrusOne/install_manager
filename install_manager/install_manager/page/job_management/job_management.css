@@ -1,3 +1,33 @@
+.status-in-progress {
+    background-color: var(--color-in-progress);
+    border-color: var(--color-in-progress);
+    color: black;
+}
+
+.status-resolve-ready {
+    background-color: var(--color-resolve-ready);
+    border-color: var(--color-resolve-ready);
+    color: black;
+}
+
+.status-non-complaint {
+    background-color: var(--color-non-complaint);
+    border-color: var(--color-non-complaint);
+    color: white;
+}
+
+.status-escalate {
+    background-color: var(--color-escalate);
+    border-color: var(--color-escalate);
+    color: white;
+}
+
+.status-ready {
+    background-color: var(--color-ready);
+    border-color: var(--color-ready);
+    color: white;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -20,13 +50,8 @@
     font-size: 16px;
     font-weight: bold;
     padding-left: 20px;
-    border-left: 1px solid var(--color-midnight-blue);
-    color: var(--color-midnight-blue);
-}
-
-.red {
-    color: var(--color-red) !important;
-    border-left: 1px solid var(--color-red) !important;
+    border-left: 1px solid var(--color-title);
+    color: var(--color-title);
 }
 
 #page-job-management .page-head .page-head-content {
@@ -68,6 +93,175 @@
     border-top: 1px solid var(--border-color);
     padding-top: 20px;
 
+}
+
+.filter-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.filter-wrapper .filter-by-team {
+    display: flex;
+    border-radius: 20px;
+    border: 1px solid var(--color-diver);
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(51, 51, 51);
+    margin-right: 30px;
+}
+
+.filter-wrapper .filter-by-team label {
+    color: var(--color-title);
+    border-right: 1px solid rgb(102, 102, 102);
+    margin-bottom: 0;
+    padding: 5px 30px;
+}
+
+.filter-wrapper .filter-by-team a {
+    padding: 5px 30px;
+    display: block;
+}
+
+.filter-wrapper .all-filter {
+    border-radius: 20px;
+    border: 1px solid rgb(102, 102, 102);
+    background: rgb(51, 51, 51);
+}
+
+.filter-wrapper .all-filter a {
+    padding: 5px 30px;
+    display: block;
+    color: var(--color-title);
+}
+
+.result-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid var(--color-border-red);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+.result-wrapper .job-item {
+    border: 1px solid var(--color-diver);
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #363636;
+    margin-bottom: 20px;
+}
+
+.result-wrapper .job-item .job-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.result-wrapper .job-item .job-header .job-title {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.result-wrapper .job-item .job-header .job-timer {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.result-wrapper .job-item .job-header .job-timer.in-progress {
+    color: var(--color-in-progress);
+}
+
+.result-wrapper .job-item .job-header .job-timer.resolve-ready {
+    color: var(--color-resolve-ready)
+}
+
+.result-wrapper .job-item .job-header .job-timer.non-complaint {
+    color: var(--color-non-complaint);
+}
+
+.result-wrapper .job-item .job-header .job-timer.escalate {
+    color: var(--color-escalate)
+}
+
+.result-wrapper .job-item .job-status {
+    margin-bottom: 10px;
+    padding: 7px 20px;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.result-wrapper .job-item .job-reason {
+    text-align: center;
+    color: var(--color-title)
+}
+
+.filter-modal .modal-content {
+    background-color: black;
+    border-radius: 8px;
+}
+
+.filter-modal .modal-content .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.filter-modal .modal-title {
+    color: var(--color-title);
+    text-transform: uppercase;
+}
+
+.filter-modal button.close {
+    background-color: var(--color-ready);
+    border-radius: 65px;
+    padding: 5px 8px;
+    margin-top: 0;
+    margin-right: 0;
+    color: black;
+}
+
+.filter-modal button.close span {
+    color: black;
+}
+
+.filter-modal .filter-modal-wrapper {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.filter-modal .filter-modal-wrapper .filter-header {
+    color: var(--color-orange);
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.filter-modal .filter-modal-wrapper .filter-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-modal .filter-modal-wrapper .filter-content .team-item {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    color: var(--color-diver);
+    font-weight: 700;
+    border-radius: 8px;
+}
+
+.filter-modal .filter-modal-wrapper .filter-content .team-item.active {
+    background: black;
+    color: var(--color-title);
 }
 
 .team-wrapper {
@@ -149,6 +343,7 @@
     margin-bottom: 0;
 }
 
+
 @media screen and (max-width: 540px) {
     #page-job-management .page-head .page-head-content .custom-actions {
         width: 100%;
@@ -162,3 +357,4 @@
         min-width: 100%;
     }
 }
+
