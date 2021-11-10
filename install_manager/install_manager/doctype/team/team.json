@@ -19,7 +19,6 @@
    "columns": 6,
    "fieldname": "team_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Name",
    "reqd": 1,
    "unique": 1
@@ -51,7 +50,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-05 23:41:10.981089",
+ "modified": "2021-11-09 21:45:28.442087",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Team",
@@ -84,8 +83,8 @@
    "write": 1
   }
  ],
+ "search_fields": "team_name",
  "sort_field": "team_name",
  "sort_order": "ASC",
- "title_field": "team_name",
  "track_changes": 1
 }
