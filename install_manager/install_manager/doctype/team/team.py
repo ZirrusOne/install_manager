@@ -15,6 +15,27 @@ from install_manager.install_manager.utilities import db_utils
 
 class Team(Document):
 
+    def after_rename(self, old: str, new: str, merge: bool):
+        # update foreign keys
+        # child doctype has already been taken care by frappe
+
+        frappe.db.sql("""
+                            update `tabSchedule Teams`
+                            set team = %(new_name)s
+                            where team = %(old_name)s
+                        """,
+                      values={'old_name': old, 'new_name': new},
+                      debug=False)
+
+        frappe.db.sql("""
+                                update `tabJob`
+                                set assigned_team = %(new_name)s
+                                where assigned_team = %(old_name)s
+                            """,
+                  values={'old_name': old, 'new_name': new},
+                  debug=False)
+
+
     def validate(self):
         self._validate_team_members()
         
