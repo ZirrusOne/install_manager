@@ -1,44 +1,54 @@
+{% if result.length > 0%}
+{% for item in result %}
+<div class="job-item">
+    <div class="job-header">
+        <div class="job-title">{{item.site_unit_full_name}}</div>
+        <div class="job-timer ">02 hours 15 minutes</div>
+    </div>
+    <div class="job-status {{item.job_status ==="In Progress"?"status-in-progress":
+                             item.job_status === "Pending"?"status-pending":
+                             item.job_status === "Escalation - Field Lead"?"status-escalate":
+                             item.job_status === "Ready"?"status-ready":""}}">{{item.job_status}}
+    </div>
+    <div class="job-reason"></div>
+</div>
+{% endfor %}
+{% else %}
+<div>No {{ isEscalation? "escalated" :""}} jobs found</div>
+{% endif %}
 
-<div class="job-item">
-    <div class="job-header">
-        <div class="job-title">Job Title</div>
-        <div class="job-timer in-progress">02 hours 15 minutes</div>
-    </div>
-    <div class="job-status status-in-progress">In Progress</div>
-    <div class="job-reason"></div>
-</div>
-<div class="job-item">
-    <div class="job-header">
-        <div class="job-title">Unit 02</div>
-        <div class="job-timer resolve-ready">02 hours 15 minutes</div>
-    </div>
-    <div class="job-status status-resolve-ready">Resolve Ready</div>
-    <div class="job-reason"></div>
-</div>
-<div class="job-item">
-    <div class="job-header">
-        <div class="job-title">Unit 03</div>
-        <div class="job-timer non-complaint">02 hours 15 minutes</div>
-    </div>
-    <div class="job-status status-non-complaint">Non Compliant</div>
-    <div class="job-reason"></div>
-</div>
-<div class="job-item">
-    <div class="job-header">
-        <div class="job-title">Unit 03</div>
-        <div class="job-timer escalate">02 hours 15 minutes</div>
-    </div>
-    <div class="job-status status-escalate">Escalate</div>
-    <div class="job-reason">Reason: HVAC</div>
-</div>
-<div class="job-item">
-    <div class="job-header">
-        <div class="job-title">Unit 03</div>
-        <div class="job-timer"></div>
-    </div>
-    <div class="job-status status-ready">Ready</div>
-    <div class="job-reason"></div>
-</div>
+<!--<div class="job-item">-->
+<!--    <div class="job-header">-->
+<!--        <div class="job-title">Unit 02</div>-->
+<!--        <div class="job-timer resolve-ready">02 hours 15 minutes</div>-->
+<!--    </div>-->
+<!--    <div class="job-status status-resolve-ready">Resolve Ready</div>-->
+<!--    <div class="job-reason"></div>-->
+<!--</div>-->
+<!--<div class="job-item">-->
+<!--    <div class="job-header">-->
+<!--        <div class="job-title">Unit 03</div>-->
+<!--        <div class="job-timer non-complaint">02 hours 15 minutes</div>-->
+<!--    </div>-->
+<!--    <div class="job-status status-non-complaint">Non Compliant</div>-->
+<!--    <div class="job-reason"></div>-->
+<!--</div>-->
+<!--<div class="job-item">-->
+<!--    <div class="job-header">-->
+<!--        <div class="job-title">Unit 03</div>-->
+<!--        <div class="job-timer escalate">02 hours 15 minutes</div>-->
+<!--    </div>-->
+<!--    <div class="job-status status-escalate">Escalate</div>-->
+<!--    <div class="job-reason">Reason: HVAC</div>-->
+<!--</div>-->
+<!--<div class="job-item">-->
+<!--    <div class="job-header">-->
+<!--        <div class="job-title">Unit 03</div>-->
+<!--        <div class="job-timer"></div>-->
+<!--    </div>-->
+<!--    <div class="job-status status-ready">Ready</div>-->
+<!--    <div class="job-reason"></div>-->
+<!--</div>-->
 
 
 

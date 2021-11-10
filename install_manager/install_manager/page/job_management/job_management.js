@@ -133,7 +133,10 @@ class JobManagement {
                 let data = result.message;
                 console.log(data);
                 this.setTitleView();
-                $(frappe.render_template('search_result', {})).appendTo($(this.resultWrapperElement));
+                $(frappe.render_template('search_result', {
+                    isEscalation: this.isEscalationView,
+                    result: data
+                })).appendTo($(this.resultWrapperElement));
             }
         });
     }

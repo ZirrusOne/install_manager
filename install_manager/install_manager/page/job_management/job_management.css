@@ -28,6 +28,14 @@
     color: white;
 }
 
+
+.status-pending{
+    background-color:#FFFF33;
+    border-color: #FFFF33;
+
+    color: white;
+}
+
 .bold {
     font-weight: bold;
 }
