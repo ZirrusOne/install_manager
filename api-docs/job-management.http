@@ -10,6 +10,7 @@ cmd=login&usr={{username}}&pwd={{password}}&device=desktop
 
 // get filter options for job list
 GET {{server_base_url}}/api/method/install_manager.install_manager.page.job_management.job_management.get_list_filter_options
+        ?escalation_view=true
 
 ###
 

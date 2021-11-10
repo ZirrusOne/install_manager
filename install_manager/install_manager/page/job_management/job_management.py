@@ -17,8 +17,12 @@ from install_manager.install_manager.utilities import db_utils, common_utils
 
 
 @frappe.whitelist(methods='GET')
-def get_list_filter_options():
+def get_list_filter_options(escalation_view: bool):
     _check_access_right()
+    if escalation_view:
+        current_roles = frappe.get_roles(frappe.session.user)
+        if FIELD_LEAD not in current_roles:
+            frappe.throw(f'Only {FIELD_LEAD} can access the Escalation View')
 
     meta_list = _query_jobs(select_list="""
                                distinct 
@@ -30,7 +34,8 @@ def get_list_filter_options():
                             order_clause="""
                                order by schedule.start_date ASC, schedule.site, job.assigned_team, unit.building_number,
                                         unit.floor_number, unit.full_name 
-                               """)
+                               """,
+                            statuses=None if not escalation_view else [ESCALATE_LEVEL_1])
     team_ids = set()
     statuses = set()
     schedule_ids = set()
