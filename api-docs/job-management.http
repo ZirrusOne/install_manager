@@ -10,7 +10,7 @@ cmd=login&usr={{username}}&pwd={{password}}&device=desktop
 
 // get filter options for job list
 GET {{server_base_url}}/api/method/install_manager.install_manager.page.job_management.job_management.get_list_filter_options
-        ?escalation_view=true
+        ?escalation_view=false
 
 ###
 
@@ -21,10 +21,10 @@ Content-Type: application/json
 
 {
   "filters": {
-    "team_id": "Level I Team 1",
-    "statuses": ["In Progress", "Ready"],
-    "building_numbers": [1],
-    "schedule_ids": ["ASSIGN-00001"]
+    "team_id": "",
+    "statuses": [],
+    "building_numbers": [],
+    "schedule_ids": []
   }
 }
 ###

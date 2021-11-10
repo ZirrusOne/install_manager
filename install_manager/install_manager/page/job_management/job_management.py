@@ -17,9 +17,10 @@ from install_manager.install_manager.utilities import db_utils, common_utils
 
 
 @frappe.whitelist(methods='GET')
-def get_list_filter_options(escalation_view: bool):
+def get_list_filter_options(escalation_view):
     _check_access_right()
-    if escalation_view:
+    is_for_escalation_view = escalation_view is not None and str(escalation_view).lower() in ('true', 'yes', '1')
+    if is_for_escalation_view:
         current_roles = frappe.get_roles(frappe.session.user)
         if FIELD_LEAD not in current_roles:
             frappe.throw(f'Only {FIELD_LEAD} can access the Escalation View')
@@ -35,7 +36,7 @@ def get_list_filter_options(escalation_view: bool):
                                order by schedule.start_date ASC, schedule.site, job.assigned_team, unit.building_number,
                                         unit.floor_number, unit.full_name 
                                """,
-                            statuses=None if not escalation_view else [ESCALATE_LEVEL_1])
+                            statuses=None if not is_for_escalation_view else [ESCALATE_LEVEL_1])
     team_ids = set()
     statuses = set()
     schedule_ids = set()
@@ -137,7 +138,7 @@ def _query_jobs(select_list: str,
 
     default_statuses = _get_default_statuses()
     filter_statuses = default_statuses
-    if statuses is not None:
+    if statuses is not None and len(statuses) > 0:
         for s in statuses:
             if s not in default_statuses:
                 frappe.throw(f'Invalid filter status: {s}')
