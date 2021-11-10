@@ -20,9 +20,11 @@ POST {{server_base_url}}/api/method/install_manager.install_manager.page.job_man
 Content-Type: application/json
 
 {
-  "team_id": "Level I Team 1",
-  "statuses": ["In Progress", "Ready"],
-  "building_numbers": [1],
-  "schedule_ids": ["ASSIGN-00001"]
+  "filters": {
+    "team_id": "Level I Team 1",
+    "statuses": ["In Progress", "Ready"],
+    "building_numbers": [1],
+    "schedule_ids": ["ASSIGN-00001"]
+  }
 }
 ###

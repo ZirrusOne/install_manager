@@ -93,7 +93,14 @@ def get_list_filter_options(escalation_view: bool):
 
 @frappe.whitelist(methods='POST')
 def list_active_jobs(*args, **kwargs):
-    request_json = json.loads(frappe.request.data)
+    filter_ars = frappe._dict(kwargs).get('filters')
+    if isinstance(filter_ars, str):
+        # called from js frappe.call
+        request_json = json.loads(filter_ars)
+    else:
+        # called from other client that correctly send content-type: application/json
+        request_json = filter_ars
+
     team_id: Optional[str] = request_json.get('team_id')
     statuses: Optional[List[str]] = request_json.get('statuses')
     building_numbers: Optional[List[int]] = request_json.get('building_numbers')
