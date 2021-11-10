@@ -29,9 +29,9 @@
 }
 
 
-.status-pending{
-    background-color:#FFFF33;
-    border-color: #FFFF33;
+.status-pending {
+    background-color: var(--color-pending);
+    border-color: var(--color-pending);
 
     color: white;
 }
@@ -91,7 +91,17 @@
     margin-bottom: 0;
 }
 
+body {
+    background: black;
+}
+
+.main-section {
+    background: black;
+}
+
 .page-container {
+    background: black;
+    height: 100%;
 }
 
 .job-wrapper {
@@ -164,6 +174,10 @@
     margin-bottom: 20px;
 }
 
+.result-wrapper .job-item:last-child {
+    margin-bottom: 0;
+}
+
 .result-wrapper .job-item .job-header {
     display: flex;
     flex-direction: row;
@@ -193,6 +207,10 @@
 
 .result-wrapper .job-item .job-header .job-timer.non-complaint {
     color: var(--color-non-complaint);
+}
+
+.result-wrapper .job-item .job-header .job-timer.pending {
+    color: var(--color-pending);
 }
 
 .result-wrapper .job-item .job-header .job-timer.escalate {
@@ -364,5 +382,39 @@
     #page-job-management .page-head .page-head-content .custom-actions .input-with-feedback {
         min-width: 100%;
     }
+
+    .filter-wrapper {
+        justify-content: space-between;
+    }
+
+    .filter-wrapper .filter-by-team {
+        justify-content: flex-start;
+        align-items: center;
+        margin-right: 10px;
+        height: 32px;
+
+    }
+
+    .filter-wrapper .filter-by-team label {
+        padding: 5px 13px;
+    }
+
+    .filter-wrapper .filter-by-team a {
+        padding: 5px 13px;
+        max-width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .filter-wrapper .all-filter {
+        border-radius: 20px;
+        background: rgb(51, 51, 51);
+    }
+
+    .filter-wrapper .all-filter a {
+        padding: 5px 13px;
+    }
+
 }
 

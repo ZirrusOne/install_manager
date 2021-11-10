@@ -131,8 +131,10 @@ class JobManagement {
             },
             callback: (result) => {
                 let data = result.message;
-                console.log(data);
-                this.setTitleView();
+                if (!frappe.user.has_role("Field Installer")){
+                    this.setTitleView();
+                }
+
                 $(frappe.render_template('search_result', {
                     isEscalation: this.isEscalationView,
                     result: data
