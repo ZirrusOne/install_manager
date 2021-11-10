@@ -112,6 +112,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "number_of_buildings",
    "fieldtype": "Int",
    "label": "Number of Buildings"
@@ -121,11 +122,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "number_floors_per_building",
    "fieldtype": "Int",
    "label": "Number of Floors per Building"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "number_units_per_floor",
    "fieldtype": "Int",
    "label": "Number of Units per Floor"
@@ -139,7 +142,7 @@
    "link_fieldname": "site"
   }
  ],
- "modified": "2021-11-05 23:57:45.335436",
+ "modified": "2021-11-09 20:50:47.631553",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Site",
