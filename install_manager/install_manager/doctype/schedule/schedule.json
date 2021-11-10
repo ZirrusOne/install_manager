@@ -30,12 +30,12 @@
  "fields": [
   {
    "allow_in_quick_entry": 1,
-   "default": "ASSIGN-.#####",
+   "default": "SCHED-.#####",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "hidden": 1,
    "label": "Series",
-   "options": "ASSIGN-.#####",
+   "options": "SCHED-.#####",
    "reqd": 1
   },
   {
@@ -171,7 +171,7 @@
    "link_fieldname": "schedule"
   }
  ],
- "modified": "2021-11-06 01:32:02.109570",
+ "modified": "2021-11-09 20:34:46.909258",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Schedule",
