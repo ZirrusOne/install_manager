@@ -2,79 +2,34 @@
     <div class="filter-wrapper">
         <div class="filter-by-team">
             <label>TEAM</label>
-            <a onclick="job_management.openTeamFilter()">{{displayFilterTeamName}}</a>
+            <a id="teamDisplayName" onclick="job_management.openTeamFilter()"></a>
         </div>
         <div class="all-filter">
             <a onclick="job_management.openAllFilters()">FILTERS</a>
         </div>
     </div>
-    <div class="result-wrapper">
-        <div class="job-item">
-            <div class="job-header">
-                <div class="job-title">Job Title</div>
-                <div class="job-timer in-progress">02 hours 15 minutes</div>
+    <div class="result-wrapper"></div>
+</div>
+<div id="teamFilter"></div>
+<div class="modal fade filter-modal all-filter-modal" id="allFilterModal" tabindex="-1" role="dialog"
+     aria-labelledby="allFilterModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">FILTER</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="job-status status-in-progress">In Progress</div>
-            <div class="job-reason"></div>
-        </div>
-        <div class="job-item">
-            <div class="job-header">
-                <div class="job-title">Unit 02</div>
-                <div class="job-timer resolve-ready">02 hours 15 minutes</div>
+            <div class="modal-body">
+                <div class="filter-modal-wrapper" id="allFilter">
+
+                </div>
+
             </div>
-            <div class="job-status status-resolve-ready">Resolve Ready</div>
-            <div class="job-reason"></div>
-        </div>
-        <div class="job-item">
-            <div class="job-header">
-                <div class="job-title">Unit 03</div>
-                <div class="job-timer non-complaint">02 hours 15 minutes</div>
-            </div>
-            <div class="job-status status-non-complaint">Non Compliant</div>
-            <div class="job-reason"></div>
-        </div>
-        <div class="job-item">
-            <div class="job-header">
-                <div class="job-title">Unit 03</div>
-                <div class="job-timer escalate">02 hours 15 minutes</div>
-            </div>
-            <div class="job-status status-escalate">Escalate</div>
-            <div class="job-reason">Reason: HVAC</div>
-        </div>
-        <div class="job-item">
-            <div class="job-header">
-                <div class="job-title">Unit 03</div>
-                <div class="job-timer"></div>
-            </div>
-            <div class="job-status status-ready">Ready</div>
-            <div class="job-reason"></div>
         </div>
     </div>
 </div>
 
-<!--    {% if result.length > 0%}-->
-<!--    {% for item in result %}-->
-<!--    <div class="team-wrapper {{isEscalation?" escalation-->
-<!--    ":""}}" style="border-color:{{item.color}}">-->
-<!--    <a class="team-title"-->
-<!--       style="border-bottom-color:{{item.color}}"-->
-<!--       onclick="job_management.toggleCollapse(this)">-->
-<!--        <span><span>[{{item.team}}]</span> :: <span>{{item.schedule}}</span></span>-->
-<!--    </a>-->
-<!--    <div class="list-job">-->
-<!--        {% for job in item.jobs %}-->
-<!--        <a class="job-item" href="/app/job/{{job.name}}">-->
-<!--            <span class="bold">{{job.label}} {{job.unit_name}}</span>-->
-<!--            <span> - </span>-->
-<!--            <span class="{{!isEscalation?" italic":""}}">{{isEscalation?job.escalation_reason === ""?"Not-->
-<!--            input":job.escalation_reason:job.status}}</span>-->
-<!--        </a>-->
-<!--        {% endfor %}-->
-<!--    </div>-->
-<!--</div>-->
-<!--{% endfor %}-->
-<!--{% else %}-->
-<!--<div>No {{ isEscalation? "escalated" :""}} jobs found</div>-->
-<!--{% endif %}-->
-<!--</div>-->
 

@@ -17,16 +17,28 @@ frappe.pages["job-management"].on_page_load = (wrapper) => {
 };
 
 class JobManagement {
+    teamTitleElement;
+    resultWrapperElement;
+    teamFilterElement;
+    allFilterElement;
+
+
     isFieldLead;
     isEscalationView;
     isFirstTimeLoad;
     teams = [];
+    jobStatus = [];
+    schedules = [];
+    buildings = [];
+
     selectedTeam;
+    selectedStatus;
+    selectedSchedule;
+    selectedBuilding;
+
     previousSearchField = '';
-    displayFilterTeamName = 'Test';
 
     constructor(wrapper) {
-
     }
 
     initData(wrapper) {
@@ -38,18 +50,19 @@ class JobManagement {
             single_column: true
         });
 
-        $('.page-head-content').remove();
+        this.isEscalationView = false;
 
-        $('.main-section').find('footer').remove();
-        $('.page-head').find('.page-title').remove();
-        $('.layout-main-section').find('.page-form').remove();
-        $('.page-head .page-actions').find('.custom-actions').removeClass('hide hidden-xs hidden-md');
-        $('.page-head .page-actions .custom-actions').find('.form-group').removeClass('col-md-2');
-        $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
-        $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
-        $('.page-head .page-actions .menu-btn-group button.btn-default.icon-btn').removeAttr('data-original-title');
-        this.getTeams();
-        this.getData('');
+        $(frappe.render_template('job_management', {})).appendTo($(this.page.main));
+
+        this.teamTitleElement = $(this.page.main).find('#teamDisplayName');
+        this.resultWrapperElement = $(this.page.main).find('.result-wrapper');
+        this.teamFilterElement = $(this.page.main).find('#teamFilter');
+        this.allFilterElement = $(this.page.main).find('#allFilter');
+
+        this.customUI();
+        this.getFilters();
+
+        //this.getData('');
     }
 
     toggleCollapse(element) {
@@ -61,60 +74,66 @@ class JobManagement {
 
     changeView() {
         this.isEscalationView = !this.isEscalationView;
-        this.getData('');
+        this.getFilters()
     }
 
-    getTeams() {
+    getFilters() {
         frappe.call({
-            method: 'install_manager.install_manager.page.job_management.job_management.get_teams',
+            type: "GET",
+            method: 'install_manager.install_manager.page.job_management.job_management.get_list_filter_options',
+            args: {
+                escalation_view: this.isEscalationView
+            },
             callback: (result) => {
-                this.teams = result.message;
+                this.teams = result.message.teams;
+                this.schedules = result.message.schedules;
+                this.jobStatus = result.message.job_statuses;
+
                 if (this.teams.length > 0) {
                     this.selectedTeam = this.teams[0];
                 } else {
                     this.selectedTeam = null;
                 }
                 if (this.selectedTeam) {
-                    this.displayFilterTeamName = this.selectedTeam.teamName
+                    $(this.teamTitleElement).text(this.selectedTeam.label);
                 } else {
-                    this.displayFilterTeamName = 'Unassigned';
+                    $(this.teamTitleElement).text('Unassigned');
                 }
+
+                if (this.jobStatus.length > 0) {
+                    this.jobStatus.forEach(item => {
+                        item.isSelected = false;
+                    })
+                }
+
+                if (this.schedules.length > 0) {
+                    this.schedules.forEach(schedule => {
+                        schedule.isSelected = false;
+                        if (schedule.buildings.length > 0) {
+                            schedule.buildings.forEach(building => {
+                                building.isSelected = false;
+                            })
+                        }
+                    })
+                }
+
+                this.getData();
             }
-        })
+        });
     }
 
-    getData(filter) {
-        $(this.page.main).find('.job-wrapper').remove();
-
+    getData() {
+        $(this.resultWrapperElement).empty();
         frappe.call({
-            method: 'install_manager.install_manager.page.job_management.job_management.get_job_base_team',
+            method: 'install_manager.install_manager.page.job_management.job_management.list_active_jobs',
             args: {
-                searchValue: filter,
-                isEscalation: this.isEscalationView
+                filters: this.prepareFilters()
             },
-            callback: (r) => {
-                let data = JSON.parse(r.message);
-                if (this.isFirstTimeLoad && this.isEscalationView) {
-                    this.isFirstTimeLoad = false;
-                    if (data.length === 0) {
-                        this.isEscalationView = false;
-                        this.getData(filter)
-                    } else {
-                        this.setTitleView();
-                        $(frappe.render_template('job_management', {
-                            isEscalation: this.isEscalationView,
-                            result: data,
-                            displayFilterTeamName: this.displayFilterTeamName,
-                        })).appendTo($(this.page.main));
-                    }
-                } else {
-                    this.setTitleView();
-                    $(frappe.render_template('job_management', {
-                        isEscalation: this.isEscalationView,
-                        displayFilterTeamName: this.displayFilterTeamName,
-                        result: data,
-                    })).appendTo($(this.page.main));
-                }
+            callback: (result) => {
+                let data = result.message;
+                console.log(data);
+                this.setTitleView();
+                $(frappe.render_template('search_result', {})).appendTo($(this.resultWrapperElement));
             }
         });
     }
@@ -130,33 +149,67 @@ class JobManagement {
     }
 
     openTeamFilter() {
-        $(this.page.main).find('.team-filter-modal').remove();
-
+        $(this.teamFilterElement).empty();
         $(frappe.render_template('team_filter', {
             teams: this.teams,
-            selectedTeam: this.selectedTeam.teamName
-        })).appendTo($(this.page.main));
-
-        $('#teamFilterModal').modal('show');
+            selectedTeam: this.selectedTeam
+        })).appendTo($(this.teamFilterElement));
+        if (this.teams.length > 0) {
+            $('#teamFilterModal').modal('show');
+        }
     }
 
     openAllFilters() {
-        $(this.page.main).find('.all-filter-modal').remove();
-        $(frappe.render_template('all_filter')).appendTo($(this.page.main));
-
+        $(this.allFilterElement).empty();
+        $(frappe.render_template('all_filter', {
+            jobStatus: this.jobStatus,
+            schedules: this.schedules,
+            building: this.buildings,
+            selectedStatus: this.selectedStatus,
+            selectedSchedule: this.selectedSchedule,
+            selectedBuilding: this.selectedBuilding,
+        })).appendTo($(this.allFilterElement));
         $('#allFilterModal').modal('show');
-
     }
 
     changeTeam(element) {
-        let teamName = $(element).attr('data-value');
-        if (!this.selectedTeam.teamName === teamName) {
-            this.selectedTeam = this.teams.find(item => item.teamName === teamName)
-            this.displayFilterTeamName = teamName;
+        let teamId = $(element).attr('data-value');
+        if (!this.selectedTeam.id === teamId) {
+            this.selectedTeam = this.teams.find(item => item.id === teamId)
+            $(this.teamTitleElement).text(this.selectedTeam.label);
         }
 
         $('#teamFilterModal').modal('hide');
     }
 
+    prepareFilters() {
+        let args = {
+            "team_id": this.selectedTeam ? this.selectedTeam.id : '',
+            "statuses": [],
+            "building_numbers": [],
+            "schedule_ids": []
+        }
 
+        // if (this.isEscalationView) {
+        //     args.statuses = this.jobStatus.map(item => item.id);
+        // } else {
+        //     //   args.statuses = this.jobStatus.filter(item => item.isSelected).map(item => item.id);
+        // }
+        //
+        // args.schedule_ids = this.schedules.filter(item => item.isSelected).map(item => item.id);
+        // args.building_numbers = this.schedules.filter(item => item.isSelected).map(item => item.id);
+        return args;
+    }
+
+    customUI() {
+        $('.page-head-content').remove();
+        $('.main-section').find('footer').remove();
+        $('.page-head').find('.page-title').remove();
+        $('.layout-main-section').find('.page-form').remove();
+        $('.page-head .page-actions').find('.custom-actions').removeClass('hide hidden-xs hidden-md');
+        $('.page-head .page-actions .custom-actions').find('.form-group').removeClass('col-md-2');
+        $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
+        $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
+        $('.page-head .page-actions .menu-btn-group button.btn-default.icon-btn').removeAttr('data-original-title');
+    }
 }

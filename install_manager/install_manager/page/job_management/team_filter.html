@@ -18,8 +18,8 @@
                     <div class="filter-content">
                         {% for item in teams %}
                         <a onclick="job_management.changeTeam(this)"
-                           class="team-item {{selectedTeam === item.teamName?" active":""}}"
-                        data-value="{{item.teamName}}">{{item.teamName}}</a>
+                           class="team-item {{selectedTeam.id === item.id?" active":""}}"
+                        data-value="{{item.id}}">{{item.label}}</a>
                         {% endfor %}
                     </div>
                 </div>
