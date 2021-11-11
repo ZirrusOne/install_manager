@@ -117,7 +117,9 @@ def list_active_jobs(*args, **kwargs):
                            job.assigned_team as team_id,
                            job.status as job_status,
                            job.escalation_reason,
-                           job.non_compliant_reason
+                           job.non_compliant_reason,
+                           job.in_progress_start_time,
+                           job.finished_timer_minutes
                            """,
                        order_clause="""
                        order by schedule.start_date ASC, schedule.site, job.assigned_team, unit.building_number,

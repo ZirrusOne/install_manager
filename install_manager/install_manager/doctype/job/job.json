@@ -23,7 +23,9 @@
   "data_collection_section",
   "cool_work",
   "heat_work",
-  "initial_measure_mode"
+  "initial_measure_mode",
+  "finished_timer_minutes",
+  "in_progress_start_time"
  ],
  "fields": [
   {
@@ -162,11 +164,27 @@
    "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
    "fieldname": "section_break_2",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "finished_timer_minutes",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Finished Timer",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "in_progress_start_time",
+   "fieldtype": "Datetime",
+   "hidden": 1,
+   "label": "In Progress Start Time",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-06 00:40:14.684297",
+ "modified": "2021-11-10 18:21:01.089988",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",

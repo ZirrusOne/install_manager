@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "autoname": "JBTMR-.########",
+ "creation": "2021-11-10 00:46:01.472308",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "job",
+  "start_time",
+  "stop_time",
+  "duration_minutes",
+  "stop_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "job",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Job",
+   "options": "Job",
+   "read_only": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start",
+   "read_only": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "stop_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Stop",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "duration_minutes",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Duration",
+   "non_negative": 1,
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "stop_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Stop Status",
+   "read_only": 1,
+   "set_only_once": 1
+  }
+ ],
+ "in_create": 1,
+ "links": [],
+ "modified": "2021-11-10 17:57:07.467370",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Job Timer",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Back Office Staff",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Installer",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Lead",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "read_only": 1,
+ "sort_field": "start_time",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

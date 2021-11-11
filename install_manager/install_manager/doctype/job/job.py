@@ -2,7 +2,7 @@
 # For license information, please see license.txt
 
 # import frappe
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, List
 
 import frappe.utils
@@ -10,7 +10,9 @@ from frappe import msgprint
 from frappe.core.doctype.sms_settings import sms_settings
 from frappe.model.document import Document
 
+from install_manager.install_manager.doctype.job.job_status import READY, NO_COMPLIANT, IN_PROGRESS
 from install_manager.install_manager.doctype.team.team_type import LEVEL_1, LEVEL_2
+from install_manager.install_manager.doctype.team.user_role import FIELD_LEAD, INSTALLER, BACK_OFFICE
 from install_manager.install_manager.utilities import common_utils
 
 _sms_not_configured_message = 'SMS is not configured. SMS notification will not be sent. ' \
@@ -33,13 +35,16 @@ class Job(Document):
 
     def db_update(self):
         self._authorize_update()
-        is_status_changed = self._is_status_changed()
-        if is_status_changed and self.status == 'Ready':
-            frappe.throw('Once a Job has been moved out of Ready state, it cannot be moved back')
+        old_status = self._get_old_status()
+        is_status_changed = old_status != self.status
+        if is_status_changed and self.status == READY:
+            frappe.throw(f'Once a Job has been moved out of {READY} state, it cannot be moved back')
         self._validate_escalation()
         self._validate_non_compliant()
+        self._update_progress_start_time()
         super(Job, self).db_update()
         if is_status_changed:
+            self._update_timer(old_status)
             self._send_escalation_notification()
 
     def onload(self):
@@ -48,8 +53,8 @@ class Job(Document):
     def _authorize_update(self):
         if frappe.session.user == 'Administrator':
             return
-        if not self._has_role(username=frappe.session.user, role='Field Lead') \
-                and not self._has_role(username=frappe.session.user, role='Field Installer'):
+        if not self._has_role(username=frappe.session.user, role=FIELD_LEAD) \
+                and not self._has_role(username=frappe.session.user, role=INSTALLER):
             return
         if self.assigned_team is None or self.assigned_team == '':
             frappe.throw('This Job is not assigned to your team. You could not work on it')
@@ -62,25 +67,33 @@ class Job(Document):
 
     def db_insert(self):
         if self.status is None or self.status == '':
-            self.status = 'Ready'
+            self.status = READY
         self._validate_escalation()
         self._validate_non_compliant()
+        self._update_progress_start_time()
         super(Job, self).db_insert()
+        self._update_timer(old_status=None)
+
+    def _update_progress_start_time(self):
+        # update denormalize field
+        if self.status == IN_PROGRESS:
+            self.in_progress_start_time = frappe.utils.now_datetime()
+        else:
+            self.in_progress_start_time = None
 
     def _validate_non_compliant(self):
-        if not self.status.startswith('Non-compliant'):
+        if not self.status.startswith(NO_COMPLIANT):
             self.non_compliant_reason = ''
 
     def _validate_escalation(self):
         if not self.status.startswith('Escalation'):
             self.escalation_reason = ''
 
-    def _is_status_changed(self) -> bool:
+    def _get_old_status(self) -> Optional[str]:
         if self.get("__islocal") or not self.name:  # reference: super.db_update
-            return False
+            return None
 
-        old_status = self.get_db_value('status')
-        return self.status != old_status
+        return self.get_db_value('status')
 
     def _validate_site_unit(self):
         if self.schedule is None or self.schedule == '':
@@ -160,14 +173,14 @@ class Job(Document):
         if not self._is_sms_configured():
             return [_sms_not_configured_message]
 
-        phone_numbers, messages = self._extract_sms_phone_number(team_name=self.assigned_team, role='Field Lead')
+        phone_numbers, messages = self._extract_sms_phone_number(team_name=self.assigned_team, role=FIELD_LEAD)
         if len(phone_numbers) == 0:
             return messages
 
         # TODO  Notes: [Escalation Note]
         escalation_note_to_set = ''
         sms_settings.send_sms(receiver_list=phone_numbers,
-                              msg=f"{self.unit_name} escalated to Field Lead by "
+                              msg=f"{self.unit_name} escalated to {FIELD_LEAD} by "
                                   f"{self._get_person_name(frappe.session.user)}. "
                                   f"Reason: {self.escalation_reason}. {escalation_note_to_set}")
         return messages
@@ -221,7 +234,7 @@ class Job(Document):
         phone_numbers = []
         messages = []
         for tm in schedule.assigned_teams:
-            phs, msgs = self._extract_sms_phone_number(team_name=tm.team, role='Back Office Staff')
+            phs, msgs = self._extract_sms_phone_number(team_name=tm.team, role=BACK_OFFICE)
             phone_numbers.extend(phs)
             messages.extend(msgs)
 
@@ -240,7 +253,7 @@ class Job(Document):
         emails = []
         messages = []
         for tm in schedule.assigned_teams:
-            ems, msgs = self._extract_email_address(team_name=tm.team, role='Back Office Staff')
+            ems, msgs = self._extract_email_address(team_name=tm.team, role=BACK_OFFICE)
             emails.extend(ems)
             messages.extend(msgs)
 
@@ -313,3 +326,86 @@ class Job(Document):
             msgprint(messages[0], raise_exception=False)
         elif len(messages) > 1:
             msgprint(f'<ul><li>{"<li> ".join(messages)}</ul>', raise_exception=False)
+
+    def _update_timer(self, old_status: Optional[str]):
+        if old_status == self.status:
+            return
+
+        last_timer = Job.get_last_timer(job_id=self.name)
+
+        if self.status == IN_PROGRESS:
+            if last_timer is not None and last_timer.get('stop_time') is None:
+                # something is wrong with the data, correct it. Consider this is a up-to-date start time
+                frappe.db.sql("""
+                                            update `tabJob Timer`
+                                            set start_time = %(start_time)s,
+                                                duration_minutes = 0,
+                                                stop_status = null
+                                            where name = %(timer_id)s
+                                        """,
+                              values={
+                                  'timer_id': last_timer['timer_id'],
+                                  'start_time': self.in_progress_start_time
+                              },
+                              debug=False)
+            else:
+                frappe.get_doc({
+                    'doctype': 'Job Timer',
+                    'job': self.name,
+                    'start_time': self.in_progress_start_time,
+                    'stop_time': None,
+                    'stop_status': None,
+                    'duration_minutes': 0
+                }).insert()
+        elif old_status == IN_PROGRESS:
+            start_time = last_timer['start_time']
+            stop_time = frappe.utils.now_datetime()
+            duration: timedelta = stop_time - start_time
+            frappe.db.sql("""
+                                        update `tabJob Timer`
+                                        set stop_time = %(stop_time)s,
+                                            duration_minutes = %(duration_minutes)s,
+                                            stop_status = %(stop_status)s
+                                        where name = %(timer_id)s
+                                    """,
+                          values={
+                              'timer_id': last_timer['timer_id'],
+                              'stop_time': stop_time,
+                              'stop_status': self.status,
+                              'duration_minutes': round(duration.total_seconds() / 60)
+                          },
+                          debug=False)
+
+        # update denormalize field
+        self.finished_timer_minutes = Job.get_total_finished_timer(job_id=self.name)
+        frappe.db.sql("update `tabJob` set finished_timer_minutes = %(finished_timer_minutes)s where name = %(job_id)s",
+                      values={'job_id': self.name, 'finished_timer_minutes': Job.get_total_finished_timer(job_id=self.name)},
+                      debug=False, as_dict=True)
+
+    @staticmethod
+    def get_last_timer(job_id) -> Optional[dict]:
+        last_timers = frappe.db.sql("""
+                                select name as timer_id, start_time, stop_time
+                                from `tabJob Timer`
+                                where job = %(job_id)s
+                                order by start_time desc
+                                limit 1
+                                """,
+                                    values={'job_id': job_id},
+                                    debug=False,
+                                    as_dict=True
+                                    )
+        return None if len(last_timers) == 0 else last_timers[0]
+
+    @staticmethod
+    def get_total_finished_timer(job_id) -> int:
+        totals = frappe.db.sql("""
+                                select sum(duration_minutes) total_minutes
+                                from `tabJob Timer`
+                                where job = %(job_id)s and stop_time is not null
+                                """,
+                               values={'job_id': job_id},
+                               debug=False,
+                               as_dict=True
+                               )
+        return 0 if len(totals) == 0 else totals[0]['total_minutes']
