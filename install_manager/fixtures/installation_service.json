@@ -1,0 +1,52 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Installation Service",
+  "modified": "2021-11-10 20:58:33.781866",
+  "name": "Pull Wire",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "service": "Pull Wire"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Installation Service",
+  "modified": "2021-11-10 20:58:58.881808",
+  "name": "Connect Wire",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "service": "Connect Wire"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Installation Service",
+  "modified": "2021-11-10 20:59:11.268363",
+  "name": "Relocate Thermostat",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "service": "Relocate Thermostat"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Installation Service",
+  "modified": "2021-11-10 20:59:20.703988",
+  "name": "Add Wire",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "service": "Add Wire"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Installation Service",
+  "modified": "2021-11-10 20:59:31.773647",
+  "name": "Install Thermostat Only",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "service": "Install Thermostat Only"
+ }
+]

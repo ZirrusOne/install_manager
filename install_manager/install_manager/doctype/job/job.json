@@ -19,6 +19,8 @@
   "escalation_reason",
   "non_compliant_reason",
   "installation_type",
+  "column_break_14",
+  "additional_services",
   "assigned_team",
   "data_collection_section",
   "cool_work",
@@ -180,11 +182,21 @@
    "hidden": 1,
    "label": "In Progress Start Time",
    "read_only": 1
+  },
+  {
+   "fieldname": "additional_services",
+   "fieldtype": "Table MultiSelect",
+   "label": "Addl. Services",
+   "options": "Job Additional Service"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-10 18:21:01.089988",
+ "modified": "2021-11-10 21:07:53.026685",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",
