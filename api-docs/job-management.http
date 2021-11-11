@@ -28,3 +28,28 @@ Content-Type: application/json
   }
 }
 ###
+
+// Load and save detail
+//         frappe.model.clear_doc("Job", 'JOB-000001');
+        // Load
+#        frappe.model
+#            .with_doc("Job", 'JOB-000001')
+#            .then((result) => {
+#                consoleave.log(result);
+#                // Save
+#                frappe.call({
+#                    freeze: true,
+#                    method: "frappe.desk.form.save.savedocs",
+#                    args: {doc: result, action: "Save"},
+#                    callback: function (r) {
+#                        console.log(r)
+#                    }
+#                })
+#            });
+// Load job detail
+GET {{server_base_url}}/api/method/frappe.desk.form.load.getdoc
+    ?doctype=Job
+    &name=JOB-000001
+    &_={{$timestamp}}
+
+###
