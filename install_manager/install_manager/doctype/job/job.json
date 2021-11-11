@@ -27,7 +27,8 @@
   "heat_work",
   "initial_measure_mode",
   "finished_timer_minutes",
-  "in_progress_start_time"
+  "in_progress_start_time",
+  "in_progress_installer"
  ],
  "fields": [
   {
@@ -192,11 +193,19 @@
   {
    "fieldname": "column_break_14",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "in_progress_installer",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "In Progress Installer",
+   "options": "User",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-10 21:07:53.026685",
+ "modified": "2021-11-10 21:12:17.921172",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",

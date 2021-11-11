@@ -78,8 +78,14 @@ class Job(Document):
         # update denormalize field
         if self.status == IN_PROGRESS:
             self.in_progress_start_time = frappe.utils.now_datetime()
+            if self._has_role(username=frappe.session.user, role=FIELD_LEAD) \
+                    or self._has_role(username=frappe.session.user, role=INSTALLER):
+                self.in_progress_installer = frappe.session.user
+            else:
+                self.in_progress_installer = None
         else:
             self.in_progress_start_time = None
+            self.in_progress_installer = None
 
     def _validate_non_compliant(self):
         if not self.status.startswith(NO_COMPLIANT):
