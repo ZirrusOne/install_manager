@@ -24,6 +24,7 @@ class JobManagement {
     job_statuses = [];
     schedules = [];
     buildings = [];
+    results = [];
     selectedTeam;
 
     constructor(wrapper) {
@@ -127,14 +128,18 @@ class JobManagement {
     }
 
     getData() {
+        let aThis = this;
         frappe.call({
             method: 'install_manager.install_manager.page.job_management.job_management.list_active_jobs',
             args: {
                 filters: this.prepareFilters()
             },
             callback: (result) => {
-                let data = result.message;
-                this.renderResult(data);
+                this.results = result.message;
+                this.calculateTimer();
+                setInterval(function () {
+                    aThis.calculateTimer();
+                }, 30000);
             }
         });
     }
@@ -260,6 +265,32 @@ class JobManagement {
         $('.main-section').find('footer').remove();
         $('.page-head').find('.page-title').remove();
         $('.layout-main-section').find('.page-form').remove();
+    }
+
+    calculateTimer() {
+        let currentTime = moment();
+        this.results.forEach(item => {
+            // count time for job with status in progress
+            item.timer_hours = 0;
+            item.timer_min = 0;
+            if (item.in_progress_start_time != null && item.job_status === 'In Progress') {
+                let startTime = moment(item.in_progress_start_time);
+                let inProgressTime = moment.duration(currentTime.diff(startTime));
+                let totalTimeInMinute = Math.round(inProgressTime.asMinutes() + item.finished_timer_minutes);
+                let hours = Math.floor(totalTimeInMinute / 60);
+                let minutes = totalTimeInMinute - hours * 60;
+
+                item.timer_hours = hours.toLocaleString('en-US', {minimumIntegerDigits: 2});
+                item.timer_min = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2});
+            } else {
+                let hours = Math.floor(item.finished_timer_minutes / 60);
+                let minutes = item.finished_timer_minutes - hours * 60;
+
+                item.timer_hours = hours.toLocaleString('en-US', {minimumIntegerDigits: 2});
+                item.timer_min = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2});
+            }
+        });
+        this.renderResult(this.results);
     }
 
     renderAllFilter() {

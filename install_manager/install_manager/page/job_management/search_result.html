@@ -4,9 +4,13 @@
     <div class="job-header">
         <div class="job-title">{{item.site_unit_full_name}}</div>
         {%if item.job_status !== "Ready"%}
-            <div class="job-timer {{item.job_status ==="In Progress"?"in-progress":
+            <div class="job-timer">
+        <span class="{{item.job_status ==="In Progress"?"in-progress":
                 item.job_status === "Pending"?"pending":
-                item.job_status === "Escalation - Field Lead"?"escalate":""}}">02 Hours 15 Mins
+                item.job_status === "Escalation - Field Lead"?"escalate":""}}">{{item.timer_hours}}</span> Hours
+                <span class="{{item.job_status ==="In Progress"?"in-progress":
+                item.job_status === "Pending"?"pending":
+                item.job_status === "Escalation - Field Lead"?"escalate":""}}"> {{item.timer_min}}</span> Mins
               </div>
     {% endif %}
     </div>

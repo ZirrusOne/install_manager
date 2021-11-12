@@ -188,23 +188,23 @@ body {
     font-size: 14px;
 }
 
-.result-wrapper .job-item .job-header .job-timer.in-progress {
+.result-wrapper .job-item .job-header .job-timer .in-progress {
     color: var(--color-in-progress);
 }
 
-.result-wrapper .job-item .job-header .job-timer.resolve-ready {
+.result-wrapper .job-item .job-header .job-timer .resolve-ready {
     color: var(--color-resolve-ready)
 }
 
-.result-wrapper .job-item .job-header .job-timer.non-complaint {
+.result-wrapper .job-item .job-header .job-timer .non-complaint {
     color: var(--color-non-complaint);
 }
 
-.result-wrapper .job-item .job-header .job-timer.pending {
+.result-wrapper .job-item .job-header .job-timer .pending {
     color: var(--color-pending);
 }
 
-.result-wrapper .job-item .job-header .job-timer.escalate {
+.result-wrapper .job-item .job-header .job-timer .escalate {
     color: var(--color-escalate)
 }
 
