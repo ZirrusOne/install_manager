@@ -21,12 +21,12 @@ item.job_status === "Ready"?"status-ready":""}}">{{item.job_status}}
 </div>
 {%if item.job_status === "Escalation - Field Lead" %}
 <div class="job-reason">
-    {{item.escalation_reason}}
+    Reason: {{item.escalation_reason}}
 </div>
 {% endif %}
 {%if item.job_status === "Non-compliant" %}
 <div class="job-reason">
-    {{item.non_compliant_reason}}
+    Reason: {{item.non_compliant_reason}}
 </div>
 {% endif %}
 </div>
