@@ -13,6 +13,7 @@ from frappe.model.document import Document
 from install_manager.install_manager.doctype.escalation_record.escalation_record import EscalationRecord
 from install_manager.install_manager.doctype.job import job_status
 from install_manager.install_manager.doctype.job.job_status import READY, NO_COMPLIANT, IN_PROGRESS
+from install_manager.install_manager.doctype.job_timer.job_timer import JobTimer
 from install_manager.install_manager.doctype.team.team import Team
 from install_manager.install_manager.doctype.team.team_type import LEVEL_1
 from install_manager.install_manager.doctype.team.user_role import FIELD_LEAD, INSTALLER
@@ -65,6 +66,7 @@ class Job(Document):
                 return
         frappe.throw('This Job is not assigned to your team. You could not work it')
 
+    # noinspection PyAttributeOutsideInit
     def db_insert(self):
         if self.status is None or self.status == '':
             self.status = READY
@@ -414,9 +416,9 @@ class Job(Document):
                           debug=False)
 
         # update denormalize field
-        self.finished_timer_minutes = Job.get_total_finished_timer(job_id=self.name)
+        self.finished_timer_minutes = JobTimer.get_total_finished_timer(job_id=self.name)
         frappe.db.sql("update `tabJob` set finished_timer_minutes = %(finished_timer_minutes)s where name = %(job_id)s",
-                      values={'job_id': self.name, 'finished_timer_minutes': Job.get_total_finished_timer(job_id=self.name)},
+                      values={'job_id': self.name, 'finished_timer_minutes': self.finished_timer_minutes},
                       debug=False, as_dict=True)
 
     @staticmethod
@@ -433,16 +435,3 @@ class Job(Document):
                                     as_dict=True
                                     )
         return None if len(last_timers) == 0 else last_timers[0]
-
-    @staticmethod
-    def get_total_finished_timer(job_id) -> int:
-        totals = frappe.db.sql("""
-                                select sum(duration_minutes) total_minutes
-                                from `tabJob Timer`
-                                where job = %(job_id)s and stop_time is not null
-                                """,
-                               values={'job_id': job_id},
-                               debug=False,
-                               as_dict=True
-                               )
-        return 0 if len(totals) == 0 else totals[0]['total_minutes']
