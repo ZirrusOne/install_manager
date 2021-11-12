@@ -1,0 +1,159 @@
+{
+ "actions": [],
+ "autoname": "format:{job}-ESCA-{###}",
+ "creation": "2021-11-11 01:09:00.140351",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "job",
+  "escalation_time",
+  "from_status",
+  "escalation_status",
+  "escalation_user",
+  "escalation_level",
+  "escalation_reason",
+  "escalation_team",
+  "resolution_user",
+  "resolution_time",
+  "resolution_status",
+  "escalation_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "job",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Job",
+   "options": "Job",
+   "read_only": 1,
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "escalation_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Escalation Time",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "from_status",
+   "fieldtype": "Data",
+   "label": "From Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "escalation_user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Escalated By",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "escalation_level",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Escalation Level",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "escalation_team",
+   "fieldtype": "Link",
+   "label": "To Team",
+   "options": "Team",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolution_user",
+   "fieldtype": "Link",
+   "label": "Resolution User",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolution_time",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Resolution Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolution_status",
+   "fieldtype": "Data",
+   "label": "Resolution Status",
+   "read_only": 1
+  },
+  {
+   "fieldname": "escalation_reason",
+   "fieldtype": "Data",
+   "label": "Escalation Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "escalation_status",
+   "fieldtype": "Data",
+   "label": "Escalation Status",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "escalation_note",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Escalation Note"
+  }
+ ],
+ "in_create": 1,
+ "links": [],
+ "modified": "2021-11-11 23:45:17.714298",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Escalation Record",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Back Office Staff",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Installer",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Lead",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

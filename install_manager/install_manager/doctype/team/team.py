@@ -10,10 +10,13 @@ import frappe.permissions
 from frappe.model.document import Document
 
 from install_manager.install_manager.doctype.team.team_type import LEVEL_2, LEVEL_3, LEVEL_1
+from install_manager.install_manager.doctype.team_member.team_member import TeamMember
 from install_manager.install_manager.utilities import db_utils
 
 
 class Team(Document):
+    team_type: str
+    team_member: List[TeamMember]
 
     def after_rename(self, old: str, new: str, merge: bool):
         # update foreign keys
