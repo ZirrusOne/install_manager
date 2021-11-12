@@ -11,7 +11,7 @@
     {%if job_statuses.length > 0%}
     {% for item in job_statuses %}
     <a onclick="job_management.onChangeAllFilter(this)"
-       class="team-item {{item.isSelected?" active":""}}"
+       class="team-item uppercase {{item.isSelected?" active":""}}"
     data-filter-for="job_statuses"
     data-value="{{item.id}}">{{item.label}}</a>
     {% endfor %}
@@ -31,7 +31,7 @@
     {%if schedules.length > 0%}
     {% for item in schedules %}
     <a onclick="job_management.onChangeAllFilter(this)"
-       class="team-item {{item.isSelected?" active":""}}"
+       class="team-item  {{item.isSelected?" active":""}}"
     data-filter-for="schedules"
     data-value="{{item.id}}">{{item.label}}</a>
     {% endfor %}

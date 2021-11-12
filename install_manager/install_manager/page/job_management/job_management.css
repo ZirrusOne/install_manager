@@ -44,6 +44,14 @@ a.btn-filter {
     color: black;
 }
 
+.border-red {
+    border-color: var(--color-border-red) !important;
+}
+
+.inactive-border {
+    border-color: var(--color-diver) !important;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -72,6 +80,11 @@ a.btn-filter {
     padding-left: 20px;
     border-left: 1px solid var(--color-title);
     color: var(--color-title);
+    text-transform: uppercase;
+}
+
+.navbar .job-title:hover, .navbar .job-title:focus, .navbar .job-title:active {
+    color: var(--color-title);
 }
 
 body {
@@ -80,6 +93,10 @@ body {
 
 .main-section {
     background: black;
+}
+
+.layout-main-section-wrapper {
+    margin-bottom: 0;
 }
 
 .page-container {
@@ -91,9 +108,6 @@ body {
     display: flex;
     flex: 1;
     flex-direction: column;
-    border-top: 1px solid var(--border-color);
-    padding-top: 20px;
-
 }
 
 .filter-wrapper {
@@ -163,6 +177,10 @@ body {
     font-size: 18px;
     text-transform: uppercase;
     font-weight: 700;
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .result-wrapper .job-item .job-header .job-timer {
@@ -195,21 +213,51 @@ body {
     padding: 7px 20px;
     border-radius: 30px;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 .result-wrapper .job-item .job-reason {
     text-align: center;
-    color: var(--color-title)
+    color: var(--color-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .filter-modal .modal-content {
     background-color: black;
     border-radius: 8px;
+    max-height: calc(var(--vh) - 50px);
+    overflow: auto;
 }
 
 .filter-modal .modal-content .modal-header {
     border-bottom: none;
     padding-bottom: 0;
+}
+
+.all-filter-modal .modal-header {
+    flex-direction: column;
+
+}
+
+.all-filter-modal .modal-header .header-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.all-filter-modal .modal-header .reset-default {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .filter-modal .modal-title {
@@ -227,6 +275,10 @@ body {
     color: black;
 }
 
+.all-filter-modal button.close {
+    margin-top: -15px;
+}
+
 .filter-modal button.close:hover {
     opacity: 0.8;
 }
@@ -239,14 +291,6 @@ body {
     background: white;
     border-radius: 8px;
     padding: 20px;
-}
-
-.filter-modal .reset-default {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
 }
 
 .filter-modal .filter-modal-wrapper .filter-header {
@@ -274,6 +318,11 @@ body {
     flex-direction: column;
 }
 
+.all-filter-modal .filter-modal-wrapper .filter-content {
+    max-height: calc((80vh - 270px) / 3);
+    overflow: auto;
+}
+
 .filter-modal.all-filter-modal .all-filter-modal-wrapper {
     padding: 20px;
     background: var(--color-diver);
@@ -296,6 +345,9 @@ body {
     color: var(--color-diver);
     font-weight: 700;
     border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .filter-modal .filter-modal-wrapper .filter-content .team-item:last-child {
@@ -397,6 +449,9 @@ body {
         width: 80%;
         margin-left: 0;
         padding-left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .filter-wrapper {
@@ -429,7 +484,7 @@ body {
     }
 
     .filter-modal .modal-dialog {
-        margin-top: 20% !important;
+        margin-top: 25px !important;
     }
 
     .filter-modal .modal-content .modal-header {
@@ -466,11 +521,21 @@ body {
     }
 
     .result-wrapper {
-        padding: 10px;
+        padding: 15px;
+        max-height: calc(var(--vh) - 130px);
+        overflow: auto;
+        margin-bottom: 0;
     }
 
     .result-wrapper .job-item {
         padding: 5px;
     }
+
+    .all-filter-modal .filter-modal-wrapper .filter-content {
+        max-height: 180px;
+        /*max-height: calc((80vh - 270px) / 3);*/
+        overflow: auto;
+    }
+
 }
 

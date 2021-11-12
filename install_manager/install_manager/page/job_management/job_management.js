@@ -39,7 +39,9 @@ class JobManagement {
 
         this.isEscalationView = false;
 
-        $(frappe.render_template('job_management', {})).appendTo($(this.page.main));
+        $(frappe.render_template('job_management', {
+            isInstaller: frappe.user.has_role("Field Installer")
+        })).appendTo($(this.page.main));
 
         this.teamTitleElement = $(this.page.main).find('#teamDisplayName');
         this.resultWrapperElement = $(this.page.main).find('.result-wrapper');
@@ -48,9 +50,7 @@ class JobManagement {
 
         this.customUI();
         this.getFilters();
-        if (!frappe.user.has_role("Field Installer")) {
-            this.setTitleView();
-        }
+        this.setTitleView();
     }
 
     toggleCollapse(element) {
@@ -61,9 +61,16 @@ class JobManagement {
     }
 
     changeView() {
-        this.isEscalationView = !this.isEscalationView;
-        this.setTitleView();
-        this.getFilters();
+        if (!frappe.user.has_role("Field Installer")) {
+            this.isEscalationView = !this.isEscalationView;
+            this.setTitleView();
+            this.getFilters();
+            if (this.isEscalationView) {
+                $('#allFilterButton').addClass('border-red');
+            } else {
+                $('#allFilterButton').removeClass('border-red');
+            }
+        }
     }
 
     getFilters() {
@@ -143,9 +150,11 @@ class JobManagement {
     }
 
     openTeamFilter() {
-        this.renderTeamFilter();
-        if (this.teams.length > 0) {
-            $('#teamFilterModal').modal('show');
+        if (!frappe.user.has_role("Field Installer")) {
+            this.renderTeamFilter();
+            if (this.teams.length > 0) {
+                $('#teamFilterModal').modal('show');
+            }
         }
     }
 
