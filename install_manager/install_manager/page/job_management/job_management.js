@@ -27,14 +27,11 @@ class JobManagement {
     isEscalationView;
     isFirstTimeLoad;
     teams = [];
-    jobStatus = [];
+    job_statuses = [];
     schedules = [];
     buildings = [];
 
     selectedTeam;
-    selectedStatus;
-    selectedSchedule;
-    selectedBuilding;
 
     previousSearchField = '';
 
@@ -61,8 +58,9 @@ class JobManagement {
 
         this.customUI();
         this.getFilters();
-
-        //this.getData('');
+        if (!frappe.user.has_role("Field Installer")) {
+            this.setTitleView();
+        }
     }
 
     toggleCollapse(element) {
@@ -74,7 +72,8 @@ class JobManagement {
 
     changeView() {
         this.isEscalationView = !this.isEscalationView;
-        this.getFilters()
+        this.setTitleView();
+        this.getFilters();
     }
 
     getFilters() {
@@ -87,7 +86,7 @@ class JobManagement {
             callback: (result) => {
                 this.teams = result.message.teams;
                 this.schedules = result.message.schedules;
-                this.jobStatus = result.message.job_statuses;
+                this.job_statuses = result.message.job_statuses;
 
                 if (this.teams.length > 0) {
                     this.selectedTeam = this.teams[0];
@@ -100,10 +99,16 @@ class JobManagement {
                     $(this.teamTitleElement).text('Unassigned');
                 }
 
-                if (this.jobStatus.length > 0) {
-                    this.jobStatus.forEach(item => {
-                        item.isSelected = false;
-                    })
+                if (this.job_statuses.length > 0) {
+                    if (this.isEscalationView) {
+                        this.job_statuses.forEach(item => {
+                            item.isSelected = true;
+                        })
+                    } else {
+                        this.job_statuses.forEach(item => {
+                            item.isSelected = false;
+                        })
+                    }
                 }
 
                 if (this.schedules.length > 0) {
@@ -117,13 +122,16 @@ class JobManagement {
                     })
                 }
 
-                this.getData();
+                if (this.job_statuses.length === 0) {
+                    this.renderResult([]);
+                } else {
+                    this.getData();
+                }
             }
         });
     }
 
     getData() {
-        $(this.resultWrapperElement).empty();
         frappe.call({
             method: 'install_manager.install_manager.page.job_management.job_management.list_active_jobs',
             args: {
@@ -131,14 +139,7 @@ class JobManagement {
             },
             callback: (result) => {
                 let data = result.message;
-                if (!frappe.user.has_role("Field Installer")){
-                    this.setTitleView();
-                }
-
-                $(frappe.render_template('search_result', {
-                    isEscalation: this.isEscalationView,
-                    result: data
-                })).appendTo($(this.resultWrapperElement));
+                this.renderResult(data);
             }
         });
     }
@@ -154,37 +155,95 @@ class JobManagement {
     }
 
     openTeamFilter() {
-        $(this.teamFilterElement).empty();
-        $(frappe.render_template('team_filter', {
-            teams: this.teams,
-            selectedTeam: this.selectedTeam
-        })).appendTo($(this.teamFilterElement));
+        this.renderTeamFilter();
         if (this.teams.length > 0) {
             $('#teamFilterModal').modal('show');
         }
     }
 
-    openAllFilters() {
-        $(this.allFilterElement).empty();
-        $(frappe.render_template('all_filter', {
-            jobStatus: this.jobStatus,
-            schedules: this.schedules,
-            building: this.buildings,
-            selectedStatus: this.selectedStatus,
-            selectedSchedule: this.selectedSchedule,
-            selectedBuilding: this.selectedBuilding,
-        })).appendTo($(this.allFilterElement));
-        $('#allFilterModal').modal('show');
-    }
-
-    changeTeam(element) {
+    onChangeTeam(element) {
         let teamId = $(element).attr('data-value');
         if (!this.selectedTeam.id === teamId) {
             this.selectedTeam = this.teams.find(item => item.id === teamId)
             $(this.teamTitleElement).text(this.selectedTeam.label);
+            this.onResetAllFilter();
+            this.getData();
+        }
+        $('#teamFilterModal').modal('hide');
+    }
+
+    openAllFilters() {
+        if (this.job_statuses.length > 0) {
+            this.renderAllFilter();
+            $('#allFilterModal').modal('show');
+        }
+    }
+
+    onChangeAllFilter(element) {
+        let id = $(element).attr('data-value');
+        let filterFor = $(element).attr('data-filter-for');
+        switch (filterFor) {
+            case 'job_statuses':
+                this.job_statuses.forEach(item => {
+                    if (item.id === id)
+                        item.isSelected = !item.isSelected;
+                })
+                break;
+            case 'schedules':
+                this.schedules.forEach(item => {
+                    if (item.id === id) {
+                        item.isSelected = !item.isSelected;
+                        if (item.isSelected) {
+                            this.buildings = item.buildings;
+                            this.buildings.forEach(building => building.isSelected = false);
+                        } else {
+                            this.buildings = [];
+                        }
+                    } else {
+                        item.isSelected = false;
+                    }
+                })
+                break;
+            case 'buildings':
+                this.buildings.forEach(item => {
+                    if (item.id.toString() === id)
+                        item.isSelected = !item.isSelected;
+                })
+                break;
         }
 
-        $('#teamFilterModal').modal('hide');
+        this.renderAllFilter();
+    }
+
+    onResetAllFilter() {
+        this.job_statuses.forEach(item => item.isSelected = false);
+        this.schedules.forEach(item => item.isSelected = false);
+        this.buildings = [];
+        this.renderAllFilter();
+    }
+
+    onResetFilterBy(element) {
+        let type = $(element).attr('data-value');
+        switch (type) {
+            case 'job_statuses':
+                this.job_statuses.forEach(item => {
+                    item.isSelected = false;
+                })
+                break;
+            case 'schedules':
+                this.schedules.forEach(item => item.isSelected = false);
+                this.buildings = [];
+                break;
+            case 'buildings':
+                this.buildings.forEach(item => item.isSelected = false);
+                break;
+        }
+        this.renderAllFilter();
+    }
+
+    onCloseFilter() {
+        $('#allFilterModal').modal('hide');
+        this.getData();
     }
 
     prepareFilters() {
@@ -195,14 +254,18 @@ class JobManagement {
             "schedule_ids": []
         }
 
-        // if (this.isEscalationView) {
-        //     args.statuses = this.jobStatus.map(item => item.id);
-        // } else {
-        //     //   args.statuses = this.jobStatus.filter(item => item.isSelected).map(item => item.id);
-        // }
-        //
-        // args.schedule_ids = this.schedules.filter(item => item.isSelected).map(item => item.id);
-        // args.building_numbers = this.schedules.filter(item => item.isSelected).map(item => item.id);
+        if (this.isEscalationView) {
+            args.statuses = this.job_statuses.map(item => item.id);
+        } else {
+            args.statuses = this.job_statuses.filter(item => item.isSelected).map(item => item.id);
+        }
+
+        args.schedule_ids = this.schedules.filter(item => item.isSelected).map(item => item.id);
+
+        if (this.buildings.length > 0) {
+            args.building_numbers = this.buildings.filter(item => item.isSelected).map(item => item.id);
+        }
+
         return args;
     }
 
@@ -216,5 +279,30 @@ class JobManagement {
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
         $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
         $('.page-head .page-actions .menu-btn-group button.btn-default.icon-btn').removeAttr('data-original-title');
+    }
+
+    renderAllFilter() {
+        $(this.allFilterElement).empty();
+        $(frappe.render_template('all_filter', {
+            job_statuses: this.job_statuses,
+            schedules: this.schedules,
+            buildings: this.buildings,
+        })).appendTo($(this.allFilterElement));
+    }
+
+    renderTeamFilter() {
+        $(this.teamFilterElement).empty();
+        $(frappe.render_template('team_filter', {
+            teams: this.teams,
+            selectedTeam: this.selectedTeam
+        })).appendTo($(this.teamFilterElement));
+    }
+
+    renderResult(data) {
+        $(this.resultWrapperElement).empty();
+        $(frappe.render_template('search_result', {
+            isEscalation: this.isEscalationView,
+            result: data
+        })).appendTo($(this.resultWrapperElement));
     }
 }

@@ -2,10 +2,10 @@
     <div class="filter-wrapper">
         <div class="filter-by-team">
             <label>TEAM</label>
-            <a id="teamDisplayName" onclick="job_management.openTeamFilter()"></a>
+            <a class="btn-filter" id="teamDisplayName" onclick="job_management.openTeamFilter()"></a>
         </div>
         <div class="all-filter">
-            <a onclick="job_management.openAllFilters()">FILTERS</a>
+            <a class="btn-filter" onclick="job_management.openAllFilters()">FILTERS</a>
         </div>
     </div>
     <div class="result-wrapper"></div>
@@ -18,18 +18,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">FILTER</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" onclick="job_management.onCloseFilter()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="filter-modal-wrapper" id="allFilter">
-
+                <div class="reset-default">
+                    <a class="btn-filter" onclick="job_management.onResetAllFilter()">RESET TO DEFAULT</a>
                 </div>
-
+                <div class="filter-modal-wrapper" id="allFilter">
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-
