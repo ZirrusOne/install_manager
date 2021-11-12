@@ -1,3 +1,12 @@
+a.btn-filter {
+    padding: 5px 30px;
+    display: block;
+    background: var(--color-gray);
+    border: 1px solid var(--color-orange);
+    border-radius: 20px;
+    color: var(--color-title);
+}
+
 .status-in-progress {
     background-color: var(--color-in-progress);
     border-color: var(--color-in-progress);
@@ -53,6 +62,10 @@
     margin-bottom: 0;
 }
 
+.navbar {
+    background: black;
+}
+
 .navbar .job-title {
     margin-left: 20px;
     font-size: 16px;
@@ -60,35 +73,6 @@
     padding-left: 20px;
     border-left: 1px solid var(--color-title);
     color: var(--color-title);
-}
-
-#page-job-management .page-head .page-head-content {
-    height: 70px;
-}
-
-#page-job-management .page-head .page-head-content .custom-actions .input-with-feedback {
-    height: 40px;
-    background: transparent;
-    border: 1px solid var(--color-midnight-blue);
-    border-radius: 0;
-    min-width: 350px;
-}
-
-#page-job-management .page-actions {
-    flex-direction: row-reverse;
-}
-
-#page-job-management .page-actions .menu-btn-group .icon-btn {
-    margin-left: 0;
-    margin-right: 10px;
-    height: 40px;
-    width: 40px;
-    border: 1px solid var(--color-peru);
-    border-radius: 0;
-}
-
-#page-job-management .layout-main-section-wrapper {
-    margin-bottom: 0;
 }
 
 body {
@@ -124,36 +108,26 @@ body {
 
 .filter-wrapper .filter-by-team {
     display: flex;
-    border-radius: 20px;
-    border: 1px solid var(--color-diver);
     justify-content: space-between;
     align-items: center;
-    background: rgb(51, 51, 51);
     margin-right: 30px;
 }
 
 .filter-wrapper .filter-by-team label {
     color: var(--color-title);
-    border-right: 1px solid rgb(102, 102, 102);
+    border: 1px solid var(--color-diver);
+    border-right: none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     margin-bottom: 0;
     padding: 5px 30px;
+    background: var(--color-gray);
 }
 
-.filter-wrapper .filter-by-team a {
-    padding: 5px 30px;
-    display: block;
-}
-
-.filter-wrapper .all-filter {
-    border-radius: 20px;
-    border: 1px solid rgb(102, 102, 102);
-    background: rgb(51, 51, 51);
-}
-
-.filter-wrapper .all-filter a {
-    padding: 5px 30px;
-    display: block;
-    color: var(--color-title);
+.filter-wrapper .filter-by-team a.btn-filter {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    color: white;
 }
 
 .result-wrapper {
@@ -246,11 +220,16 @@ body {
 
 .filter-modal button.close {
     background-color: var(--color-ready);
+    opacity: 1;
     border-radius: 65px;
-    padding: 5px 8px;
+    padding: 3px 6px;
     margin-top: 0;
     margin-right: 0;
     color: black;
+}
+
+.filter-modal button.close:hover {
+    opacity: 0.8;
 }
 
 .filter-modal button.close span {
@@ -263,16 +242,45 @@ body {
     padding: 20px;
 }
 
+.filter-modal .reset-default {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
 .filter-modal .filter-modal-wrapper .filter-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+
+.filter-modal .filter-modal-wrapper .filter-header .header-title {
     color: var(--color-orange);
     font-size: 16px;
     text-transform: uppercase;
-    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.filter-modal .filter-modal-wrapper .filter-header .fa {
+    font-size: 20px;
 }
 
 .filter-modal .filter-modal-wrapper .filter-content {
     display: flex;
     flex-direction: column;
+}
+
+.filter-modal.all-filter-modal .filter-modal-wrapper .filter-content {
+    margin-bottom: 20px;
+}
+
+.filter-modal.all-filter-modal .filter-modal-wrapper .filter-content.last-child {
+    margin-bottom: 0;
 }
 
 .filter-modal .filter-modal-wrapper .filter-content .team-item {
@@ -285,6 +293,10 @@ body {
     border-radius: 8px;
 }
 
+.filter-modal .filter-modal-wrapper .filter-content .team-item:last-child {
+    margin-bottom: 0;
+}
+
 .filter-modal .filter-modal-wrapper .filter-content .team-item.active {
     background: black;
     color: var(--color-title);
@@ -294,8 +306,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-    padding: 10px;
-    padding-bottom: 0;
+    padding: 10px 10px 0;
     border: 1px solid var(--color-midnight-blue)
 }
 
@@ -369,18 +380,18 @@ body {
     margin-bottom: 0;
 }
 
-
 @media screen and (max-width: 540px) {
-    #page-job-management .page-head .page-head-content .custom-actions {
-        width: 100%;
+    a.btn-filter {
+        padding: 5px 13px;
     }
 
-    #page-job-management .page-head .page-head-content .custom-actions .form-group {
-        width: 100%;
-    }
-
-    #page-job-management .page-head .page-head-content .custom-actions .input-with-feedback {
-        min-width: 100%;
+    .navbar .job-title {
+        color: var(--color-title);
+        text-align: center;
+        border-left: none;
+        width: 80%;
+        margin-left: 0;
+        padding-left: 0;
     }
 
     .filter-wrapper {
@@ -412,9 +423,45 @@ body {
         background: rgb(51, 51, 51);
     }
 
-    .filter-wrapper .all-filter a {
-        padding: 5px 13px;
+    .filter-modal .modal-dialog {
+        margin-top: 20% !important;
     }
 
+    .filter-modal .modal-content .modal-header {
+        padding: 10px 10px 0;
+    }
+
+    .filter-modal .modal-content .modal-body {
+        padding: 10px;
+    }
+
+    .filter-modal .filter-modal-wrapper {
+        padding: 10px;
+    }
+
+    .filter-modal .filter-modal-wrapper .filter-header {
+        margin-bottom: 10px;
+    }
+
+    .filter-modal.all-filter-modal .filter-modal-wrapper .filter-content {
+        margin-bottom: 10px;
+    }
+
+    .filter-modal .reset-default {
+        margin-bottom: 10px;
+    }
+
+    .filter-modal .filter-modal-wrapper .filter-content .team-item {
+        margin-bottom: 10px;
+        padding: 8px 16px;
+    }
+
+    .result-wrapper {
+        padding: 10px;
+    }
+
+    .result-wrapper .job-item {
+        padding: 5px;
+    }
 }
 

@@ -1,23 +1,61 @@
 <div class="filter-header">
-    <i class="fa fa-info-circle" aria-hidden="true"></i>
-    <span>STATUS</span>
+    <div class="header-title">
+        <i class="fa fa-info-circle" aria-hidden="true"></i>
+        <span>STATUS</span>
+    </div>
+    <a class="header-action" onclick="job_management.onResetFilterBy(this)" data-value="job_statuses">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+    </a>
 </div>
 <div class="filter-content">
-
+    {%if job_statuses.length > 0%}
+    {% for item in job_statuses %}
+    <a onclick="job_management.onChangeAllFilter(this)"
+       class="team-item {{item.isSelected?" active":""}}"
+    data-filter-for="job_statuses"
+    data-value="{{item.id}}">{{item.label}}</a>
+    {% endfor %}
+    {% endif %}
 </div>
 
 <div class="filter-header">
-    <i class="fa fa-calendar" aria-hidden="true"></i>
-    <span>SCHEDULE</span>
+    <div class="header-title">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        <span>SCHEDULE</span>
+    </div>
+    <a class="header-action" onclick="job_management.onResetFilterBy(this)" data-value="schedules">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+    </a>
 </div>
 <div class="filter-content">
-
+    {%if schedules.length > 0%}
+    {% for item in schedules %}
+    <a onclick="job_management.onChangeAllFilter(this)"
+       class="team-item {{item.isSelected?" active":""}}"
+    data-filter-for="schedules"
+    data-value="{{item.id}}">{{item.label}}</a>
+    {% endfor %}
+    {% endif %}
 </div>
 
 <div class="filter-header">
-    <i class="fa fa-building-o" aria-hidden="true"></i>
-    <span>BUILDING</span>
+    <div class="header-title">
+        <i class="fa fa-building-o" aria-hidden="true"></i>
+        <span>BUILDING</span>
+    </div>
+    {%if buildings.length > 0%}
+    <a class="header-action" onclick="job_management.onResetFilterBy(this)" data-value="buildings">
+        <i class="fa fa-repeat" aria-hidden="true"></i>
+    </a>
+    {% endif %}
 </div>
-<div class="filter-content">
-
+<div class="filter-content last-child">
+    {%if buildings.length > 0%}
+    {% for item in buildings %}
+    <a onclick="job_management.onChangeAllFilter(this)"
+       class="team-item {{item.isSelected?" active":""}}"
+    data-filter-for="buildings"
+    data-value="{{item.id}}">{{item.label}}</a>
+    {% endfor %}
+    {% endif %}
 </div>
