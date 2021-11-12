@@ -7,39 +7,29 @@ frappe.pages["job-management"].on_page_load = (wrapper) => {
     const job_management = new JobManagement(wrapper);
     $('#navbar-breadcrumbs').addClass('hide-item');
     $(wrapper).bind('show', () => {
-        let isFieldLead = frappe.user.has_role("Field Lead");
-        job_management.isFieldLead = isFieldLead;
-        job_management.isEscalationView = !!isFieldLead;
-        job_management.isFirstTimeLoad = true;
         job_management.initData(wrapper);
     });
     window.job_management = job_management;
 };
 
 class JobManagement {
+    //binding element
     teamTitleElement;
     resultWrapperElement;
     teamFilterElement;
     allFilterElement;
 
-
-    isFieldLead;
     isEscalationView;
-    isFirstTimeLoad;
     teams = [];
     job_statuses = [];
     schedules = [];
     buildings = [];
-
     selectedTeam;
-
-    previousSearchField = '';
 
     constructor(wrapper) {
     }
 
     initData(wrapper) {
-        let aThis = this;
         $(wrapper).empty();
         this.page = frappe.ui.make_app_page({
             parent: wrapper,
@@ -274,11 +264,6 @@ class JobManagement {
         $('.main-section').find('footer').remove();
         $('.page-head').find('.page-title').remove();
         $('.layout-main-section').find('.page-form').remove();
-        $('.page-head .page-actions').find('.custom-actions').removeClass('hide hidden-xs hidden-md');
-        $('.page-head .page-actions .custom-actions').find('.form-group').removeClass('col-md-2');
-        $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').removeClass('dropdown-menu-right');
-        $('.page-head .page-actions .menu-btn-group').find('ul.dropdown-menu').addClass('dropdown-menu-left');
-        $('.page-head .page-actions .menu-btn-group button.btn-default.icon-btn').removeAttr('data-original-title');
     }
 
     renderAllFilter() {
