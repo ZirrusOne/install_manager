@@ -90,27 +90,25 @@ class JobManagement {
                 }
 
                 if (this.job_statuses.length > 0) {
-                    if (this.isEscalationView) {
-                        this.job_statuses.forEach(item => {
-                            item.isSelected = true;
-                        })
-                    } else {
-                        this.job_statuses.forEach(item => {
-                            item.isSelected = false;
-                        })
-                    }
+                    this.job_statuses.forEach(item => {
+                        item.isSelected = true;
+                    })
                 }
 
                 if (this.schedules.length > 0) {
                     this.schedules.forEach(schedule => {
-                        schedule.isSelected = false;
+                        schedule.isSelected = true;
                         if (schedule.buildings.length > 0) {
                             schedule.buildings.forEach(building => {
-                                building.isSelected = false;
+                                building.isSelected = true;
                             })
                         }
+
+                        this.buildings = this.buildings.concat(schedule.buildings)
                     })
                 }
+
+                this.buildings = this.buildings.filter((building, index, tempBuilding) => tempBuilding.findIndex(tempBuildingItem => tempBuildingItem.id === building.id) === index)
 
                 if (this.job_statuses.length === 0) {
                     this.renderResult([]);
@@ -183,14 +181,6 @@ class JobManagement {
                 this.schedules.forEach(item => {
                     if (item.id === id) {
                         item.isSelected = !item.isSelected;
-                        if (item.isSelected) {
-                            this.buildings = item.buildings;
-                            this.buildings.forEach(building => building.isSelected = false);
-                        } else {
-                            this.buildings = [];
-                        }
-                    } else {
-                        item.isSelected = false;
                     }
                 })
                 break;
@@ -208,7 +198,7 @@ class JobManagement {
     onResetAllFilter() {
         this.job_statuses.forEach(item => item.isSelected = false);
         this.schedules.forEach(item => item.isSelected = false);
-        this.buildings = [];
+        this.buildings.forEach(item => item.isSelected = false);
         this.renderAllFilter();
     }
 
@@ -216,13 +206,10 @@ class JobManagement {
         let type = $(element).attr('data-value');
         switch (type) {
             case 'job_statuses':
-                this.job_statuses.forEach(item => {
-                    item.isSelected = false;
-                })
+                this.job_statuses.forEach(item => item.isSelected = false)
                 break;
             case 'schedules':
                 this.schedules.forEach(item => item.isSelected = false);
-                this.buildings = [];
                 break;
             case 'buildings':
                 this.buildings.forEach(item => item.isSelected = false);

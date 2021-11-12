@@ -41,8 +41,7 @@ a.btn-filter {
 .status-pending {
     background-color: var(--color-pending);
     border-color: var(--color-pending);
-
-    color: white;
+    color: black;
 }
 
 .bold {
@@ -275,6 +274,12 @@ body {
     flex-direction: column;
 }
 
+.filter-modal.all-filter-modal .all-filter-modal-wrapper {
+    padding: 20px;
+    background: var(--color-diver);
+    border-radius: 8px;
+}
+
 .filter-modal.all-filter-modal .filter-modal-wrapper .filter-content {
     margin-bottom: 20px;
 }
@@ -441,6 +446,10 @@ body {
 
     .filter-modal .filter-modal-wrapper .filter-header {
         margin-bottom: 10px;
+    }
+
+    .filter-modal.all-filter-modal .all-filter-modal-wrapper {
+        padding: 10px;
     }
 
     .filter-modal.all-filter-modal .filter-modal-wrapper .filter-content {
