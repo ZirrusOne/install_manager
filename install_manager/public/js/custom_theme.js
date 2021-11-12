@@ -5,5 +5,6 @@ $(document).ready(function () {
     // The drawback of this hack is that: if a user switches his preferred theme to "light",
     // it will come back to this default "dark" when he presses F5!
     $('html').attr('data-theme', 'dark');
+    document.querySelector(':root').style.setProperty('--vh', window.innerHeight + 'px');
 });
 
