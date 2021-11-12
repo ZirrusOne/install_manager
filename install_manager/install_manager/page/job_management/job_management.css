@@ -1,74 +1,3 @@
-a.btn-filter {
-    padding: 5px 30px;
-    display: block;
-    background: var(--color-gray);
-    border: 1px solid var(--color-orange);
-    border-radius: 20px;
-    color: var(--color-title);
-}
-
-.status-in-progress {
-    background-color: var(--color-in-progress);
-    border-color: var(--color-in-progress);
-    color: black;
-}
-
-.status-resolve-ready {
-    background-color: var(--color-resolve-ready);
-    border-color: var(--color-resolve-ready);
-    color: black;
-}
-
-.status-non-complaint {
-    background-color: var(--color-non-complaint);
-    border-color: var(--color-non-complaint);
-    color: white;
-}
-
-.status-escalate {
-    background-color: var(--color-escalate);
-    border-color: var(--color-escalate);
-    color: white;
-}
-
-.status-ready {
-    background-color: var(--color-ready);
-    border-color: var(--color-ready);
-    color: white;
-}
-
-
-.status-pending {
-    background-color: var(--color-pending);
-    border-color: var(--color-pending);
-    color: black;
-}
-
-.border-red {
-    border-color: var(--color-border-red) !important;
-}
-
-.inactive-border {
-    border-color: var(--color-diver) !important;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.italic {
-    font-style: italic;
-}
-
-#body, #page-job-management {
-    height: 100%
-}
-
-#page-job-management .page-head {
-    position: sticky;
-    margin-bottom: 0;
-}
-
 .navbar {
     background: black;
 }
@@ -159,6 +88,10 @@ body {
     border-radius: 8px;
     background-color: #363636;
     margin-bottom: 20px;
+}
+
+.result-wrapper .job-item:hover {
+    text-decoration: none;
 }
 
 .result-wrapper .job-item:last-child {
