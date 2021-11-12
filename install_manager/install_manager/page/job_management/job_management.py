@@ -61,6 +61,9 @@ def get_list_filter_options(escalation_view):
         return idx1 - idx2
     status_list.sort(key=cmp_to_key(status_compare))
 
+    if len(team_ids) == 0:
+        team_ids = _get_default_team_ids()
+
     teams = []
     for team_id in team_ids:
         team = frappe.get_doc('Team', team_id)
