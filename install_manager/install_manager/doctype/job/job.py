@@ -268,11 +268,12 @@ class Job(Document):
                             f"No notification will be sent to them")
 
         if len(phone_numbers) > 0:
+            escalation_note = '' if self.escalation_note is None else self.escalation_note
             messages.extend(
                 self._send_sms(receiver_list=phone_numbers,
                                msg=f"{self.unit_name} escalated to {level} by "
                                    f"{self._get_person_name(frappe.session.user)}. "
-                                   f"Reason: {self.escalation_reason}. {self.escalation_note}"))
+                                   f"Reason: {self.escalation_reason}. {escalation_note}"))
         return messages
 
     def _send_sms(self, receiver_list: List[str], msg: str) -> List[str]:
@@ -315,13 +316,14 @@ class Job(Document):
             current_datetime: datetime = frappe.utils.now_datetime()
             url_to_job_page = f"{frappe.utils.get_url(full_address=True)}{frappe.utils.get_absolute_url('Job', self.name)}"
             email_subject = f"{schedule.schedule_name} - {self.unit_name} Escalated to {level}"
+            escalation_note = '' if self.escalation_note is None else self.escalation_note
             email_body = f"""<html><body> 
                          <p>Schedule activity for {schedule.site_name} - {self.unit_name} 
                          was escalated to {level} at {current_datetime.strftime('%HH:%M')} 
                          on {current_datetime.strftime('%m/%d/%Y')} with the following details:</p> 
                          <p>
-                         <br>Reason: {self.escalation_reason}
-                         {self.escalation_note}
+                         <br>Reason: {self.escalation_reason}.
+                         {escalation_note}
                          <br>Escalation Source: {self._get_person_name_email_phone(frappe.session.user)}
                          <br><a href="{url_to_job_page}">Go to Job detail</a>
                          </p></body></html>"""

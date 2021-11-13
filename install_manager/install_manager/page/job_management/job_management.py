@@ -173,6 +173,7 @@ def _query_jobs(select_list: str,
             inner join `tabSite Unit` unit on unit.name = job.site_unit
     		where 
     		    schedule.start_date <= %(current_date)s
+    		    and schedule.status <> 'Completed' and schedule.status <> 'Cancelled'
     		    {job_status_condition}
     		    {team_condition}
     		    {building_condition}
