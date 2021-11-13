@@ -261,6 +261,8 @@ class JobManagement {
     }
 
     customUI() {
+        $('.navbar').removeClass('hide-item');
+        $('.job-title').removeClass('hide-item');
         $('.page-head-content').remove();
         $('.main-section').find('footer').remove();
         $('.page-head').find('.page-title').remove();

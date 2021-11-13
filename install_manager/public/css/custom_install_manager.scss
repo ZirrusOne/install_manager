@@ -25,250 +25,75 @@
   top: 60px;
 }
 
-// custom layout job-detail with role field lead, field installer
-.level-1-team-job {
-
-  .page-head {
-    border-bottom: 1px solid var(--border-color);
-
-    .page-head-content {
-      height: 60px;
-
-      .sidebar-toggle-btn {
-        height: 40px;
-        width: 40px;
-        border: 1px solid var(--color-peru);
-        margin-right: 15px;
-
-        .icon-md {
-          margin-top: 6px;
-          width: 25px;
-          height: 25px;
-          filter: brightness(0%);
-        }
-
-        .sidebar-toggle-icon {
-          margin-left: 6px;
-          filter: brightness(0%);
-
-        }
-      }
-
-      .title-area {
-        div.flex {
-          align-items: center;
-          @media screen and (max-width: 540px) {
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-
-            .indicator-pill {
-              height: 20px;
-              font-size: 10px;
-            }
-          }
-
-          .title-text {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--color-midnight-blue);
-          }
-        }
-      }
-
-      .page-actions {
-        .standard-actions {
-          .btn {
-            height: 40px;
-            font-size: 14px;
-            border-radius: 0;
-            font-weight: bold;
-            background: var(--color-midnight-blue);
-
-            &:hover {
-              opacity: 0.8;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .page-body {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    @media screen and (max-width: 540px) {
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-
-    .page-content {
-      .layout-main {
-        margin-left: 0;
-        margin-right: 0;
-
-        .layout-side-section {
-          width: 20%;
-          padding: 0;
-          max-width: 20%;
-          min-width: 20%;
-          @media screen and (max-width: 990px) {
-            width: 0;
-            max-width: 0;
-            min-width: 0;
-          }
-
-          .form-sidebar {
-            border: 1px solid var(--color-midnight-blue);
-            padding: 24px 24px 10px;
-
-            ul.sidebar-menu {
-              margin-bottom: 0;
-
-              li.sidebar-label {
-                color: black;
-                font-size: 14px;
-                margin-bottom: 20px;
-              }
-
-              li.attachment-row {
-                border-radius: 0;
-                border: 1px solid var(--color-dodger-blue);
-
-                button {
-                  background: white;
-
-                  .pill-label {
-                    margin-left: 0 !important;
-                  }
-                }
-              }
-
-              li.add-attachment-btn {
-                margin-top: 20px;
-
-                button {
-                  border-radius: 0;
-                  background: var(--color-dodger-blue);
-                  color: white;
-                  height: 40px;
-                  font-size: 14px;
-
-                  &:hover {
-                    opacity: 0.8;
-                  }
-
-                  svg {
-                    filter: brightness(0) invert(1);
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        .layout-main-section-wrapper {
-          width: 80%;
-          padding: 0 0 0 20px;
-          margin-bottom: 0;
-          @media screen and (max-width: 990px) {
-            width: 100%;
-            padding: 0;
-          }
-
-          .layout-main-section {
-            .visible-section:first-child {
-            }
-
-            .form-page {
-              border-top: 1px solid var(--color-midnight-blue);
-            }
-
-            .form-section {
-              border-radius: 0;
-              box-shadow: none;
-              border: 1px solid var(--color-midnight-blue);
-              border-top: 0;
-              border-bottom: 0;
-              margin-bottom: 0;
-              padding-bottom: 0;
-
-              .section-head {
-                padding-top: 0;
-              }
-
-              .frappe-control {
-                width: 100%;
-                max-width: 100%;
-                padding-right: 0;
-
-                .form-control {
-                  background: transparent;
-                  border: 1px solid var(--color-dodger-blue);
-                  border-radius: 0;
-                  min-height: 40px;
-                  font-size: 14px;
-                }
-              }
-            }
-          }
-
-          .form-footer {
-            position: relative;
-
-            .after-save {
-              .comment-box {
-                border-radius: 0;
-                box-shadow: none;
-                border: 1px solid var(--color-midnight-blue);
-                border-top: 0;
-                padding: 0 24px 24px;
-
-                .comment-input-header {
-                  font-size: 12px;
-                  font-weight: 400;
-                  margin-bottom: 5px;
-                }
-
-                .ql-editor {
-                  background: transparent;
-                  font-size: 14px;
-                  border: 1px solid var(--color-dodger-blue);
-                  border-radius: 0;
-                }
-
-                .btn-comment {
-                  height: 40px;
-                  background: var(--color-dodger-blue);
-                  border-radius: 0;
-                  font-weight: 500;
-                  font-size: 14px;
-                  color: white;
-                }
-              }
-
-              .new-timeline {
-                border-radius: 0;
-                box-shadow: none;
-                padding: 24px;
-                padding-top: 0;
-                margin-top: 20px;
-
-                .timeline-item {
-                  word-break: break-word;
-                }
-              }
-            }
-
-            .scroll-to-top {
-              position: absolute;
-              bottom: 10px;
-              right: 10px;
-            }
-          }
-        }
-      }
-    }
-  }
+a.btn-filter {
+  padding: 5px 30px;
+  display: block;
+  background: var(--color-gray);
+  border: 1px solid var(--color-orange);
+  border-radius: 20px;
+  color: var(--color-title);
 }
 
+.status-in-progress {
+  background-color: var(--color-in-progress);
+  border-color: var(--color-in-progress);
+  color: black;
+}
+
+.status-resolve-ready {
+  background-color: var(--color-resolve-ready);
+  border-color: var(--color-resolve-ready);
+  color: black;
+}
+
+.status-non-complaint {
+  background-color: var(--color-non-complaint);
+  border-color: var(--color-non-complaint);
+  color: white;
+}
+
+.status-escalate {
+  background-color: var(--color-escalate);
+  border-color: var(--color-escalate);
+  color: white;
+}
+
+.status-ready {
+  background-color: var(--color-ready);
+  border-color: var(--color-ready);
+  color: white;
+}
+
+
+.status-pending {
+  background-color: var(--color-pending);
+  border-color: var(--color-pending);
+  color: black;
+}
+
+.border-red {
+  border-color: var(--color-border-red) !important;
+}
+
+.inactive-border {
+  border-color: var(--color-diver) !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+#body, #page-job-management, #page-job-detail {
+  height: 100%
+}
+
+#page-job-management, #page-job-detail {
+  .page-head {
+    position: sticky;
+    margin-bottom: 0;
+  }
+}

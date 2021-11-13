@@ -1,0 +1,40 @@
+.navbar {
+    background: black;
+}
+
+.navbar .job-title {
+    margin-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 20px;
+    border-left: 1px solid var(--color-title);
+    color: var(--color-title);
+    text-transform: uppercase;
+}
+
+.navbar .job-title:hover, .navbar .job-title:focus, .navbar .job-title:active {
+    color: var(--color-title);
+}
+
+body {
+    background: black;
+}
+
+.main-section {
+    background: black;
+}
+
+.layout-main-section-wrapper {
+    margin-bottom: 0;
+}
+
+.page-container {
+    background: black;
+    height: 100%;
+}
+
+.job-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
