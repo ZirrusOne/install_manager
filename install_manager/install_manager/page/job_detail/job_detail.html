@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="btn-action">Lock Photo</a>
+                        <a class="btn-action last">Lock Photo</a>
                     </div>
                 </div>
             </div>
@@ -168,15 +168,41 @@
             RECORDS
         </div>
         <div class="item-content">
-
+            <a class="btn-action">
+                <i class="fa fa-comments" aria-hidden="true"></i><span class="uppercase"> COMMENT</span>
+            </a>
+            <a class="btn-action">
+                <i class="fa fa-camera" aria-hidden="true"></i><span class="uppercase"> PHOTO</span>
+            </a>
         </div>
     </div>
     <div class="activity-wrapper job-container">
         <div class="item-title">
             JOB ACTIVITY STREAM
         </div>
-        <div class="item-content">
-
+        <div class="item-content job-tab-wrapper">
+            <ul class="nav nav-pills job-tab-header" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" data-target="#allActivity">ALL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#commentActivity">COMMENTS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#photoActivity">PHOTOS</a>
+                </li>
+            </ul>
+            <div class="tab-content job-tab-content">
+                <div id="allActivity" class="tab-pane active">
+                    All activity
+                </div>
+                <div id="commentActivity" class="tab-pane">
+                    Comments Activity
+                </div>
+                <div id="photoActivity" class="tab-pane">
+                    Photo Activity
+                </div>
+            </div>
         </div>
     </div>
 </div>
