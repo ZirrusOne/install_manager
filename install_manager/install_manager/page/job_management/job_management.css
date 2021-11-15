@@ -2,6 +2,7 @@
     background: black;
 }
 
+
 .navbar .job-title {
     margin-left: 20px;
     font-size: 16px;
@@ -26,6 +27,7 @@ body {
 
 .layout-main-section-wrapper {
     margin-bottom: 0;
+    margin-top: 20px;
 }
 
 .page-container {
@@ -174,7 +176,6 @@ body {
 
 .all-filter-modal .modal-header {
     flex-direction: column;
-
 }
 
 .all-filter-modal .modal-header .header-title {
@@ -375,6 +376,14 @@ body {
         padding: 5px 13px;
     }
 
+    .layout-main-section-wrapper {
+        margin-top: 0;
+    }
+
+    .navbar.job-page {
+        border-bottom: none!important;
+    }
+
     .navbar .job-title {
         color: var(--color-title);
         text-align: center;
@@ -396,7 +405,6 @@ body {
         align-items: center;
         margin-right: 10px;
         height: 32px;
-
     }
 
     .filter-wrapper .filter-by-team label {
