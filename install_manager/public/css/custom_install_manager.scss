@@ -1,3 +1,5 @@
+@import "fonts";
+
 :root {
   --color-peru: #ed7d31;
   --color-midnight-blue: #0042a0;
@@ -27,6 +29,11 @@
   --icon-stroke: #F1C232;
   --sidebar-select-color: #0D54A8;
   --sidebar-select-text-color: #F2EFF3;
+  --base-font: Raleway;
+}
+
+body {
+  font-family: var(--base-font);
 }
 
 .z1n {
@@ -47,25 +54,30 @@
     .standard-sidebar-label {
       font-weight: bold;
     }
+
     .standard-sidebar-item.selected {
       .sidebar-item-label {
         color: var(--sidebar-select-text-color);
         font-weight: bold;
       }
     }
+
     .sidebar-item-label {
       color: #666666;
       text-transform: uppercase;
-      font-size: 12px;  // because of uppercase
+      font-size: 12px; // because of uppercase
     }
   }
+
   .search-bar {
     svg {
       stroke: var(--icon-stroke);
     }
+
     #navbar-search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
       color: #666666;
     }
+
     #navbar-search::-ms-input-placeholder { /* Microsoft Edge */
       color: #666666;
     }
