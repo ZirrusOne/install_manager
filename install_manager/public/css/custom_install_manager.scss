@@ -17,6 +17,8 @@
   --color-border-red: rgb(153, 0, 0);
   --color-orange: #DE6D28;
   --color-gray: #363636;
+  --background-gray: #333333;
+  --color-job-detail-button: #666666;
   --color-job-container: #232323;
   --color-title-active: #FEFD5D;
   --color-switch-button: #81120B;
@@ -42,9 +44,15 @@ body {
     color: #444;
     --icon-stroke: #444;
   }
+
   input[type=checkbox] {
     border-color: #f1c232;
   }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
+
   input[type=checkbox]:checked {
     border-color: #f1c232;
     background-image: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 4.00001L2.66667 5.80001L7 1.20001' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"), linear-gradient(180deg, #111111 -124.51%, #F1C232 100%);
@@ -176,4 +184,69 @@ body {
       margin-bottom: 0;
     }
   }
+
+  .check-slider {
+    width: 60px;
+    /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      right: 0;
+      top: 0px;
+      display: flex;
+      align-items: flex-start;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      display: none;
+    }
+
+    /* The slider */
+    .slider {
+      position: relative;
+      cursor: pointer;
+      border-radius: 34px;
+      background-color: var(--color-switch-button);
+      -webkit-transition: .4s;
+      transition: .4s;
+      width: 50px;
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    .slider-text {
+      padding-top: 3px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      border-radius: 50%;
+      bottom: 3px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: var(--color-green-light);
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px var(--color-green-light);
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+  }
 }
+
