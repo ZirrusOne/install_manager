@@ -314,9 +314,8 @@ class Job(Document):
         if len(emails) > 0:
             schedule = frappe.get_doc('Schedule', self.schedule)
             current_datetime: datetime = frappe.utils.now_datetime()
-            url_to_job_page = f"{frappe.utils.get_url(full_address=True)}{frappe.utils.get_absolute_url('Job', self.name)}"
             email_subject = f"{schedule.schedule_name} - {self.unit_name} Escalated to {level}"
-            escalation_note = '' if self.escalation_note is None else self.escalation_note
+            escalation_note = '' if self.escalation_note is None else f'<br>Note: {self.escalation_note}'
             email_body = f"""<html><body> 
                          <p>Schedule activity for {schedule.site_name} - {self.unit_name} 
                          was escalated to {level} at {current_datetime.strftime('%HH:%M')} 
@@ -325,7 +324,6 @@ class Job(Document):
                          <br>Reason: {self.escalation_reason}.
                          {escalation_note}
                          <br>Escalation Source: {self._get_person_name_email_phone(frappe.session.user)}
-                         <br><a href="{url_to_job_page}">Go to Job detail</a>
                          </p></body></html>"""
 
             self._send_email(recipients=emails,
