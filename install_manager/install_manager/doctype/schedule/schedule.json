@@ -9,15 +9,13 @@
  "field_order": [
   "naming_series",
   "schedule_name",
-  "site",
-  "expected_start_date",
-  "expected_end_date",
   "start_date",
   "end_date",
-  "column_break_9",
-  "site_name",
   "status",
   "schedule_type",
+  "column_break_9",
+  "site",
+  "site_name",
   "assigned_teams",
   "pct_completion_method",
   "schedule_color",
@@ -49,23 +47,10 @@
    "reqd": 1
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "expected_start_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Expected Start Date"
-  },
-  {
-   "allow_in_quick_entry": 1,
-   "fieldname": "expected_end_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Expected End Date"
-  },
-  {
    "fieldname": "start_date",
    "fieldtype": "Date",
-   "label": "Start Date"
+   "label": "Start Date",
+   "search_index": 1
   },
   {
    "fieldname": "end_date",
@@ -78,7 +63,8 @@
    "fieldtype": "Select",
    "label": "Status",
    "options": "Open\nIn Progress\nOn-Hold\nCompleted\nCancelled",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "allow_in_quick_entry": 1,
@@ -118,6 +104,7 @@
    "default": "#169cd8",
    "fieldname": "schedule_color",
    "fieldtype": "Color",
+   "hidden": 1,
    "label": "Schedule Color"
   },
   {
@@ -171,7 +158,7 @@
    "link_fieldname": "schedule"
   }
  ],
- "modified": "2021-11-09 20:34:46.909258",
+ "modified": "2021-11-14 16:09:32.478596",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Schedule",
