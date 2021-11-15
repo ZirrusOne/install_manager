@@ -1,12 +1,13 @@
-<div class="modal fade filter-modal filter-for-detail job-type-filter-modal" id="jobTypeModal" tabindex="-1" role="dialog"
+<div class="modal fade filter-modal filter-for-detail additional-service-filter-modal" id="additionalServiceModal" tabindex="-1" role="dialog"
      data-backdrop="static" data-keyboard="false"
-     aria-labelledby="jobTypeModal"
+     aria-labelledby="additionalServiceModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">JOB TYPE</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">ADDITIONAL SERVICES</h5>
+                <button type="button" class="close" aria-label="Close"
+                        onclick="job_detail.onCloseAdditionalServiceModal()">
                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                 </button>
             </div>
@@ -15,12 +16,16 @@
                     <div class="filter-header">
                         <div class="header-title">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            <span>TYPES</span>
+                            <span>SERVICE</span>
                         </div>
                     </div>
                     <div class="filter-content">
-                        <a class="team-item active" onclick="job_detail.onChangeJobType()">STANDARD</a>
-                        <a class="team-item" onclick="job_detail.onChangeJobType()">REWORK</a>
+                        <a class="team-item active" onclick="job_detail.onChangeAdditionalService(this)">Pull Wire</a>
+                        <a class="team-item active" onclick="job_detail.onChangeAdditionalService(this)">Add Wire</a>
+                        <a class="team-item active" onclick="job_detail.onChangeAdditionalService(this)">Connect
+                            Wire</a>
+                        <a class="team-item " onclick="job_detail.onChangeAdditionalService(this)">Reconnect
+                            Thermostat</a>
                         <!--                        {% for item in job_types %}-->
                         <!--                        <a onclick="job_detail.onChangeJobType(this)"-->
                         <!--                           class="team-item {{selectedJobType.id === item.id?" active":""}}"-->

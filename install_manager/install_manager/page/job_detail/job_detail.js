@@ -63,8 +63,34 @@ class JobDetail {
 
     }
 
+    renderJobType() {
+        $(this.jobStatusElement).empty();
+        $(frappe.render_template('job_type', {
+            job_types: this.job_types,
+            selectedJobType: this.selectedJobType
+        })).appendTo($(this.jobTypeElement));
+    }
+
     onChangeJobType(element) {
         $('#jobTypeModal').modal('hide');
+    }
+
+    openAdditionalServiceModal() {
+        this.renderAdditionalService();
+        $('#additionalServiceModal').modal('show');
+    }
+
+    renderAdditionalService() {
+        $(this.additionalServiceElement).empty();
+        $(frappe.render_template('additional_service', {})).appendTo($(this.additionalServiceElement));
+    }
+
+    onChangeAdditionalService() {
+        
+    }
+
+    onCloseAdditionalServiceModal() {
+        $('#additionalServiceModal').modal('hide');
     }
 
     customUI() {
@@ -103,11 +129,5 @@ class JobDetail {
 
     }
 
-    renderJobType() {
-        $(this.jobStatusElement).empty();
-        $(frappe.render_template('job_type', {
-            job_types: this.job_types,
-            selectedJobType: this.selectedJobType
-        })).appendTo($(this.jobTypeElement));
-    }
+
 }

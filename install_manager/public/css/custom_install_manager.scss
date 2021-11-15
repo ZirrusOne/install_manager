@@ -362,13 +362,25 @@ body {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          &.active{
+
+          &.active {
             background: black;
             color: var(--color-title);
           }
+
           &:last-child {
             margin-bottom: 0;
           }
+        }
+      }
+    }
+
+    &.filter-for-detail {
+      .team-item {
+        color: var(--background-gray) !important;
+
+        &.active {
+          color: var(--color-title-active) !important;
         }
       }
     }
