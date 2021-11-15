@@ -20,85 +20,135 @@
   --color-switch-button: #81120B;
   --color-green-light: #94FB4A;
   --color-job-detail-title: #E5AD5B;
+  --bg-color: #161A1F;
+  --card-bg: #1C2126;
+  --color-header-navbar-border: #E5AD5B;
+  //--icon-fill: #F1C232;
+  --icon-stroke: #F1C232;
+  --sidebar-select-color: #0D54A8;
+  --sidebar-select-text-color: #F2EFF3;
 }
 
-.hide-item {
-  display: none !important;
-}
+.z1n {
+  header.navbar {
+    border-bottom: solid var(--color-header-navbar-border) 1px;
 
-.page-head {
-  top: 60px;
-}
+    .avatar .standard-image {
+      border: solid var(--color-header-navbar-border) 1px;
+    }
+  }
 
-a.btn-filter {
-  padding: 5px 30px;
-  display: block;
-  background: var(--color-gray);
-  border: 1px solid var(--color-orange);
-  border-radius: 20px;
-  color: var(--color-title);
-}
+  .page-head .page-head-content .title-text {
+    color: #FAAC4D;
+    text-transform: uppercase;
+  }
 
-.status-in-progress {
-  background-color: var(--color-in-progress);
-  border-color: var(--color-in-progress);
-  color: black;
-}
+  .desk-sidebar {
+    .standard-sidebar-label {
+      font-weight: bold;
+    }
+    .standard-sidebar-item.selected {
+      .sidebar-item-label {
+        color: var(--sidebar-select-text-color);
+        font-weight: bold;
+      }
+    }
+    .sidebar-item-label {
+      color: #666666;
+      text-transform: uppercase;
+      font-size: 12px;  // because of uppercase
+    }
+  }
+  .search-bar {
+    svg {
+      stroke: var(--icon-stroke);
+    }
+    #navbar-search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: #666666;
+    }
+    #navbar-search::-ms-input-placeholder { /* Microsoft Edge */
+      color: #666666;
+    }
+  }
 
-.status-resolve-ready {
-  background-color: var(--color-resolve-ready);
-  border-color: var(--color-resolve-ready);
-  color: black;
-}
+  .hide-item {
+    display: none;
+  }
 
-.status-non-complaint {
-  background-color: var(--color-non-complaint);
-  border-color: var(--color-non-complaint);
-  color: white;
-}
-
-.status-escalate {
-  background-color: var(--color-escalate);
-  border-color: var(--color-escalate);
-  color: white;
-}
-
-.status-ready {
-  background-color: var(--color-ready);
-  border-color: var(--color-ready);
-  color: white;
-}
-
-
-.status-resolved {
-  background-color: var(--color-resolved);
-  border-color: var(--color-resolved);
-  color: black;
-}
-
-.border-red {
-  border-color: var(--color-border-red) !important;
-}
-
-.inactive-border {
-  border-color: var(--color-diver) !important;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.italic {
-  font-style: italic;
-}
-
-#body, #page-job-management, #page-job-detail {
-  height: 100%
-}
-
-#page-job-management, #page-job-detail {
   .page-head {
-    position: sticky;
-    margin-bottom: 0;
+    top: 60px;
+  }
+
+  a.btn-filter {
+    padding: 5px 30px;
+    display: block;
+    background: var(--color-gray);
+    border: 1px solid var(--color-orange);
+    border-radius: 20px;
+    color: var(--color-title);
+  }
+
+  .status-in-progress {
+    background-color: var(--color-in-progress);
+    border-color: var(--color-in-progress);
+    color: black;
+  }
+
+  .status-resolve-ready {
+    background-color: var(--color-resolve-ready);
+    border-color: var(--color-resolve-ready);
+    color: black;
+  }
+
+  .status-non-complaint {
+    background-color: var(--color-non-complaint);
+    border-color: var(--color-non-complaint);
+    color: white;
+  }
+
+  .status-escalate {
+    background-color: var(--color-escalate);
+    border-color: var(--color-escalate);
+    color: white;
+  }
+
+  .status-ready {
+    background-color: var(--color-ready);
+    border-color: var(--color-ready);
+    color: white;
+  }
+
+
+  .status-resolved {
+    background-color: var(--color-resolved);
+    border-color: var(--color-resolved);
+    color: black;
+  }
+
+  .border-red {
+    border-color: var(--color-border-red);
+  }
+
+  .inactive-border {
+    border-color: var(--color-diver);
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  #body, #page-job-management, #page-job-detail {
+    height: 100%
+  }
+
+  #page-job-management, #page-job-detail {
+    .page-head {
+      position: sticky;
+      margin-bottom: 0;
+    }
   }
 }
