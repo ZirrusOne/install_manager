@@ -82,6 +82,7 @@ body {
 
   .page-head .page-head-content .title-text {
     color: #FAAC4D;
+    font-size: 18px;
     text-transform: uppercase;
   }
 
@@ -112,17 +113,21 @@ body {
           font-weight: 600;
         }
 
+        .standard-sidebar-item {
+          margin: 0 5px;
+        }
+
         .standard-sidebar-item.selected {
           .sidebar-item-label {
             color: var(--sidebar-select-text-color);
-            font-weight: 545;  // Bold is weight 700 which is too much for font Raleway
+            font-weight: 700;
           }
         }
 
         .sidebar-item-label {
           color: #666666;
           text-transform: uppercase;
-          font-size: 12px; // because of uppercase
+          font-size: 13px;
         }
       }
     }
