@@ -3,7 +3,7 @@ import frappe
 from install_manager.install_manager.doctype.team import team_type
 
 READY='Ready'
-PENDING='Pending'
+RESOLVED='Resolved - Ready'
 IN_PROGRESS='In Progress'
 ESCALATE_LEVEL_1='Escalation - Field Lead'
 ESCALATE_LEVEL_2='Escalation - Back Office'

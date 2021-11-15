@@ -59,7 +59,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Ready\nPending\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nNon-compliant\nCompleted",
+   "options": "Ready\nResolved - Ready\nIn Progress\nEscalation - Field Lead\nEscalation - Back Office\nEscalation - Vendor\nNon-compliant\nCompleted",
    "reqd": 1
   },
   {
@@ -212,7 +212,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-11 23:07:02.509815",
+ "modified": "2021-11-14 15:57:08.179368",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",

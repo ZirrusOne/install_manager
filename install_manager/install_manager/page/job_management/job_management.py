@@ -9,7 +9,7 @@ from typing import Optional, List, Dict, Set
 import frappe
 import json
 
-from install_manager.install_manager.doctype.job.job_status import READY, PENDING, IN_PROGRESS, ESCALATE_LEVEL_1
+from install_manager.install_manager.doctype.job.job_status import READY, RESOLVED, IN_PROGRESS, ESCALATE_LEVEL_1
 from install_manager.install_manager.doctype.team.team import Team
 from install_manager.install_manager.doctype.team.team_type import LEVEL_1
 from install_manager.install_manager.doctype.team.user_role import INSTALLER, FIELD_LEAD
@@ -203,7 +203,7 @@ def _get_default_statuses() -> List[str]:
     """
     :return: sorted list
     """
-    default_statuses = [READY, PENDING, IN_PROGRESS]
+    default_statuses = [READY, RESOLVED, IN_PROGRESS]
     current_roles = frappe.get_roles(frappe.session.user)
     if FIELD_LEAD in current_roles:
         default_statuses.append(ESCALATE_LEVEL_1)

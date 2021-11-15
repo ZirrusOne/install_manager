@@ -6,16 +6,16 @@
         {%if item.job_status !== "Ready"%}
             <div class="job-timer">
         <span class="{{item.job_status ==="In Progress"?"in-progress":
-                item.job_status === "Pending"?"pending":
+                item.job_status === "Resolved - Ready"?"resolved":
                 item.job_status === "Escalation - Field Lead"?"escalate":""}}">{{item.timer_hours}}</span> Hours
                 <span class="{{item.job_status ==="In Progress"?"in-progress":
-                item.job_status === "Pending"?"pending":
+                item.job_status === "Resolved - Ready"?"resolved":
                 item.job_status === "Escalation - Field Lead"?"escalate":""}}"> {{item.timer_min}}</span> Mins
               </div>
         {% endif %}
     </div>
 <div class="job-status {{item.job_status ==="In Progress"?"status-in-progress":
-item.job_status === "Pending"?"status-pending":
+item.job_status === "Resolved - Ready"?"status-resolved":
 item.job_status === "Escalation - Field Lead"?"status-escalate":
 item.job_status === "Ready"?"status-ready":""}}">{{item.job_status}}
 </div>

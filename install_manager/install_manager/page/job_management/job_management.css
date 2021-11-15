@@ -133,8 +133,8 @@ body {
     color: var(--color-non-complaint);
 }
 
-.result-wrapper .job-item .job-header .job-timer .pending {
-    color: var(--color-pending);
+.result-wrapper .job-item .job-header .job-timer .resolved {
+    color: var(--color-resolved);
 }
 
 .result-wrapper .job-item .job-header .job-timer .escalate {

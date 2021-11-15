@@ -41,7 +41,7 @@ frappe.ui.form.on('Job', {
 
             if (frappe.user.has_role("Field Installer")) {
                 let statusField = jobForm.fields.find(item => item.df.fieldname === 'status')
-                statusField.df.options = ["Ready", "Pending", "In Progress", "Escalation - Field Lead", "Non-compliant", "Completed"];
+                statusField.df.options = ["Ready", "Resolved - Ready", "In Progress", "Escalation - Field Lead", "Non-compliant", "Completed"];
             }
         }
     },

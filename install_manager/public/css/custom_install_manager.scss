@@ -7,7 +7,7 @@
   --color-in-progress: #FAAC4D;
   --color-resolve-ready: rgb(255, 255, 51);
   --color-non-complaint: #743EE2;
-  --color-pending: #FFFF33;
+  --color-resolved: #FFFF33;
   --color-escalate: #FF5858;
   --color-complete: #0D54A8;
   --color-ready: #569627;
@@ -70,9 +70,9 @@ a.btn-filter {
 }
 
 
-.status-pending {
-  background-color: var(--color-pending);
-  border-color: var(--color-pending);
+.status-resolved {
+  background-color: var(--color-resolved);
+  border-color: var(--color-resolved);
   color: black;
 }
 
