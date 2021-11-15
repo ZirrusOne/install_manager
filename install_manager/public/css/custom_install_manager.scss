@@ -102,6 +102,7 @@ body {
           margin-bottom: 0;
         }
       }
+
       .overlay-sidebar-wrapper {
         height: calc(100% - var(--z1n-panel-height) - var(--z1n-panel-margin-bottom));
         overflow-y: auto;
@@ -115,7 +116,7 @@ body {
         .standard-sidebar-item.selected {
           .sidebar-item-label {
             color: var(--sidebar-select-text-color);
-            font-weight: 545;  // Bold is weight 700 which is too much for font Raleway
+            font-weight: 545; // Bold is weight 700 which is too much for font Raleway
           }
         }
 
@@ -272,5 +273,106 @@ body {
       transform: translateX(26px);
     }
   }
+
+  .filter-modal {
+    &.all-filter-modal {
+      .all-filter-modal-wrapper {
+        padding: 10px;
+
+        .filter-content {
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .modal-title {
+      color: var(--color-title);
+      text-transform: uppercase;
+    }
+
+    button.close {
+      color: var(--color-green-light);
+      opacity: 1;
+      border-radius: 65px;
+      padding: 3px 6px;
+      margin-top: 0;
+      margin-right: 0;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .modal-dialog {
+      margin-top: 25px !important;
+    }
+
+    .modal-content {
+      background-color: black;
+      border-radius: 8px;
+      max-height: calc(var(--vh) - 50px);
+      overflow: auto;
+
+      .modal-header {
+        border-bottom: none;
+        padding: 10px 10px 0;
+      }
+
+      .modal-body {
+        padding: 10px;
+      }
+    }
+
+    .filter-modal-wrapper {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+
+      .filter-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .header-title {
+          color: var(--color-orange);
+          font-size: 16px;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+
+        .fa {
+          font-size: 20px;
+        }
+      }
+
+      .filter-content {
+        display: flex;
+        flex-direction: column;
+
+        .team-item {
+          width: 100%;
+          text-align: center;
+          margin-bottom: 20px;
+          padding: 10px 20px;
+          color: var(--color-diver);
+          font-weight: 700;
+          border-radius: 8px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          &.active{
+            background: black;
+            color: var(--color-title);
+          }
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
 }
+
 
