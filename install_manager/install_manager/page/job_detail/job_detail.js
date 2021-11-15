@@ -64,7 +64,7 @@ class JobDetail {
     }
 
     renderJobType() {
-        $(this.jobStatusElement).empty();
+        $(this.jobTypeElement).empty();
         $(frappe.render_template('job_type', {
             job_types: this.job_types,
             selectedJobType: this.selectedJobType
@@ -86,11 +86,25 @@ class JobDetail {
     }
 
     onChangeAdditionalService() {
-        
+
     }
 
     onCloseAdditionalServiceModal() {
         $('#additionalServiceModal').modal('hide');
+    }
+
+    openJobStatusModal() {
+        this.renderJobStatus();
+        $('#jobStatusModal').modal('show');
+    }
+
+    renderJobStatus() {
+        $(this.jobStatusElement).empty();
+        $(frappe.render_template('job_status', {})).appendTo($(this.jobStatusElement));
+    }
+
+    onChangeJobType(element) {
+        $('#jobStatusModal').modal('hide');
     }
 
     customUI() {
