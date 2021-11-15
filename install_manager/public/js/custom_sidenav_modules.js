@@ -4,7 +4,9 @@ $(document).ready(function () {
     }
 
     // remove the default "Install Manager" item
-    $('.standard-sidebar-label:contains("Modules")').parent().children('a[href^="/app/install-manager"]').remove();
+    let sidebarModules = $('.standard-sidebar-label:contains("Modules")');
+    sidebarModules.parent().children('a[href^="/app/install-manager"]').remove();
+    sidebarModules.remove();
 
     insertZ1NPanel();
 
