@@ -65,34 +65,6 @@ fixtures = [
         ]
     ]},
     {"dt": "Custom DocPerm", "filters": [
-        [
-            "parent", "in", [
-            "User",
-            "Sales Order",
-            "Company",
-            "Customer",
-            "File",
-            "Salutation",
-            "Tax Withholding Category",
-            "Bank Account",
-            "Lead",
-            "Opportunity",
-            "Customer Group",
-            "Territory",
-            "Tax Category",
-            "Currency",
-            "Price List",
-            "Contact",
-            "Address",
-            "Payment Terms Template",
-            "Market Segment",
-            "Industry Type",
-            "Language",
-            "Loyalty Program",
-            "Sales Partner",
-            "Google Contacts"
-        ]
-        ],
         ["role", "in", ["Back Office Staff"]]
     ]}
 ]
