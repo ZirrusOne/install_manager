@@ -48,15 +48,119 @@
             JOB STATUS
         </div>
         <div class="item-content">
-
+            <a class="item-action">
+                <div class="action-title">
+                    <span class="bold uppercase">STATUS</span>
+                </div>
+                <div class="action-content">
+                    <span class="uppercase">STANDARD</span>
+                </div>
+            </a>
+            <div class="timer-wrapper">
+                <div class="time-content">
+                    <div class="time-content-item"><span class="color-orange-light">00</span><span
+                            class="color-yellow">Hour</span></div>
+                    <div class="time-content-item"><span class="color-orange-light">00</span><span class="color-yellow">Minutes</span>
+                    </div>
+                </div>
+                <div class="time-icon">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="checklist-wrapper job-container">
         <div class="item-title">
             CHECKLISTS
         </div>
-        <div class="item-content">
-
+        <div class="item-content job-tab-wrapper">
+            <ul class="nav nav-pills job-tab-header" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" data-target="#preInstall">PRE-INSTALL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#postInstall">POST-INSTALL</a>
+                </li>
+            </ul>
+            <div class="tab-content job-tab-content">
+                <div id="preInstall" class="tab-pane active">
+                    <div class="job-tab-pane pre-install">
+                        <div class="item slide-item">
+                            <div class="label">Cool Work?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item slide-item">
+                            <div class="label">Heat Work?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item input-item">
+                            <div class="label">Initial Measure Mode</div>
+                            <div class="input">
+                                <input class="custom-input" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="postInstall" class="tab-pane">
+                    <div class="job-tab-pane post-install">
+                        <a class="btn-action">Writing Photo</a>
+                        <a class="btn-action">Thermostat Photo</a>
+                        <div class="item slide-item">
+                            <div class="label">Common Wire Connected?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item slide-item">
+                            <div class="label">Solid LoRAWAN Symbol?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item slide-item">
+                            <div class="label">No Battery Lights Present?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn-action">Lock Photo</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="record-wrapper job-container">
