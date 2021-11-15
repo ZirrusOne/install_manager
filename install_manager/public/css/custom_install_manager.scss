@@ -65,13 +65,13 @@ body {
 
   .desk-sidebar {
     .standard-sidebar-label {
-      font-weight: bold;
+      font-weight: 600;
     }
 
     .standard-sidebar-item.selected {
       .sidebar-item-label {
         color: var(--sidebar-select-text-color);
-        font-weight: bold;
+        font-weight: 545;  // Bold is weight 700 which is too much for font Raleway
       }
     }
 
