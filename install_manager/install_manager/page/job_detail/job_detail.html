@@ -20,12 +20,12 @@
                         Unit 101
                     </div>
                 </div>
-                <a class="header-item item-action">
+                <a class="header-item item-action" onclick="job_detail.openJobTypeModal()">
                     <div class="action-title">
                         <span class="bold uppercase">JOB TYPE</span>
                     </div>
                     <div class="action-content">
-                        <span class="uppercase color-yellow">STANDARD</span>
+                        <span id="jobTypeDisplayText" class="uppercase color-yellow">STANDARD</span>
                     </div>
                 </a>
                 <a class="header-item item-action">
@@ -206,3 +206,10 @@
         </div>
     </div>
 </div>
+<div id="jobType"></div>
+<div id="additionalService"></div>
+<div id="jobStatus"></div>
+<div id="statusNonComplaint"></div>
+<div id="statusEscalate"></div>
+<div id="addComment"></div>
+<div id="addPhoto"></div>
