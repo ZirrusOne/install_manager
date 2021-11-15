@@ -37,6 +37,19 @@ body {
 }
 
 .z1n {
+  .btn.btn-primary {
+    background-color: #F1C232;
+    color: #444;
+    --icon-stroke: #444;
+  }
+  input[type=checkbox] {
+    border-color: #f1c232;
+  }
+  input[type=checkbox]:checked {
+    border-color: #f1c232;
+    background-image: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 4.00001L2.66667 5.80001L7 1.20001' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"), linear-gradient(180deg, #111111 -124.51%, #F1C232 100%);
+  }
+
   header.navbar {
     border-bottom: solid var(--color-header-navbar-border) 1px;
 
