@@ -174,6 +174,7 @@ def _query_jobs(select_list: str,
     		where 
     		    schedule.start_date <= %(current_date)s
     		    and schedule.status <> 'Completed' and schedule.status <> 'Cancelled'
+    		    and job.installation_date = %(current_date)s
     		    {job_status_condition}
     		    {team_condition}
     		    {building_condition}
