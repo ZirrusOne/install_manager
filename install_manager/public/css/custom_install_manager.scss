@@ -1,6 +1,6 @@
 @import "fonts";
 
-:root {
+:root[data-theme=dark] {
   --color-peru: #ed7d31;
   --color-midnight-blue: #0042a0;
   --color-dodger-blue: #169cd8;
@@ -38,7 +38,7 @@ body {
   font-family: var(--base-font);
 }
 
-.z1n {
+.z1n[data-theme=dark] {
   .btn.btn-primary {
     background-color: #F1C232;
     color: #444;
