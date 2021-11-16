@@ -142,7 +142,7 @@
    "link_fieldname": "site"
   }
  ],
- "modified": "2021-11-09 20:50:47.631553",
+ "modified": "2021-11-16 14:03:10.697990",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Site",
@@ -173,6 +173,26 @@
    "select": 1,
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Installer",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Lead",
+   "select": 1,
+   "share": 1
   }
  ],
  "quick_entry": 1,

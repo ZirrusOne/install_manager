@@ -164,7 +164,7 @@
  ],
  "is_tree": 1,
  "links": [],
- "modified": "2021-11-06 05:11:50.048872",
+ "modified": "2021-11-16 14:02:27.151785",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Site Unit",
@@ -195,6 +195,26 @@
    "select": 1,
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Installer",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Lead",
+   "select": 1,
+   "share": 1
   }
  ],
  "sort_field": "site_name ASC, full_name ASC",
