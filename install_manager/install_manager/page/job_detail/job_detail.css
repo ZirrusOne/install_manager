@@ -12,7 +12,7 @@
     background: var(--color-job-detail-button);
     border: 1px solid var(--color-orange);
     border-radius: 20px;
-    color: var(--color-title-active)!important;
+    color: var(--color-title-active) !important;
     text-align: center;
     width: 85%;
     max-width: 200px;
@@ -208,6 +208,20 @@ i.fa {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 5px 10px;
+}
+
+.job-container .item-content .item-action .action-content.additional-services {
+    display: block;
+    text-align: center;
+}
+
+.job-container .item-content .item-action .action-content.additional-services span:after {
+    content: ",";
+    display: inline-block;
+}
+
+.job-container .item-content .item-action .action-content.additional-services span:last-child:after {
+    display: none;
 }
 
 .job-container .job-tab-wrapper {

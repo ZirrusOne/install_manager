@@ -19,13 +19,11 @@
                         </div>
                     </div>
                     <div class="filter-content">
-                        <a class="team-item active" onclick="job_detail.onChangeJobType()">STANDARD</a>
-                        <a class="team-item" onclick="job_detail.onChangeJobType()">REWORK</a>
-                        <!--                        {% for item in job_types %}-->
-                        <!--                        <a onclick="job_detail.onChangeJobType(this)"-->
-                        <!--                           class="team-item {{selectedJobType.id === item.id?" active":""}}"-->
-                        <!--                        data-value="{{item.id}}">{{item.label}}</a>-->
-                        <!--                        {% endfor %}-->
+                        {% for item in installation_types %}
+                        <a onclick="job_detail.onChangeJobType(this)"
+                           class="team-item text-uppercase {{selectedInstallationType === item?" active":""}}"
+                            data-value="{{item}}">{{item}}</a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

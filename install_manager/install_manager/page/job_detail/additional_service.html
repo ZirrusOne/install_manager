@@ -1,4 +1,5 @@
-<div class="modal fade filter-modal filter-for-detail additional-service-filter-modal" id="additionalServiceModal" tabindex="-1" role="dialog"
+<div class="modal fade filter-modal filter-for-detail additional-service-filter-modal" id="additionalServiceModal"
+     tabindex="-1" role="dialog"
      data-backdrop="static" data-keyboard="false"
      aria-labelledby="additionalServiceModal"
      aria-hidden="true">
@@ -20,17 +21,13 @@
                         </div>
                     </div>
                     <div class="filter-content">
-                        <a class="team-item active" onclick="job_detail.onChangeAdditionalService(this)">Pull Wire</a>
-                        <a class="team-item active" onclick="job_detail.onChangeAdditionalService(this)">Add Wire</a>
-                        <a class="team-item active" onclick="job_detail.onChangeAdditionalService(this)">Connect
-                            Wire</a>
-                        <a class="team-item " onclick="job_detail.onChangeAdditionalService(this)">Reconnect
-                            Thermostat</a>
-                        <!--                        {% for item in job_types %}-->
-                        <!--                        <a onclick="job_detail.onChangeJobType(this)"-->
-                        <!--                           class="team-item {{selectedJobType.id === item.id?" active":""}}"-->
-                        <!--                        data-value="{{item.id}}">{{item.label}}</a>-->
-                        <!--                        {% endfor %}-->
+                        {%if additional_services.length > 0%}
+                        {% for item in additional_services %}
+                        <a onclick="job_detail.onChangeAdditionalService(this)"
+                           class="team-item {{item.isSelected?" active":""}}"
+                        data-value="{{item.name}}">{{item.name}}</a>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
