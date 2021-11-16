@@ -15,8 +15,10 @@ $(document).ready(function () {
         customizeZ1nSidebar();
     });
 
+    // For F5 from the installer-manage page
+    customizeZ1nSidebar();
+
     frappe.router.on('change', () => {
-        console.log(frappe.get_route_str());
         if ($('#page-Workspaces:visible').length) {
             if ('Workspaces/Install Manager' !== frappe.get_route_str()) {
                 $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').removeClass('selected');
@@ -63,8 +65,6 @@ $(document).ready(function () {
 
 function customizeZ1nSidebar() {
     if (!$('#page-Workspaces').length || $('#page-Workspaces .layout-side-section .z1n-panel').length) {
-        console.log('#page-Workspaces ' + $('#page-Workspaces:visible').length);
-        console.log('#page-Workspaces .layout-side-section .z1n-panel ' + $('#page-Workspaces .layout-side-section .z1n-panel').length);
         return;
     }
     // remove the default "Install Manager" item
