@@ -1,14 +1,30 @@
+// Frappe behavior:
+//  List of items shown on sidebar: is the list of Workspace (doctype) items
+//  returned by desktop.py#get_desk_sidebar_items. Those items will be places on file frappe/www/app.html by
+//  frappe/www/app.py
+//  Sidebar and Pages are rendered by frappe/public/js/frappe/views/workspace/workspace.js sidebar toogle is done here.
+//
+// Everytime an item in the sidebar is clicked, an html of the page is generated and inserted to the main page.
+// Previous page is hidden.
+// Only Workspace pages have sidebar menu. Other pages have sidebar filters
+// Each page is a frappe/public/js/frappe/ui/page.js
+
 $(document).ready(function () {
-    if ($('#page-Workspaces:visible').length === 0) {
-        return;
-    }
+    // emitted by container.js#change_to
+    $('#body').on('show', '.page-container', ()=> {
+        customizeZ1nSidebar();
+    });
 
-    // remove the default "Install Manager" item
-    let sidebarModules = $('.standard-sidebar-label:contains("Modules")');
-    sidebarModules.parent().children('a[href^="/app/install-manager"]').remove();
-    sidebarModules.remove();
-
-    insertZ1NPanel();
+    frappe.router.on('change', () => {
+        console.log(frappe.get_route_str());
+        if ($('#page-Workspaces:visible').length) {
+            if ('Workspaces/Install Manager' !== frappe.get_route_str()) {
+                $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').removeClass('selected');
+            } else {
+                $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').addClass('selected');
+            }
+        }
+    });
 
     //let isBackOffice = frappe.user.has_role("Back Office Staff") && !frappe.user.has_role("Administrator");
     // let moduleNodeElm = $('.standard-sidebar-label:contains("Modules")');
@@ -45,8 +61,22 @@ $(document).ready(function () {
 
 })
 
+function customizeZ1nSidebar() {
+    if (!$('#page-Workspaces').length || $('#page-Workspaces .layout-side-section .z1n-panel').length) {
+        console.log('#page-Workspaces ' + $('#page-Workspaces:visible').length);
+        console.log('#page-Workspaces .layout-side-section .z1n-panel ' + $('#page-Workspaces .layout-side-section .z1n-panel').length);
+        return;
+    }
+    // remove the default "Install Manager" item
+    let sidebarModules = $('.standard-sidebar-label:contains("Modules")');
+    sidebarModules.parent().children('a[href^="/app/install-manager"]').remove();
+    sidebarModules.remove();
+
+    insertZ1NPanel();
+}
+
 function insertZ1NPanel() {
-    let sideBarSection = $('.layout-side-section');
+    let sideBarSection = $('#page-Workspaces .layout-side-section');
 
     let overlaySideBar = sideBarSection.children('.overlay-sidebar').first();
     overlaySideBar.before([
@@ -63,14 +93,6 @@ function insertZ1NPanel() {
         '</div>'
     ].join(''));
     overlaySideBar.wrap('<div class="overlay-sidebar-wrapper"></div>');
-
-    frappe.router.on('change', () => {
-        if ('Workspaces/Install Manager' !== frappe.get_route_str()) {
-            $('.z1n-panel a[href^="/app/install-manager"]').removeClass('selected');
-        } else {
-            $('.z1n-panel a[href^="/app/install-manager"]').addClass('selected');
-        }
-    });
 }
 
 function removeChildren(containerElm, keepItemWithText) {
