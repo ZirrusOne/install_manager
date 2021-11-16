@@ -18,6 +18,27 @@
     max-width: 200px;
 }
 
+.color-in-progress {
+    color: var(--color-in-progress) !important;
+}
+
+.color-status-resolved {
+    color: var(--color-resolve-ready) !important;
+}
+
+.color-non-compliant {
+    color: var(--color-non-complaint) !important;
+}
+
+.color-status-escalate {
+    color: var(--color-escalate) !important;
+}
+
+.color-status-ready {
+    color: var(--color-green-light) !important;
+}
+
+
 .navbar .job-title {
     margin-left: 20px;
     font-size: 16px;
@@ -174,7 +195,6 @@ i.fa {
 .job-container .item-content .timer-wrapper .time-icon i.fa {
     margin-right: 0;
     margin-left: 10px;
-    color: var(--color-green-light);
 }
 
 .job-container .item-content .item-action .action-title {
@@ -279,7 +299,7 @@ i.fa {
     background: var(--background-gray);
     overflow: auto;
     padding: 20px;
-    height: 150px;
+    height: 125px;
 }
 
 .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {

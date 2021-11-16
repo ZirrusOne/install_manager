@@ -27,7 +27,7 @@
                     </div>
                     <div class="action-content">
                         <span id="jobTypeDisplayText"
-                              class="text-uppercase color-yellow">{{installation_type_text}}</span>
+                              class="text-uppercase color-yellow">{{result.installation_type}}</span>
                     </div>
                 </a>
                 <a class="header-item item-action" onclick="job_detail.openAdditionalServiceModal()">
@@ -59,18 +59,30 @@
                     <span class="bold uppercase">STATUS</span>
                 </div>
                 <div class="action-content">
-                    <span class="text-uppercase">{{installation_type_text}}</span>
+                    <span class="text-uppercase {{result.status ==="In Progress"?"color-in-progress":
+                    result.status === "Resolved - Ready"?"color-status-resolved":
+                    result.status === "Non-compliant"?"color-non-compliant":
+                    (result.status === "Escalation - Field Lead" ||
+                    result.status === "Escalation - Back Office" ||
+                    result.status === "Escalation - Vendor") ?"color-status-escalate":
+                    result.status === "Ready"?"color-status-ready":""}}">{{result.status}}</span>
                 </div>
             </a>
             <div class="timer-wrapper">
                 <div class="time-content">
-                    <div class="time-content-item"><span class="color-orange-light">00</span><span
+                    <div class="time-content-item"><span id="timer_hours" class="color-orange-light">{{result.timer_hours}}</span><span
                             class="color-yellow">Hour</span></div>
-                    <div class="time-content-item"><span class="color-orange-light">00</span><span class="color-yellow">Minutes</span>
+                    <div class="time-content-item"><span id="timer_min" class="color-orange-light">{{result.timer_min}}</span><span class="color-yellow">Minutes</span>
                     </div>
                 </div>
                 <div class="time-icon">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    <i class="fa fa-clock-o {{result.status ==="In Progress"?"color-in-progress":
+                    result.status === "Resolved - Ready"?"color-status-resolved":
+                    result.status === "Non-compliant"?"color-non-compliant":
+                    (result.status === "Escalation - Field Lead" ||
+                    result.status === "Escalation - Back Office" ||
+                    result.status === "Escalation - Vendor") ?"color-status-escalate":
+                    result.status === "Ready"?"color-status-ready":""}}" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
