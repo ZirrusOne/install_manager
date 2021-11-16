@@ -12,7 +12,7 @@
     background: var(--color-job-detail-button);
     border: 1px solid var(--color-orange);
     border-radius: 20px;
-    color: var(--color-title);
+    color: var(--color-title-active)!important;
     text-align: center;
     width: 85%;
     max-width: 200px;
@@ -61,11 +61,30 @@ i.fa {
     height: 100%;
 }
 
-.checklist-wrapper .custom-input {
+.checklist-wrapper .input {
+    position: relative;
+}
+
+.checklist-wrapper .input .custom-input {
     background: var(--background-gray);
     border: none;
     border-bottom: 1px solid var(--color-diver);
     color: var(--color-title-active);
+    width: 100%;
+}
+
+.checklist-wrapper .input::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    display: block;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-bottom: 10px solid var(--color-diver);
+    z-index: 0;
 }
 
 .checklist-wrapper .custom-input:focus {
@@ -99,8 +118,8 @@ i.fa {
     text-transform: uppercase;
     color: var(--color-job-detail-title);
     padding-bottom: 20px;
-    font-weight: 600;
-    font-size: 12px;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .job-container .item-content {
@@ -174,7 +193,7 @@ i.fa {
 }
 
 .job-container .item-content .item-action .action-title span {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .job-container .item-content .item-action .action-content {
@@ -222,7 +241,7 @@ i.fa {
 
 .job-container .job-tab-wrapper .job-tab-header .nav-item .nav-link.active {
     color: var(--color-title-active);
-    background: transparent;
+    background: black;
 }
 
 .job-container .job-tab-wrapper .job-tab-header .nav-item:first-child .nav-link {
@@ -242,11 +261,15 @@ i.fa {
     border-bottom-left-radius: 20px;
 }
 
-.job-container.checklist-wrapper .job-tab-wrapper .job-tab-content {
-    height: 150px;
+.job-container .job-tab-wrapper .job-tab-content {
     background: var(--background-gray);
     overflow: auto;
     padding: 20px;
+    height: 150px;
+}
+
+.job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
+    height: 250px;
 }
 
 .job-container .job-tab-wrapper .job-tab-content .job-tab-pane {
@@ -270,9 +293,9 @@ i.fa {
     flex: 1;
     text-align: right;
     padding-right: 5px;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--color-job-detail-title);
-    font-weight: 575;
+    font-weight: bold;
 }
 
 .job-container .job-tab-wrapper .job-tab-content .job-tab-pane .item .input,
@@ -282,12 +305,36 @@ i.fa {
     padding-left: 5px;
 }
 
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install .item .slider {
+    width: 80px;
+    flex: unset;
+}
+
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install .item .label {
+    width: calc(100% - 80px);
+    flex: unset;
+}
+
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install {
+    align-items: center;
+}
+
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install .btn-action {
+    margin-bottom: 20px;
+}
+
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install .btn-action.last {
+    margin-bottom: 0;
+}
+
+
 .header-wrapper {
     position: sticky;
     top: 0;
     left: 0;
     padding-top: 20px;
     background: black;
+    z-index: 1;
 }
 
 .header-wrapper .item-header {
@@ -360,14 +407,21 @@ i.fa {
     justify-items: flex-start;
 }
 
-.header-wrapper .item-content .header-item.installer {
-
-}
-
 .header-wrapper .item-content .header-item.installer .item span.bold {
-    font-size: 13px;
+    font-size: 14px;
 }
 
+.record-wrapper .item-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.record-wrapper .item-content .btn-action {
+    width: 49%;
+    padding: 5px 10px;
+}
 
 @media screen and (max-width: 540px) {
     .job-container {

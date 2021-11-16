@@ -1,0 +1,34 @@
+<div class="modal fade filter-modal filter-for-detail job-type-filter-modal" id="jobTypeModal" tabindex="-1" role="dialog"
+     data-backdrop="static" data-keyboard="false"
+     aria-labelledby="jobTypeModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">JOB TYPE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-modal-wrapper">
+                    <div class="filter-header">
+                        <div class="header-title">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span>TYPES</span>
+                        </div>
+                    </div>
+                    <div class="filter-content">
+                        <a class="team-item active" onclick="job_detail.onChangeJobType()">STANDARD</a>
+                        <a class="team-item" onclick="job_detail.onChangeJobType()">REWORK</a>
+                        <!--                        {% for item in job_types %}-->
+                        <!--                        <a onclick="job_detail.onChangeJobType(this)"-->
+                        <!--                           class="team-item {{selectedJobType.id === item.id?" active":""}}"-->
+                        <!--                        data-value="{{item.id}}">{{item.label}}</a>-->
+                        <!--                        {% endfor %}-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
