@@ -31,10 +31,12 @@ class Job(Document):
     site_unit: str
     unit_name: str
     assigned_team: str
+    checklist: List[dict]
 
     def validate(self):
         self._validate_site_unit()
         self._validate_team_type()
+        self._validate_checklist()
 
     def db_update(self):
         self._authorize_update()
@@ -127,6 +129,13 @@ class Job(Document):
             t_type = frappe.db.get_value('Team', {'name': self.assigned_team}, 'team_type')
             if t_type != LEVEL_1:
                 frappe.throw(f'Team type of team {self.assigned_team} is not {LEVEL_1}')
+
+    def _validate_checklist(self):
+        if self.checklist is not None:
+            for chk in self.checklist:
+                result = chk.get('result')
+                if chk['criterion_type'] == 'checkbox' and result is not None and result not in ['0', '1', 0, 1]:
+                    frappe.throw(f'Wrong response data for checklist check {chk["criterion"]}')
 
     def _record_escalation(self, old_status: Optional[str]):
         if old_status == self.status \

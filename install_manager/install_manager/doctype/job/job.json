@@ -23,10 +23,8 @@
   "column_break_14",
   "additional_services",
   "assigned_team",
-  "data_collection_section",
-  "cool_work",
-  "heat_work",
-  "initial_measure_mode",
+  "section_checklist",
+  "checklist",
   "finished_timer_minutes",
   "in_progress_start_time",
   "in_progress_installer",
@@ -99,29 +97,6 @@
    "label": "Installation Type",
    "options": "Standard\nPull Wire\nConnect Wire\nRelocate Thermostat\nAdd Wire\nInstall Thermostat Only\nService Visit",
    "reqd": 1
-  },
-  {
-   "depends_on": "eval: doc.status && doc.status.startsWith('Completed');",
-   "fieldname": "data_collection_section",
-   "fieldtype": "Section Break",
-   "label": "Data Collection"
-  },
-  {
-   "default": "0",
-   "fieldname": "cool_work",
-   "fieldtype": "Check",
-   "label": "Cool Work"
-  },
-  {
-   "default": "0",
-   "fieldname": "heat_work",
-   "fieldtype": "Check",
-   "label": "Heat Work"
-  },
-  {
-   "fieldname": "initial_measure_mode",
-   "fieldtype": "Data",
-   "label": "Initial Measure Mode"
   },
   {
    "allow_in_quick_entry": 1,
@@ -219,11 +194,21 @@
    "in_standard_filter": 1,
    "label": "Installation Date",
    "search_index": 1
+  },
+  {
+   "fieldname": "section_checklist",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "checklist",
+   "fieldtype": "Table",
+   "label": "Checklist",
+   "options": "Job Checklist"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-14 16:20:42.528955",
+ "modified": "2021-11-17 15:36:55.125966",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",
