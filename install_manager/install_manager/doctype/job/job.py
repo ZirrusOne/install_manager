@@ -186,7 +186,7 @@ class Job(Document):
             if escalation_level_count == 0:
                 self._send_escalation_notification(to_team=team)
             else:
-                frappe.logger().info(f'Job {self.name} has been escalated to {escalation_level} {escalation_level_count} time(s). Skip notification')
+                _log_info(f'Job {self.name} has been escalated to {escalation_level} {escalation_level_count} time(s). Skip notification')
         elif last_escalation is not None:
             self._update_escalation_resolution(last_escalation)
 
@@ -228,7 +228,7 @@ class Job(Document):
                 notified_user_ids.append(tm.member)
 
         if len(notified_user_ids) == 0:
-            frappe.logger().error(f'No eligible team member to send notification to. Team: {to_team.name}')
+            _log_error(f'No eligible team member to send notification to. Team: {to_team.name}')
             return
 
         messages = []
@@ -277,10 +277,10 @@ class Job(Document):
         return messages
 
     def _send_sms(self, receiver_list: List[str], msg: str) -> List[str]:
-        frappe.logger().info(f'Sending SMS to {receiver_list}. Content: {msg}')
+        _log_info(f'Sending SMS to {receiver_list}. Content: {msg}')
         is_sms_configured = frappe.db.get_value('SMS Settings', None, 'sms_gateway_url') is not None
         if not is_sms_configured:
-            frappe.logger().error('SMS is not configured')
+            _log_error('SMS is not configured')
             return [_sms_not_configured_message]
         sms_settings.send_sms(receiver_list=receiver_list, msg=msg)
         return []
@@ -333,7 +333,7 @@ class Job(Document):
         return messages
 
     def _send_email(self, recipients: List[str], reply_to: str, subject: str, message: str):
-        frappe.logger().info(f'Sending email to {recipients}. Subject {subject}. Content: {message}')
+        _log_info(f'Sending email to {recipients}. Subject {subject}. Content: {message}')
         frappe.sendmail(recipients=recipients,
                         reply_to=reply_to,
                         subject=subject,
@@ -437,6 +437,18 @@ class Job(Document):
         return None if len(last_timers) == 0 else last_timers[0]
 
 
+def _log_info(msg):
+    frappe.logger().info(msg)
+    # Frappe always writes log to file. See frappe.utils.logger.get_logger
+    print(repr(msg))
+
+
+def _log_error(msg):
+    frappe.logger().error(msg)
+    # Frappe always writes log to file. See frappe.utils.logger.get_logger
+    print(repr(msg))
+
+
 @frappe.whitelist()
 def get_job_installer(job_id):
     job = frappe.get_doc('Job', job_id)
@@ -454,7 +466,7 @@ def get_job_installer(job_id):
             'user_id': job.in_progress_installer
         }
 
-    frappe.logger().error(f'Installer {job.in_progress_installer} does not exist')
+    _log_error(f'Installer {job.in_progress_installer} does not exist')
     return {
         'full_name': job.in_progress_installer,
         'user_id': job.in_progress_installer
