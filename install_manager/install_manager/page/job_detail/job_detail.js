@@ -335,7 +335,18 @@ class JobDetail {
                             foundItem.isSelected = true;
                     })
                 }
+                if (this.job_detail.in_progress_installer && this.job_detail.in_progress_installer.length > 0) {
+                    frappe.call({
+                        type: "GET",
+                        method: "install_manager.install_manager.doctype.job.job.get_job_installer",
+                        args: {job_id: this.job_id},
+                        callback: function (result) {
+                            aThis.job_detail.full_name = result.message.full_name;
+                        }
+                    })
 
+                    aThis.job_detail.start_at = moment(this.job_detail.in_progress_start_time).format('MMM. DD,YYYY')
+                }
                 let siteUnit = frappe.model.with_doc("Site Unit", this.job_detail.site_unit)
                 let schedule = frappe.model.with_doc("Schedule", this.job_detail.schedule)
                 Promise.all([siteUnit, schedule]).then((result) => {

@@ -42,8 +42,9 @@
                 </a>
                 {% if result.in_progress_installer %}
                 <div class="header-item installer">
-                    <span class="bold uppercase">INSTALLER:&nbsp;</span><span class="color-yellow">John Doe</span><span
-                        class="bold">&nbsp;on&nbsp; </span><span class="color-yellow">Sep. 23, 2021</span>
+                    <span class="bold uppercase">INSTALLER:&nbsp;</span><span
+                        class="color-yellow">{{result.full_name}}</span><span
+                        class="bold">&nbsp;on&nbsp; </span><span class="color-yellow">{{result.start_at}}</span>
                 </div>
                 {% endif%}
             </div>
