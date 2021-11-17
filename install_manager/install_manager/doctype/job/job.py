@@ -187,7 +187,7 @@ class Job(Document):
                 self._send_escalation_notification(to_team=team)
             else:
                 frappe.logger().info(f'Job {self.name} has been escalated to {escalation_level} {escalation_level_count} time(s). Skip notification')
-        else:
+        elif last_escalation is not None:
             self._update_escalation_resolution(last_escalation)
 
     def _update_escalation_resolution(self, last_escalation: EscalationRecord):
