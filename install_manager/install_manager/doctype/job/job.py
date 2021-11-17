@@ -31,10 +31,12 @@ class Job(Document):
     site_unit: str
     unit_name: str
     assigned_team: str
+    checklist: List[dict]
 
     def validate(self):
         self._validate_site_unit()
         self._validate_team_type()
+        self._validate_checklist()
 
     def db_update(self):
         self._authorize_update()
@@ -128,6 +130,13 @@ class Job(Document):
             if t_type != LEVEL_1:
                 frappe.throw(f'Team type of team {self.assigned_team} is not {LEVEL_1}')
 
+    def _validate_checklist(self):
+        if self.checklist is not None:
+            for chk in self.checklist:
+                result = chk.get('result')
+                if chk['criterion_type'] == 'checkbox' and result is not None and result not in ['0', '1', 0, 1]:
+                    frappe.throw(f'Wrong response data for checklist check {chk["criterion"]}')
+
     def _record_escalation(self, old_status: Optional[str]):
         if old_status == self.status \
                 or (not job_status.is_escalation_status(old_status) and not job_status.is_escalation_status(self.status)):
@@ -186,8 +195,8 @@ class Job(Document):
             if escalation_level_count == 0:
                 self._send_escalation_notification(to_team=team)
             else:
-                frappe.logger().info(f'Job {self.name} has been escalated to {escalation_level} {escalation_level_count} time(s). Skip notification')
-        else:
+                _log_info(f'Job {self.name} has been escalated to {escalation_level} {escalation_level_count} time(s). Skip notification')
+        elif last_escalation is not None:
             self._update_escalation_resolution(last_escalation)
 
     def _update_escalation_resolution(self, last_escalation: EscalationRecord):
@@ -228,7 +237,7 @@ class Job(Document):
                 notified_user_ids.append(tm.member)
 
         if len(notified_user_ids) == 0:
-            frappe.logger().error(f'No eligible team member to send notification to. Team: {to_team.name}')
+            _log_error(f'No eligible team member to send notification to. Team: {to_team.name}')
             return
 
         messages = []
@@ -247,7 +256,7 @@ class Job(Document):
             return self._send_sms_to_users(user_ids=user_ids, level=level)
         except:
             print(frappe.get_traceback())
-            return ['An error happened when sending SMS messages']
+            return ['Data changes were save but an error happened when sending escalation notifications via SMS messages']
 
     def _send_sms_to_users(self, user_ids: List[str], level: str) -> List[str]:
         users_has_no_phone = []
@@ -277,10 +286,10 @@ class Job(Document):
         return messages
 
     def _send_sms(self, receiver_list: List[str], msg: str) -> List[str]:
-        frappe.logger().info(f'Sending SMS to {receiver_list}. Content: {msg}')
+        _log_info(f'Sending SMS to {receiver_list}. Content: {msg}')
         is_sms_configured = frappe.db.get_value('SMS Settings', None, 'sms_gateway_url') is not None
         if not is_sms_configured:
-            frappe.logger().error('SMS is not configured')
+            _log_error('SMS is not configured')
             return [_sms_not_configured_message]
         sms_settings.send_sms(receiver_list=receiver_list, msg=msg)
         return []
@@ -291,7 +300,7 @@ class Job(Document):
             return self._send_email_to_users(user_ids=user_ids, level=level)
         except:
             print(frappe.get_traceback())
-            return ['An error happened when sending email messages']
+            return ['Data changes were save but an error happened when sending escalation notifications via email messages']
 
     def _send_email_to_users(self, user_ids: List[str], level: str) -> List[str]:
         emails = []
@@ -318,7 +327,7 @@ class Job(Document):
             escalation_note = '' if self.escalation_note is None else f'<br>Note: {self.escalation_note}'
             email_body = f"""<html><body> 
                          <p>Schedule activity for {schedule.site_name} - {self.unit_name} 
-                         was escalated to {level} at {current_datetime.strftime('%HH:%M')} 
+                         was escalated to {level} at {current_datetime.strftime('%H:%M')} 
                          on {current_datetime.strftime('%m/%d/%Y')} with the following details:</p> 
                          <p>
                          <br>Reason: {self.escalation_reason}.
@@ -333,11 +342,12 @@ class Job(Document):
         return messages
 
     def _send_email(self, recipients: List[str], reply_to: str, subject: str, message: str):
-        frappe.logger().info(f'Sending email to {recipients}. Subject {subject}. Content: {message}')
+        _log_info(f'Sending email to {recipients}. Subject {subject}. Content: {message}')
         frappe.sendmail(recipients=recipients,
                         reply_to=reply_to,
                         subject=subject,
-                        message=message)
+                        message=message,
+                        delayed=False)
 
     # noinspection PyUnresolvedReferences
     def _has_role(self, username: str, role: str) -> bool:
@@ -437,6 +447,18 @@ class Job(Document):
         return None if len(last_timers) == 0 else last_timers[0]
 
 
+def _log_info(msg):
+    frappe.logger().info(msg)
+    # Frappe always writes log to file. See frappe.utils.logger.get_logger
+    print(repr(msg))
+
+
+def _log_error(msg):
+    frappe.logger().error(msg)
+    # Frappe always writes log to file. See frappe.utils.logger.get_logger
+    print(repr(msg))
+
+
 @frappe.whitelist()
 def get_job_installer(job_id):
     job = frappe.get_doc('Job', job_id)
@@ -454,7 +476,7 @@ def get_job_installer(job_id):
             'user_id': job.in_progress_installer
         }
 
-    frappe.logger().error(f'Installer {job.in_progress_installer} does not exist')
+    _log_error(f'Installer {job.in_progress_installer} does not exist')
     return {
         'full_name': job.in_progress_installer,
         'user_id': job.in_progress_installer
