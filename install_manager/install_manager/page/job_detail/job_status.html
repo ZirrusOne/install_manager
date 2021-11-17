@@ -1,4 +1,5 @@
-<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="jobStatusModal" tabindex="-1" role="dialog"
+<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="jobStatusModal" tabindex="-1"
+     role="dialog"
      data-backdrop="static" data-keyboard="false"
      aria-labelledby="jobStatusModal"
      aria-hidden="true">
@@ -19,12 +20,11 @@
                         </div>
                     </div>
                     <div class="filter-content">
-                        <a class="team-item active" onclick="job_detail.onChangeJobStatus()">READY</a>
-                        <!--                        {% for item in job_types %}-->
-                        <!--                        <a onclick="job_detail.onChangeJobType(this)"-->
-                        <!--                           class="team-item {{selectedJobType.id === item.id?" active":""}}"-->
-                        <!--                        data-value="{{item.id}}">{{item.label}}</a>-->
-                        <!--                        {% endfor %}-->
+                        {% for item in job_statuses %}
+                        <a onclick="job_detail.onChangeJobStatus(this)"
+                           class="team-item {{selectedJobStatus === item?" active":""}}"
+                        data-value="{{item}}">{{item}}</a>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

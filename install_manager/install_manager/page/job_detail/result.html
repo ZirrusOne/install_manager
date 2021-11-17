@@ -1,0 +1,226 @@
+<div>
+    <div class="header-wrapper">
+        <div class=" job-container">
+            <div class="item-header">
+                <div class="header-title">
+                    <i class="fa fa-globe color-orange-light" aria-hidden="true"></i>
+                    <span class="bold">{{result.site_name}} {{result.schedule_name}}</span>
+                </div>
+                <a class="btn-close">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="item-content">
+                <div class="header-item address"><span>{{site.street_address}}, {{site.state}} {{site.zip_code}}</span>
+                </div>
+                <div class="header-item building-wrapper">
+                    <div class="item building"><i class="fa fa-building-o color-orange-light" aria-hidden="true"></i>
+                        Building {{site_unit.building_number}}
+                    </div>
+                    <div class="item unit"><i class="fa fa-sign-in color-orange-light" aria-hidden="true"></i>
+                        Unit {{site_unit.floor_number}}
+                    </div>
+                </div>
+                <a class="header-item item-action" onclick="job_detail.openJobTypeModal()">
+                    <div class="action-title">
+                        <span class="bold text-uppercase">JOB TYPE</span>
+                    </div>
+                    <div class="action-content">
+                        <span id="jobTypeDisplayText"
+                              class="text-uppercase color-yellow">{{result.installation_type}}</span>
+                    </div>
+                </a>
+                <a class="header-item item-action" onclick="job_detail.openAdditionalServiceModal()">
+                    <div class="action-title">
+                        <span class="bold uppercase">ADDL. SERVICES</span>
+                    </div>
+                    <div class="action-content additional-services">
+                        {% for item in result.additional_services %}
+                        <span class="text-capitalize color-yellow">{{item.service}}</span>
+                        {% endfor %}
+                    </div>
+                </a>
+                {% if result.in_progress_installer %}
+                <div class="header-item installer">
+                    <span class="bold uppercase">INSTALLER:&nbsp;</span><span class="color-yellow">John Doe</span><span
+                        class="bold">&nbsp;on&nbsp; </span><span class="color-yellow">Sep. 23, 2021</span>
+                </div>
+                {% endif%}
+            </div>
+        </div>
+    </div>
+    <div class="status-wrapper job-container">
+        <div class="item-title">
+            JOB STATUS
+        </div>
+        <div class="item-content">
+            <a class="item-action" onclick="job_detail.openJobStatusModal()">
+                <div class="action-title">
+                    <span class="bold uppercase">STATUS</span>
+                </div>
+                <div class="action-content">
+                    <span class="text-uppercase {{result.status ==="In Progress"?"color-in-progress":
+                    result.status === "Resolved - Ready"?"color-status-resolved":
+                    result.status === "Non-compliant"?"color-non-compliant":
+                    (result.status === "Escalation - Field Lead" ||
+                    result.status === "Escalation - Back Office" ||
+                    result.status === "Escalation - Vendor") ?"color-status-escalate":
+                    result.status === "Ready"?"color-status-ready":""}}">{{result.status}}</span>
+                </div>
+            </a>
+            <div class="timer-wrapper">
+                <div class="time-content">
+                    <div class="time-content-item"><span id="timer_hours" class="color-orange-light">{{result.timer_hours}}</span><span
+                            class="color-yellow">Hour</span></div>
+                    <div class="time-content-item"><span id="timer_min" class="color-orange-light">{{result.timer_min}}</span><span class="color-yellow">Minutes</span>
+                    </div>
+                </div>
+                <div class="time-icon">
+                    <i class="fa fa-clock-o {{result.status ==="In Progress"?"color-in-progress":
+                    result.status === "Resolved - Ready"?"color-status-resolved":
+                    result.status === "Non-compliant"?"color-non-compliant":
+                    (result.status === "Escalation - Field Lead" ||
+                    result.status === "Escalation - Back Office" ||
+                    result.status === "Escalation - Vendor") ?"color-status-escalate":
+                    result.status === "Ready"?"color-status-ready":""}}" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="checklist-wrapper job-container">
+        <div class="item-title">
+            CHECKLISTS
+        </div>
+        <div class="item-content job-tab-wrapper">
+            <ul class="nav nav-pills job-tab-header" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" data-target="#preInstall">PRE-INSTALL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#postInstall">POST-INSTALL</a>
+                </li>
+            </ul>
+            <div class="tab-content job-tab-content">
+                <div id="preInstall" class="tab-pane active">
+                    <div class="job-tab-pane pre-install">
+                        <div class="item slide-item">
+                            <div class="label">Cool Work?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item slide-item">
+                            <div class="label">Heat Work?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item input-item">
+                            <div class="label">Initial Measure Mode</div>
+                            <div class="input">
+                                <input class="custom-input" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="postInstall" class="tab-pane">
+                    <div class="job-tab-pane post-install">
+                        <a class="btn-action">Writing Photo</a>
+                        <a class="btn-action">Thermostat Photo</a>
+                        <div class="item slide-item">
+                            <div class="label">Common Wire Connected?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item slide-item">
+                            <div class="label">Solid LoRAWAN Symbol?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item slide-item">
+                            <div class="label">No Battery Lights Present?</div>
+                            <div class="slider">
+                                <div class="check-slider">
+                                    <label class="switch">
+                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
+                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn-action last">Lock Photo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="record-wrapper job-container">
+        <div class="item-title">
+            RECORDS
+        </div>
+        <div class="item-content">
+            <a class="btn-action">
+                <i class="fa fa-comments" aria-hidden="true"></i><span class="uppercase"> COMMENT</span>
+            </a>
+            <a class="btn-action">
+                <i class="fa fa-camera" aria-hidden="true"></i><span class="uppercase"> PHOTO</span>
+            </a>
+        </div>
+    </div>
+    <div class="activity-wrapper job-container">
+        <div class="item-title">
+            JOB ACTIVITY STREAM
+        </div>
+        <div class="item-content job-tab-wrapper">
+            <ul class="nav nav-pills job-tab-header" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" data-target="#allActivity">ALL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#commentActivity">COMMENTS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" data-target="#photoActivity">PHOTOS</a>
+                </li>
+            </ul>
+            <div class="tab-content job-tab-content">
+                <div id="allActivity" class="tab-pane active">
+                    All activity
+                </div>
+                <div id="commentActivity" class="tab-pane">
+                    Comments Activity
+                </div>
+                <div id="photoActivity" class="tab-pane">
+                    Photo Activity
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

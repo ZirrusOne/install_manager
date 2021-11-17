@@ -12,11 +12,32 @@
     background: var(--color-job-detail-button);
     border: 1px solid var(--color-orange);
     border-radius: 20px;
-    color: var(--color-title-active)!important;
+    color: var(--color-title-active) !important;
     text-align: center;
     width: 85%;
     max-width: 200px;
 }
+
+.color-in-progress {
+    color: var(--color-in-progress) !important;
+}
+
+.color-status-resolved {
+    color: var(--color-resolve-ready) !important;
+}
+
+.color-non-compliant {
+    color: var(--color-non-complaint) !important;
+}
+
+.color-status-escalate {
+    color: var(--color-escalate) !important;
+}
+
+.color-status-ready {
+    color: var(--color-green-light) !important;
+}
+
 
 .navbar .job-title {
     margin-left: 20px;
@@ -174,7 +195,6 @@ i.fa {
 .job-container .item-content .timer-wrapper .time-icon i.fa {
     margin-right: 0;
     margin-left: 10px;
-    color: var(--color-green-light);
 }
 
 .job-container .item-content .item-action .action-title {
@@ -208,6 +228,20 @@ i.fa {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 5px 10px;
+}
+
+.job-container .item-content .item-action .action-content.additional-services {
+    display: block;
+    text-align: center;
+}
+
+.job-container .item-content .item-action .action-content.additional-services span:after {
+    content: ",";
+    display: inline-block;
+}
+
+.job-container .item-content .item-action .action-content.additional-services span:last-child:after {
+    display: none;
 }
 
 .job-container .job-tab-wrapper {
@@ -265,7 +299,7 @@ i.fa {
     background: var(--background-gray);
     overflow: auto;
     padding: 20px;
-    height: 150px;
+    height: 125px;
 }
 
 .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
