@@ -327,7 +327,7 @@ class Job(Document):
             escalation_note = '' if self.escalation_note is None else f'<br>Note: {self.escalation_note}'
             email_body = f"""<html><body> 
                          <p>Schedule activity for {schedule.site_name} - {self.unit_name} 
-                         was escalated to {level} at {current_datetime.strftime('%HH:%M')} 
+                         was escalated to {level} at {current_datetime.strftime('%H:%M')} 
                          on {current_datetime.strftime('%m/%d/%Y')} with the following details:</p> 
                          <p>
                          <br>Reason: {self.escalation_reason}.
@@ -346,7 +346,8 @@ class Job(Document):
         frappe.sendmail(recipients=recipients,
                         reply_to=reply_to,
                         subject=subject,
-                        message=message)
+                        message=message,
+                        delayed=False)
 
     # noinspection PyUnresolvedReferences
     def _has_role(self, username: str, role: str) -> bool:
