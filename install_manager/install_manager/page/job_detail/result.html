@@ -60,7 +60,7 @@
                     <span class="bold uppercase">STATUS</span>
                 </div>
                 <div class="action-content">
-                    <span class="text-uppercase {{result.status ===" In Progress"?"color-in-progress":
+                    <span class="text-uppercase {{result.status ==="In Progress"?"color-in-progress":
                     result.status === "Resolved - Ready"?"color-status-resolved":
                     result.status === "Non-compliant"?"color-non-compliant":
                     (result.status === "Escalation - Field Lead" ||
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="time-icon">
-                    <i class="fa fa-clock-o {{result.status ===" In Progress"?"color-in-progress":
+                    <i class="fa fa-clock-o {{result.status ==="In Progress"?"color-in-progress":
                     result.status === "Resolved - Ready"?"color-status-resolved":
                     result.status === "Non-compliant"?"color-non-compliant":
                     (result.status === "Escalation - Field Lead" ||
@@ -193,7 +193,7 @@
             RECORDS
         </div>
         <div class="item-content">
-            <a class="btn-action">
+            <a class="btn-action" onclick="job_detail.openCommentModal()">
                 <i class="fa fa-comments" aria-hidden="true"></i><span class="uppercase"> COMMENT</span>
             </a>
             <a class="btn-action">

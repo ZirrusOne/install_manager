@@ -350,11 +350,26 @@ body {
         .fa {
           font-size: 20px;
         }
+
+        @media screen and (max-width: 540px) {
+          margin-bottom: 10px;
+        }
       }
 
       .filter-content {
         display: flex;
         flex-direction: column;
+
+        textarea.input-comment {
+          min-height: 100px;
+          border: 1px solid var(--color-gray);
+          border-radius: 8px;
+          padding: 5px 10px;
+
+          &:focus {
+            outline: none;
+          }
+        }
 
         .team-item {
           width: 100%;

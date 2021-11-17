@@ -277,6 +277,20 @@ class JobDetail {
         }
     }
 
+    openCommentModal() {
+        $(frappe.render_template('comment', {})).appendTo($(this.addCommentElement));
+        $('#commentModal').modal('show');
+    }
+
+    onCloseComment() {
+        let comment = $('#jobComment').val();
+        if (comment !== '') {
+            this.addComment(comment);
+            this.getData();
+        }
+        $('#commentModal').modal('hide');
+    }
+
     customUI() {
         $('.navbar').addClass('hide-item');
         $('.page-head-content').remove();
@@ -359,10 +373,6 @@ class JobDetail {
                     })
                 })
             })
-    }
-
-    clearData() {
-        frappe.model.clear_doc("Job", this.job_id);
     }
 
     addComment(message) {
