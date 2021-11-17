@@ -53,3 +53,7 @@ GET {{server_base_url}}/api/method/frappe.desk.form.load.getdoc
     &_={{$timestamp}}
 
 ###
+
+// get full name of Job installer
+GET {{server_base_url}}/api/method/install_manager.install_manager.doctype.job.job.get_job_installer
+    ?job_id=JOB-000002

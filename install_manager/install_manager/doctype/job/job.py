@@ -435,3 +435,27 @@ class Job(Document):
                                     as_dict=True
                                     )
         return None if len(last_timers) == 0 else last_timers[0]
+
+
+@frappe.whitelist()
+def get_job_installer(job_id):
+    job = frappe.get_doc('Job', job_id)
+    if job.in_progress_installer is None or job.in_progress_installer == '':
+        return {
+            'full_name': None,
+            'user_id': None
+        }
+
+    user = frappe.db.get(doctype='User', filters={'name': job.in_progress_installer})
+    # user might be deleted, no foreign key constraint in DB!
+    if user is not None:
+        return {
+            'full_name': user.full_name,
+            'user_id': job.in_progress_installer
+        }
+
+    frappe.logger().error(f'Installer {job.in_progress_installer} does not exist')
+    return {
+        'full_name': job.in_progress_installer,
+        'user_id': job.in_progress_installer
+    }
