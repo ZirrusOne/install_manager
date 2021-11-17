@@ -1,13 +1,13 @@
-<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="jobStatusModal" tabindex="-1"
+<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="nonComplaintReasonModal" tabindex="-1"
      role="dialog"
      data-backdrop="static" data-keyboard="false"
-     aria-labelledby="jobStatusModal"
+     aria-labelledby="nonComplaintReasonModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">JOB STATUS</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title">NON-COMPLAINT</h5>
+                <button type="button" class="close" onclick="job_detail.onCloseNonComplaint()" aria-label="Close">
                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                 </button>
             </div>
@@ -16,15 +16,27 @@
                     <div class="filter-header">
                         <div class="header-title">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            <span>STATUS</span>
+                            <span>REASON</span>
                         </div>
                     </div>
                     <div class="filter-content">
-                        {% for item in job_statuses %}
-                        <a onclick="job_detail.onChangeJobStatus(this)"
-                           class="team-item {{selectedJobStatus === item?" active":""}}"
+                        {% for item in non_compliant_reasons %}
+                        <a onclick="job_detail.onChangeNonComplaintReason(this)"
+                           class="team-item {{selectedNonComplaintReason === item?" active":""}}"
+                        data-target="non-complaint"
                         data-value="{{item}}">{{item}}</a>
                         {% endfor %}
+                    </div>
+                </div>
+                <div class="filter-modal-wrapper margin-top-20">
+                    <div class="filter-header">
+                        <div class="header-title">
+                            <i class="fa fa-comments" aria-hidden="true"></i>
+                            <span>COMMENT</span>
+                        </div>
+                    </div>
+                    <div class="filter-content">
+                        <textarea class="input-comment" id="nonComplaintComment" type="text"></textarea>
                     </div>
                 </div>
             </div>

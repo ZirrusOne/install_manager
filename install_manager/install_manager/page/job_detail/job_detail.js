@@ -180,6 +180,7 @@ class JobDetail {
                 this.openEscalationModal();
             } else if (this.selectedJobStatus === "Non-compliant") {
                 this.selectedNonComplaintReason = ''
+                this.openNonComplaintModal();
             } else {
                 this.saveJob();
             }
@@ -221,6 +222,41 @@ class JobDetail {
             this.saveJob();
         }
         $('#escalationReasonModal').modal('hide');
+    }
+
+    openNonComplaintModal() {
+        this.renderNonComplaintModal();
+        $('#nonComplaintReasonModal').modal('show');
+    }
+
+    renderNonComplaintModal() {
+        $(frappe.render_template('non_complaint_reason', {
+            non_compliant_reasons: this.non_compliant_reasons,
+            selectedNonComplaintReason: this.selectedNonComplaintReason
+        })).appendTo($(this.statusNonComplaintElement));
+    }
+
+    onChangeNonComplaintReason(element) {
+        let value = $(element).attr('data-value');
+        if (value !== this.selectedNonComplaintReason) {
+            $("a[data-target='non-complaint']").removeClass('active');
+            this.selectedNonComplaintReason = value;
+            $(element).addClass('active');
+        }
+    }
+
+    onCloseNonComplaint() {
+        let comment = $('#nonComplaintComment').val();
+        if (this.selectedNonComplaintReason === '') {
+            this.isStatusChanged = false;
+            this.selectedJobStatus = this.previousSelectedJobStatus;
+        } else {
+            let message = 'NON-COMPLIANT NOTE: ';
+            message += comment === '' ? '-' : comment;
+            this.reasonMessage = message;
+            this.saveJob();
+        }
+        $('#nonComplaintReasonModal').modal('hide');
     }
 
     customUI() {
