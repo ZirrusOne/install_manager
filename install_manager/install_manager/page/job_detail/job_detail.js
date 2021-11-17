@@ -259,6 +259,24 @@ class JobDetail {
         $('#nonComplaintReasonModal').modal('hide');
     }
 
+    onChangeCoolWork(element) {
+        this.job_detail.cool_work = element.checked ? 1 : 0;
+        this.saveJob();
+    }
+
+    onChangeHeatWork(element) {
+        this.job_detail.heat_work = element.checked ? 1 : 0;
+        this.saveJob();
+    }
+
+    onInitialMeasureMode(element) {
+        let value = $(element).val();
+        if (this.job_detail.initial_measure_mode !== value) {
+            this.job_detail.initial_measure_mode = value;
+            this.saveJob();
+        }
+    }
+
     customUI() {
         $('.navbar').addClass('hide-item');
         $('.page-head-content').remove();
@@ -301,6 +319,7 @@ class JobDetail {
                 if (this.job_detail.non_compliant_reasons) {
                     this.selectedNonComplaintReason = this.job_detail.non_compliant_reasons;
                 }
+
                 this.calculateTimer();
                 if (this.job_detail.status === "In Progress") {
                     setInterval(function () {
@@ -325,7 +344,7 @@ class JobDetail {
                     let site = frappe.model.with_doc("Site", this.schedule.site)
                     Promise.all([site]).then((siteResult) => {
                         this.site = siteResult[0];
-                        this.renderJobDetail()
+                        this.renderJobDetail();
                     })
                 })
             })

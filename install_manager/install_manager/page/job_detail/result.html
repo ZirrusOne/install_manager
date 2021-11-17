@@ -59,7 +59,7 @@
                     <span class="bold uppercase">STATUS</span>
                 </div>
                 <div class="action-content">
-                    <span class="text-uppercase {{result.status ==="In Progress"?"color-in-progress":
+                    <span class="text-uppercase {{result.status ===" In Progress"?"color-in-progress":
                     result.status === "Resolved - Ready"?"color-status-resolved":
                     result.status === "Non-compliant"?"color-non-compliant":
                     (result.status === "Escalation - Field Lead" ||
@@ -72,11 +72,13 @@
                 <div class="time-content">
                     <div class="time-content-item"><span id="timer_hours" class="color-orange-light">{{result.timer_hours}}</span><span
                             class="color-yellow">Hour</span></div>
-                    <div class="time-content-item"><span id="timer_min" class="color-orange-light">{{result.timer_min}}</span><span class="color-yellow">Minutes</span>
+                    <div class="time-content-item"><span id="timer_min"
+                                                         class="color-orange-light">{{result.timer_min}}</span><span
+                            class="color-yellow">Minutes</span>
                     </div>
                 </div>
                 <div class="time-icon">
-                    <i class="fa fa-clock-o {{result.status ==="In Progress"?"color-in-progress":
+                    <i class="fa fa-clock-o {{result.status ===" In Progress"?"color-in-progress":
                     result.status === "Resolved - Ready"?"color-status-resolved":
                     result.status === "Non-compliant"?"color-non-compliant":
                     (result.status === "Escalation - Field Lead" ||
@@ -108,8 +110,11 @@
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
-                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        {%if result.cool_work == 1%}
+                                        <input type="checkbox" onclick="job_detail.onChangeCoolWork(this)" checked/>
+                                        {%else%}
+                                        <input type="checkbox" onclick="job_detail.onChangeCoolWork(this)"/>
+                                        {%endif%}
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
@@ -120,8 +125,11 @@
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
-                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        {%if result.heat_work == 1%}
+                                        <input type="checkbox" onclick="job_detail.onChangeHeatWork(this)" checked/>
+                                        {%else%}
+                                        <input type="checkbox" onclick="job_detail.onChangeHeatWork(this)"/>
+                                        {%endif%}
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
@@ -130,7 +138,8 @@
                         <div class="item input-item">
                             <div class="label">Initial Measure Mode</div>
                             <div class="input">
-                                <input class="custom-input" type="text"/>
+                                <input id="initialMeasureMode" onfocusout="job_detail.onInitialMeasureMode(this)"
+                                       class="custom-input" type="text" value="{{result.initial_measure_mode}}"/>
                             </div>
                         </div>
                     </div>
@@ -144,8 +153,7 @@
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
-                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <input type="checkbox"/>
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
@@ -156,8 +164,7 @@
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
-                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <input type="checkbox"/>
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
@@ -168,8 +175,7 @@
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        <input type="checkbox" ng-model="UserSettingsCtrl.user.enable2Fa"
-                                               ng-checked="UserSettingsCtrl.user.enable2Fa">
+                                        <input type="checkbox"/>
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
