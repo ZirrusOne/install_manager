@@ -134,7 +134,7 @@ class Job(Document):
         if self.checklist is not None:
             for chk in self.checklist:
                 result = chk.get('result')
-                if chk['criterion_type'] == 'checkbox' and result is not None and result not in ['0', '1', 0, 1]:
+                if chk.criterion_type == 'checkbox' and result is not None and result not in ['0', '1', 0, 1]:
                     frappe.throw(f'Wrong response data for checklist check {chk["criterion"]}')
 
     def _record_escalation(self, old_status: Optional[str]):
