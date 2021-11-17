@@ -256,7 +256,7 @@ class Job(Document):
             return self._send_sms_to_users(user_ids=user_ids, level=level)
         except:
             print(frappe.get_traceback())
-            return ['An error happened when sending SMS messages']
+            return ['Data changes were save but an error happened when sending escalation notifications via SMS messages']
 
     def _send_sms_to_users(self, user_ids: List[str], level: str) -> List[str]:
         users_has_no_phone = []
@@ -300,7 +300,7 @@ class Job(Document):
             return self._send_email_to_users(user_ids=user_ids, level=level)
         except:
             print(frappe.get_traceback())
-            return ['An error happened when sending email messages']
+            return ['Data changes were save but an error happened when sending escalation notifications via email messages']
 
     def _send_email_to_users(self, user_ids: List[str], level: str) -> List[str]:
         emails = []
