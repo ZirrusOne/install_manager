@@ -30,6 +30,9 @@ class JobDetail {
     non_compliant_reasons = [];
     installation_types = [];
     additional_services = [];
+    check_list_pre_install = [];
+    check_list_post_install = [];
+
     reasonMessage = '';
     selectedInstallationType = '';
     selectedJobStatus = '';
@@ -38,6 +41,9 @@ class JobDetail {
     previousSelectedJobStatus = '';
     isAdditionalServiceChanged = false;
     isStatusChanged = false;
+
+    current_checkList = "pre-install";
+    current_activity = "all";
 
     constructor(wrapper) {
     }
@@ -89,6 +95,18 @@ class JobDetail {
         });
         this.getData();
         this.customUI();
+    }
+
+    onChangeChecklistType(element) {
+        let value = $(element).attr('view-for');
+        if (this.current_checkList !== value)
+            this.current_checkList = value
+    }
+
+    onChangeActivityType(element) {
+        let value = $(element).attr('view-for');
+        if (this.current_activity !== value)
+            this.current_activity = value
     }
 
     openJobTypeModal() {
@@ -194,7 +212,6 @@ class JobDetail {
     }
 
     renderEscalationModal() {
-        console.log(this.escalations_reasons);
         $(frappe.render_template('escalation_reason', {
             escalations_reasons: this.escalations_reasons,
             selectedEscalationReason: this.selectedEscalationReason
@@ -259,21 +276,25 @@ class JobDetail {
         $('#nonComplaintReasonModal').modal('hide');
     }
 
-    onChangeCoolWork(element) {
-        this.job_detail.cool_work = element.checked ? 1 : 0;
-        this.saveJob();
-    }
-
-    onChangeHeatWork(element) {
-        this.job_detail.heat_work = element.checked ? 1 : 0;
-        this.saveJob();
-    }
-
-    onInitialMeasureMode(element) {
-        let value = $(element).val();
-        if (this.job_detail.initial_measure_mode !== value) {
-            this.job_detail.initial_measure_mode = value;
+    onChangeCheckboxCheckList(element) {
+        let fieldName = $(element).attr('data-for-field');
+        let checklistType = $(element).attr('data-for-type');
+        let foundItem = this.job_detail.checklist.find(item => item.criterion === fieldName && item.criterion_type === checklistType)
+        if (foundItem) {
+            foundItem.result = element.checked ? "1" : "0";
             this.saveJob();
+        }
+    }
+
+    onChangeInputCheckList(element) {
+        let fieldName = $(element).attr('data-for-field');
+        let checklistType = $(element).attr('data-for-type');
+        let value = $(element).val();
+        let foundItem = this.job_detail.checklist.find(item => item.criterion === fieldName && item.criterion_type === checklistType)
+        if (foundItem) {
+            if (foundItem.result !== value) {
+                foundItem.result = value
+            }
         }
     }
 
@@ -334,6 +355,11 @@ class JobDetail {
                     this.selectedNonComplaintReason = this.job_detail.non_compliant_reasons;
                 }
 
+                //checklist
+                this.check_list_pre_install = this.job_detail.checklist.filter(preItem => preItem.checklist_type === "Pre-Install")
+                this.check_list_post_install = this.job_detail.checklist.filter(preItem => preItem.checklist_type === "Post-Install")
+
+                //timer
                 this.calculateTimer();
                 if (this.job_detail.status === "In Progress") {
                     setInterval(function () {
@@ -389,6 +415,14 @@ class JobDetail {
             }
         });
     }
+
+    // make_attachments() {
+    //     var aThis = this;
+    //     this.attachments = new frappe.ui.form.Attachments({
+    //         parent: aThis.addPhotoElement,
+    //         frm: aThis.job_detail
+    //     });
+    // }
 
     saveJob() {
         let aThis = this;
@@ -448,6 +482,10 @@ class JobDetail {
             isInstaller: frappe.user.has_role("Field Installer"),
             result: this.job_detail,
             site_unit: this.site_unit,
+            check_list_pre_install: this.check_list_pre_install,
+            check_list_post_install: this.check_list_post_install,
+            current_checkList: this.current_checkList,
+            current_activity: this.current_activity,
             site: this.site
         })).appendTo($(this.jobDetailElement));
     }

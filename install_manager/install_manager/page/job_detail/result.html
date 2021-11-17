@@ -97,92 +97,109 @@
         <div class="item-content job-tab-wrapper">
             <ul class="nav nav-pills job-tab-header" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" data-target="#preInstall">PRE-INSTALL</a>
+                    <a view-for="pre-install"
+                       data-toggle="tab" data-target="#preInstall"
+                       onclick="job_detail.onChangeChecklistType(this)"
+                       class="nav-link {{current_checkList === "pre-install"?"active":""}}">PRE-INSTALL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" data-target="#postInstall">POST-INSTALL</a>
+                    <a view-for="post-install"
+                       data-toggle="tab" data-target="#postInstall"
+                       onclick="job_detail.onChangeChecklistType(this)"
+                       class="nav-link {{current_checkList === "post-install"?"active":""}}">POST-INSTALL</a>
                 </li>
             </ul>
             <div class="tab-content job-tab-content">
-                <div id="preInstall" class="tab-pane active">
+                <div id="preInstall" class="tab-pane {{current_checkList === "pre-install"?"active":""}}">
                     <div class="job-tab-pane pre-install">
+                        {% for item in check_list_pre_install %}
+                        {%if item.criterion_type === "checkbox"%}
                         <div class="item slide-item">
-                            <div class="label">Cool Work?</div>
+                            <div class="label">{{item.criterion}}</div>
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        {%if result.cool_work == 1%}
-                                        <input type="checkbox" onclick="job_detail.onChangeCoolWork(this)" checked/>
+                                        {%if item.result && item.result === "1"%}
+                                        <input type="checkbox"
+                                               data-for-field="{{item.criterion}}"
+                                               data-for-type="{{item.criterion_type}}"
+                                               onclick="job_detail.onChangeCheckboxCheckList(this)" checked/>
                                         {%else%}
-                                        <input type="checkbox" onclick="job_detail.onChangeCoolWork(this)"/>
+                                        <input type="checkbox"
+                                               data-for-field="{{item.criterion}}"
+                                               data-for-type="{{item.criterion_type}}"
+                                               onclick="job_detail.onChangeCheckboxCheckList(this)"/>
                                         {%endif%}
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="item slide-item">
-                            <div class="label">Heat Work?</div>
-                            <div class="slider">
-                                <div class="check-slider">
-                                    <label class="switch">
-                                        {%if result.heat_work == 1%}
-                                        <input type="checkbox" onclick="job_detail.onChangeHeatWork(this)" checked/>
-                                        {%else%}
-                                        <input type="checkbox" onclick="job_detail.onChangeHeatWork(this)"/>
-                                        {%endif%}
-                                        <div class="slider round"></div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        {%endif%}
+                        {%if item.criterion_type === "data" %}
                         <div class="item input-item">
-                            <div class="label">Initial Measure Mode</div>
+                            <div class="label">{{item.criterion}}</div>
                             <div class="input">
-                                <input id="initialMeasureMode" onfocusout="job_detail.onInitialMeasureMode(this)"
-                                       class="custom-input" type="text" value="{{result.initial_measure_mode}}"/>
+                                <input class="custom-input"
+                                       data-for-field="{{item.criterion}}"
+                                       data-for-type="{{item.criterion_type}}"
+                                       onfocusout="job_detail.onChangeInputCheckList(this)"
+                                       type="text" value="{{item.result}}"/>
                             </div>
                         </div>
+                        {%endif%}
+                        {%if item.criterion_type === "photo" %}
+                        <a class="btn-action"
+                           data-for-field="{{item.criterion}}"
+                           data-for-type="{{item.criterion_type}}">{{item.criterion}} Photo</a>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                 </div>
-                <div id="postInstall" class="tab-pane">
+                <div id="postInstall"  class="tab-pane {{current_checkList === "post-install"?"active":""}}">
                     <div class="job-tab-pane post-install">
-                        <a class="btn-action">Writing Photo</a>
-                        <a class="btn-action">Thermostat Photo</a>
+                        {% for item in check_list_post_install %}
+                        {%if item.criterion_type === "checkbox"%}
                         <div class="item slide-item">
-                            <div class="label">Common Wire Connected?</div>
+                            <div class="label">{{item.criterion}}</div>
                             <div class="slider">
                                 <div class="check-slider">
                                     <label class="switch">
-                                        <input type="checkbox"/>
+                                        {%if item.result && item.result === "1"%}
+                                        <input type="checkbox"
+                                               data-for-field="{{item.criterion}}"
+                                               data-for-type="{{item.criterion_type}}"
+                                               onclick="job_detail.onChangeCheckboxCheckList(this)" checked/>
+                                        {%else%}
+                                        <input type="checkbox"
+                                               data-for-field="{{item.criterion}}"
+                                               data-for-type="{{item.criterion_type}}"
+                                               onclick="job_detail.onChangeCheckboxCheckList(this)"/>
+                                        {%endif%}
                                         <div class="slider round"></div>
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="item slide-item">
-                            <div class="label">Solid LoRAWAN Symbol?</div>
-                            <div class="slider">
-                                <div class="check-slider">
-                                    <label class="switch">
-                                        <input type="checkbox"/>
-                                        <div class="slider round"></div>
-                                    </label>
-                                </div>
+                        {%endif%}
+                        {%if item.criterion_type === "data" %}
+                        <div class="item input-item">
+                            <div class="label">{{item.criterion}}</div>
+                            <div class="input">
+                                <input class="custom-input"
+                                       data-for-field="{{item.criterion}}"
+                                       data-for-type="{{item.criterion_type}}"
+                                       onfocusout="job_detail.onChangeInputCheckList(this)"
+                                       type="text" value="{{item.result}}"/>
                             </div>
                         </div>
-                        <div class="item slide-item">
-                            <div class="label">No Battery Lights Present?</div>
-                            <div class="slider">
-                                <div class="check-slider">
-                                    <label class="switch">
-                                        <input type="checkbox"/>
-                                        <div class="slider round"></div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <a class="btn-action last">Lock Photo</a>
+                        {%endif%}
+                        {%if item.criterion_type === "photo" %}
+                        <a class="btn-action"
+                           data-for-field="{{item.criterion}}"
+                           data-for-type="{{item.criterion_type}}">{{item.criterion}} Photo</a>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -208,23 +225,32 @@
         <div class="item-content job-tab-wrapper">
             <ul class="nav nav-pills job-tab-header" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" data-target="#allActivity">ALL</a>
+                    <a view-for="all"
+                       data-toggle="tab" data-target="#allActivity"
+                       onclick="job_detail.onChangeActivityType(this)"
+                       class="nav-link {{current_activity === "all"?"active":""}}">ALL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" data-target="#commentActivity">COMMENTS</a>
+                    <a view-for="comment"
+                       data-toggle="tab" data-target="#commentActivity"
+                       onclick="job_detail.onChangeActivityType(this)"
+                       class="nav-link {{current_activity === "comment"?"active":""}}" >COMMENTS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" data-target="#photoActivity">PHOTOS</a>
+                    <a view-for="photo"
+                       data-toggle="tab" data-target="#photoActivity"
+                       onclick="job_detail.onChangeActivityType(this)"
+                       class="nav-link {{current_activity === "photo"?"active":""}}">PHOTOS</a>
                 </li>
             </ul>
             <div class="tab-content job-tab-content">
-                <div id="allActivity" class="tab-pane active">
+                <div id="allActivity" class="tab-pane {{current_activity === "all"?"active":""}}">
                     All activity
                 </div>
-                <div id="commentActivity" class="tab-pane">
+                <div id="commentActivity" class="tab-pane {{current_activity === "comment"?"active":""}}">
                     Comments Activity
                 </div>
-                <div id="photoActivity" class="tab-pane">
+                <div id="photoActivity" class="tab-pane {{current_activity === "photo"?"active":""}}">
                     Photo Activity
                 </div>
             </div>
