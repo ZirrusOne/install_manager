@@ -30,11 +30,14 @@ class JobDetail {
     non_compliant_reasons = [];
     installation_types = [];
     additional_services = [];
-
-    selectedInstallationType;
-    selectedJobStatus;
-
+    reasonMessage = '';
+    selectedInstallationType = '';
+    selectedJobStatus = '';
+    selectedEscalationReason = '';
+    selectedNonComplaintReason = '';
+    previousSelectedJobStatus = '';
     isAdditionalServiceChanged = false;
+    isStatusChanged = false;
 
     constructor(wrapper) {
     }
@@ -107,7 +110,6 @@ class JobDetail {
             this.selectedInstallationType = value;
             this.saveJob();
             $('#jobTypeModal').modal('hide');
-            this.getData();
         }
     }
 
@@ -140,7 +142,6 @@ class JobDetail {
     onCloseAdditionalServiceModal() {
         if (this.isAdditionalServiceChanged) {
             this.saveJob();
-            this.getData();
         }
         $('#additionalServiceModal').modal('hide');
     }
@@ -156,8 +157,8 @@ class JobDetail {
 
         if (frappe.user.has_role("Field Installer")) {
             job_statuses = this.job_statuses.filter(item => item !== "Escalation - Back Office" && item !== "Escalation - Vendor")
-        } else {
-            job_statuses = this.job_statuses;
+        } else if (frappe.user.has_role("Field Lead")) {
+            job_statuses = this.job_statuses.filter(item => item !== "Escalation - Field Lead")
         }
 
         $(frappe.render_template('job_status', {
@@ -167,18 +168,20 @@ class JobDetail {
     }
 
     onChangeJobStatus(element) {
+        this.previousSelectedJobStatus = this.selectedJobStatus;
+        this.isStatusChanged = true;
         let value = $(element).attr('data-value');
         if (value !== this.selectedJobStatus) {
             this.selectedJobStatus = value;
             if (this.selectedJobStatus === "Escalation - Field Lead" ||
                 this.selectedJobStatus === "Escalation - Back Office" ||
                 this.selectedJobStatus === "Escalation - Vendor") {
-                // todo: implement escalation reason
+                this.selectedEscalationReason = '';
+                this.openEscalationModal();
             } else if (this.selectedJobStatus === "Non-compliant") {
-                // todo: implement non-compliant reason
+                this.selectedNonComplaintReason = ''
             } else {
                 this.saveJob();
-                this.getData();
             }
             $('#jobStatusModal').modal('hide');
         }
@@ -186,14 +189,38 @@ class JobDetail {
 
     openEscalationModal() {
         this.renderEscalationModal();
-        $('#jobStatusModal').modal('show');
+        $('#escalationReasonModal').modal('show');
     }
 
     renderEscalationModal() {
-        $(frappe.render_template('job_status', {
-            job_statuses: job_statuses,
-            selectedJobStatus: this.selectedJobStatus
-        })).appendTo($(this.jobStatusElement));
+        console.log(this.escalations_reasons);
+        $(frappe.render_template('escalation_reason', {
+            escalations_reasons: this.escalations_reasons,
+            selectedEscalationReason: this.selectedEscalationReason
+        })).appendTo($(this.statusEscalateElement));
+    }
+
+    onChangeEscalationReason(element) {
+        let value = $(element).attr('data-value');
+        if (value !== this.selectedEscalationReason) {
+            $("a[data-target='escalation']").removeClass('active');
+            this.selectedEscalationReason = value;
+            $(element).addClass('active');
+        }
+    }
+
+    onCloseEscalation() {
+        let comment = $('#escalationComment').val();
+        if (this.selectedEscalationReason === '') {
+            this.isStatusChanged = false;
+            this.selectedJobStatus = this.previousSelectedJobStatus;
+        } else {
+            let message = 'ESCALATION NOTE: ';
+            message += comment === '' ? '-' : comment;
+            this.reasonMessage = message;
+            this.saveJob();
+        }
+        $('#escalationReasonModal').modal('hide');
     }
 
     customUI() {
@@ -204,21 +231,40 @@ class JobDetail {
         $('.layout-main-section').find('.page-form').remove();
     }
 
+    resetVariable() {
+        this.previousSelectedJobStatus = '';
+        this.selectedNonComplaintReason = '';
+        this.selectedEscalationReason = '';
+        this.reasonMessage = '';
+        this.isAdditionalServiceChanged = false;
+        this.isStatusChanged = false;
+    }
+
     getData() {
         let aThis = this;
+        this.resetVariable();
         frappe.model.with_doctype("Job", () => {
             let meta = frappe.get_meta("Job");
             this.job_statuses = meta.fields.find(item => item.fieldname === "status").options.split("\n");
             this.escalations_reasons = meta.fields.find(item => item.fieldname === "escalation_reason").options.split("\n");
+            this.escalations_reasons = this.escalations_reasons.filter(item => item !== "");
             this.non_compliant_reasons = meta.fields.find(item => item.fieldname === "non_compliant_reason").options.split("\n");
+            this.non_compliant_reasons = this.non_compliant_reasons.filter(item => item !== "");
             this.installation_types = meta.fields.find(item => item.fieldname === "installation_type").options.split("\n");
         });
 
-        let result = frappe.model.with_doc("Job", this.job_id)
+        frappe.model.with_doc("Job", this.job_id)
             .then((result) => {
                 this.job_detail = result
                 this.selectedInstallationType = this.job_detail.installation_type;
                 this.selectedJobStatus = this.job_detail.status;
+                if (this.job_detail.escalation_reason) {
+                    this.selectedEscalationReason = this.job_detail.escalation_reason;
+                }
+
+                if (this.job_detail.non_compliant_reasons) {
+                    this.selectedNonComplaintReason = this.job_detail.non_compliant_reasons;
+                }
                 this.calculateTimer();
                 if (this.job_detail.status === "In Progress") {
                     setInterval(function () {
@@ -253,22 +299,56 @@ class JobDetail {
         frappe.model.clear_doc("Job", this.job_id);
     }
 
+    addComment(message) {
+        frappe.call({
+            method: "frappe.desk.form.utils.add_comment",
+            args: {
+                reference_doctype: "Job",
+                reference_name: this.job_id,
+                content: message,
+                comment_email: frappe.session.user,
+                comment_by: frappe.session.user_fullname
+            },
+            callback: function (r) {
+            }
+        });
+    }
+
     saveJob() {
-        this.prepareDataBeforeSave();
+        let aThis = this;
+        let job_detail = this.prepareDataBeforeSave();
         frappe.call({
             freeze: true,
             method: "frappe.desk.form.save.savedocs",
-            args: {doc: this.job_detail, action: "Save"},
-            callback: function (result) {
-
+            args: {doc: job_detail, action: "Save"},
+            callback: function () {
+                if (aThis.selectedJobStatus === "Escalation - Field Lead" ||
+                    aThis.selectedJobStatus === "Escalation - Back Office" ||
+                    aThis.selectedJobStatus === "Escalation - Vendor" ||
+                    aThis.selectedJobStatus === "Non-compliant") {
+                    aThis.addComment(aThis.reasonMessage);
+                }
+                aThis.getData()
             }
         })
     }
 
     prepareDataBeforeSave() {
-        this.job_detail.installation_type = this.selectedInstallationType;
-        this.job_detail.status = this.selectedJobStatus;
-        this.job_detail.additional_services = [];
+        let job_detail = JSON.parse(JSON.stringify(this.job_detail));
+        job_detail.installation_type = this.selectedInstallationType;
+
+        if (this.isStatusChanged) {
+            job_detail.status = this.selectedJobStatus;
+            if (this.selectedJobStatus === "Escalation - Field Lead" ||
+                this.selectedJobStatus === "Escalation - Back Office" ||
+                this.selectedJobStatus === "Escalation - Vendor") {
+                job_detail.escalation_reason = this.selectedEscalationReason;
+            } else if (this.selectedJobStatus === "Non-compliant") {
+                job_detail.non_compliant_reasons = this.selectedNonComplaintReason;
+            }
+        }
+
+        job_detail.additional_services = [];
 
         // add additional_services
         this.additional_services.forEach((service, index) => {
@@ -279,9 +359,11 @@ class JobDetail {
                 newService.parenttype = "Job";
                 newService.idx = index + 1;
                 newService.service = service.name;
-                this.job_detail.additional_services.push(newService);
+                job_detail.additional_services.push(newService);
             }
         })
+
+        return job_detail;
     }
 
     renderJobDetail() {

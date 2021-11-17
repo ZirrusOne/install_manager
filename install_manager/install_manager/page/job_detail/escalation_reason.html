@@ -1,0 +1,45 @@
+<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="escalationReasonModal" tabindex="-1"
+     role="dialog"
+     data-backdrop="static" data-keyboard="false"
+     aria-labelledby="escalationReasonModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ESCALATION</h5>
+                <button type="button" class="close" onclick="job_detail.onCloseEscalation()" aria-label="Close">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="filter-modal-wrapper">
+                    <div class="filter-header">
+                        <div class="header-title">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                            <span>REASON</span>
+                        </div>
+                    </div>
+                    <div class="filter-content">
+                        {% for item in escalations_reasons %}
+                        <a onclick="job_detail.onChangeEscalationReason(this)"
+                           class="team-item {{selectedEscalationReason === item?" active":""}}"
+                        data-target="escalation"
+                        data-value="{{item}}">{{item}}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="filter-modal-wrapper margin-top-20">
+                    <div class="filter-header">
+                        <div class="header-title">
+                            <i class="fa fa-comments" aria-hidden="true"></i>
+                            <span>COMMENT</span>
+                        </div>
+                    </div>
+                    <div class="filter-content">
+                        <textarea class="input-comment" id="escalationComment" type="text"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
