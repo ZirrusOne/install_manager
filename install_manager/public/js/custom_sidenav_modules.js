@@ -1,8 +1,13 @@
 // Frappe behavior:
-//  List of items shown on sidebar: is the list of Workspace (doctype) items
-//  returned by desktop.py#get_desk_sidebar_items. Those items will be places on file frappe/www/app.html by
-//  frappe/www/app.py
-//  Sidebar and Pages are rendered by frappe/public/js/frappe/views/workspace/workspace.js sidebar toogle is done here.
+//  List of items shown on sidebar:
+//      - is the list of Workspace items
+//      - returned by desktop.py#get_desk_sidebar_items. Those items will be places on file frappe/www/app.html by
+//          frappe/www/app.py
+//      - Item to display = workspace of modules that (module) the current user has permission on:
+//         user.py#build_permissions
+//          build lists of what the user can read / write / create
+//          If a user has permission on on doctype, he/she will have permission on that module.
+//  Sidebar and Pages are rendered by frappe/public/js/frappe/views/workspace/workspace.js sidebar toggling is done here.
 //
 // Everytime an item in the sidebar is clicked, an html of the page is generated and inserted to the main page.
 // Previous page is hidden.
