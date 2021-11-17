@@ -66,7 +66,8 @@ fixtures = [
     ]},
     {"dt": "Custom DocPerm", "filters": [
         ["role", "in", ["Back Office Staff"]]
-    ]}
+    ]},
+    {"dt": "Workspace Menus"},
 ]
 
 override_whitelisted_methods = {

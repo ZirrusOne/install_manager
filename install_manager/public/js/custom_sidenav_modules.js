@@ -33,38 +33,9 @@ $(document).ready(function () {
         }
     });
 
-    //let isBackOffice = frappe.user.has_role("Back Office Staff") && !frappe.user.has_role("Administrator");
-    // let moduleNodeElm = $('.standard-sidebar-label:contains("Modules")');
-    // let sideBarModuleSectionElm = moduleNodeElm.parent();
-    //
-    // if (isBackOffice) {
-    //     removeChildren(sideBarModuleSectionElm, 'Install Manager', 'DASHBOARD');
-    //
-    //     moduleNodeElm.text(frappe.defaults.get_user_default("Company"));
-    //     moduleNodeElm.css('text-transform', 'none');
-    //
-    //     let installManagerElm = sideBarModuleSectionElm.children('a[href^="/app/install-manager"]');
-    //     installManagerElm
-    //         .after([
-    //             getSideBarItemHtml('TEAMS', '/app/team', 'users'),
-    //             getSideBarItemHtml('SCHEDULES', '/app/schedule', 'calendar'),
-    //             getSideBarItemHtml('SITES', '/app/site', 'organization')
-    //         ].join(''));
-    //     installManagerElm.html(getSideBarItemInner('DASHBOARD', 'crm'));  // icon dashboard
-    //
-    //     let administrationElm = $('.standard-sidebar-label:contains("Administration")');
-    //     removeChildren(administrationElm.parent(), 'Users');
-    //     administrationElm.parent().children('a[href^="/app/users"]').children('.sidebar-item-label').html('USERS');
-    // } else {
-    //     let installManagerElm = sideBarModuleSectionElm.children('a[href^="/app/install-manager"]');
-    //     installManagerElm
-    //         .after([
-    //             getSideBarItemHtml('Teams', '/app/team', 'users'),
-    //             getSideBarItemHtml('Schedules', '/app/schedule', 'calendar'),
-    //             getSideBarItemHtml('Sites', '/app/site', 'organization')
-    //         ].join(''));
-    //     installManagerElm.html(getSideBarItemInner('Install Manager', 'projects'));
-    // }
+    if (!frappe.user.has_role("Administrator")) {
+        hideMenus();
+    }
 
 })
 
@@ -100,21 +71,6 @@ function insertZ1NPanel() {
     overlaySideBar.wrap('<div class="overlay-sidebar-wrapper"></div>');
 }
 
-function removeChildren(containerElm, keepItemWithText) {
-    containerElm.each(function() {
-        let removeItems = [];
-        this.childNodes.forEach(item => {
-            if (item.classList.contains('desk-sidebar-item') && item.innerText.toLowerCase() !== keepItemWithText.toLowerCase()) {
-                removeItems.push(item);
-            }
-        })
-
-        removeItems.forEach(item => {
-            this.removeChild(item);
-        })
-    });
-}
-
 function getSideBarItemHtml(name, uri, icon, selected) {
     return [
         '<a href="', uri, '" class="desk-sidebar-item standard-sidebar-item ', selected ? 'selected' : '', '">',
@@ -130,4 +86,40 @@ function getSideBarItemInner(name, icon) {
         '   </span>',
         '   <span class="sidebar-item-label">', name, '</span>',
     ].join('');
+}
+
+function hideMenus() {
+    let standardSideBarWrapper = $('.overlay-sidebar-wrapper');
+    standardSideBarWrapper.css('display', 'none');
+
+    frappe.call({
+        method: 'install_manager.install_manager.doctype.workspace_menus.workspace_menus.get_visible_menus',
+        args: {},
+        type: 'GET',
+        callback: function (result) {
+            let visibleWorkspaces = result.message;
+            let visibleUrls = [];
+            visibleWorkspaces.forEach((w) => {
+                visibleUrls.push('/app/' + frappe.router.slug(w));
+            });
+
+            console.log(visibleUrls);
+
+            standardSideBarWrapper.find('.standard-sidebar-section')
+                .each(function() {
+                   let section = $(this);
+                    section.find('a.desk-sidebar-item')
+                        .each(function() {
+                           let menuItem = $(this);
+                           if (!visibleUrls.includes(menuItem.attr('href'))) {
+                               menuItem.remove();
+                           }
+                        });
+                    if (!section.find('a.desk-sidebar-item').length) {
+                        section.remove();
+                    }
+                });
+            standardSideBarWrapper.css('display', 'block');
+        }
+    });
 }
