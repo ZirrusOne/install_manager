@@ -79,7 +79,7 @@ def get_chart_data(data: List):
         # https://github.com/frappe/charts/pull/179
         # Also, the "colors" attribute returned here has not effect. It always looks for "colors" attributes in the
         #   custom_options of the dashboard chart object
-        # 'colors': ['#8B0000'],
+        'colors': ['#8B0000'],
         'height': 180,
         'truncateLegends': True,
         'barOptions': {
