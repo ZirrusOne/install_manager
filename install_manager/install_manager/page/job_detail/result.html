@@ -149,7 +149,7 @@
                         </div>
                         {%endif%}
                         {%if item.criterion_type === "photo" %}
-                        <a class="btn-action"
+                        <a class="btn-action" onclick="job_detail.openFileUpload()"
                            data-for-field="{{item.criterion}}"
                            data-for-type="{{item.criterion_type}}">{{item.criterion}} Photo</a>
                         {%endif%}
@@ -195,7 +195,7 @@
                         </div>
                         {%endif%}
                         {%if item.criterion_type === "photo" %}
-                        <a class="btn-action"
+                        <a class="btn-action" onclick="job_detail.openFileUpload()"
                            data-for-field="{{item.criterion}}"
                            data-for-type="{{item.criterion_type}}">{{item.criterion}} Photo</a>
                         {%endif%}
