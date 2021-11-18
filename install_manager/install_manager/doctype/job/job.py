@@ -292,7 +292,9 @@ class Job(Document):
         if not is_sms_configured:
             _log_error('SMS is not configured')
             return [_sms_not_configured_message]
-        sms_settings.send_sms(receiver_list=receiver_list, msg=msg)
+        sms_settings.send_sms(receiver_list=receiver_list, msg=msg,
+                              success_msg=False  # don't popup a message on the page after sent
+                              )
         return []
 
     # noinspection PyBroadException
