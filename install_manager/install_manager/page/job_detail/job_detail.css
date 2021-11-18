@@ -460,6 +460,10 @@ i.fa {
     padding: 5px 10px;
 }
 
+.custom-file-upload {
+
+}
+
 @media screen and (max-width: 540px) {
     .job-container {
         padding: 10px;

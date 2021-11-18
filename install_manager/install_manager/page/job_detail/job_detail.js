@@ -329,6 +329,79 @@ class JobDetail {
         this.isStatusChanged = false;
     }
 
+
+    addComment(message) {
+        frappe.call({
+            method: "frappe.desk.form.utils.add_comment",
+            args: {
+                reference_doctype: "Job",
+                reference_name: this.job_id,
+                content: message,
+                comment_email: frappe.session.user,
+                comment_by: frappe.session.user_fullname
+            },
+            callback: function (r) {
+            }
+        });
+    }
+
+    openFileUpload() {
+        this.renderFileUpload()
+        $("#uploadModal").modal('show');
+        var $wrapper = $("#fileUploader").empty();
+        let aThis = this;
+        new frappe.ui.FileUploader({
+            wrapper: $wrapper,
+            doctype: "Job",
+            docname: this.job_id,
+            folder: 'Home/Attachments',
+            on_success: (file_doc) => {
+                let message = $("#jobPhotoComment").val();
+                if (message.length > 0) {
+                    aThis.addComment(message);
+                }
+                aThis.getData();
+                $("#uploadModal").modal('hide');
+            }
+        });
+        this.customFileUpload();
+    }
+
+    renderFileUpload() {
+        $(this.addPhotoElement).empty();
+        $(frappe.render_template('upload_photo', {})).appendTo($(this.addPhotoElement));
+    }
+
+    uploadPhoto() {
+        let button = $("#uploadModal").find("button.btn.btn-primary.btn-sm.margin-right")
+        $(button).trigger("click");
+        console.log($(button).val());
+    }
+
+    customFileUpload() {
+        let buttons = $(".mt-2.text-center").find(".btn-file-upload");
+        $(buttons[1]).remove();
+        $(buttons[2]).remove();
+        let gallery = buttons[0];
+        let galleryTitle = $(gallery).find('div.mt-1');
+        let camera = buttons[3];
+        let cameraTitle = $(camera).find('div.mt-1');
+        let inputFile = $(".mt-2.text-center").find("input[type='file']");
+
+        $(inputFile).attr("multiple", false);
+        $(inputFile).attr("accept", "image/*");
+
+        $(gallery).find('svg').remove();
+        $(galleryTitle.addClass('text-uppercase'));
+        $(galleryTitle).text('Gallery');
+        $(galleryTitle).before("<i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i>")
+
+        $(camera).find('svg').remove();
+        $(cameraTitle.addClass('text-uppercase'));
+        $(cameraTitle).text('camera');
+        $(cameraTitle).before("<i class=\"fa fa-camera\" aria-hidden=\"true\"></i>");
+    }
+
     getData() {
         let aThis = this;
         this.resetVariable();
@@ -358,6 +431,11 @@ class JobDetail {
                 //checklist
                 this.check_list_pre_install = this.job_detail.checklist.filter(preItem => preItem.checklist_type === "Pre-Install")
                 this.check_list_post_install = this.job_detail.checklist.filter(preItem => preItem.checklist_type === "Post-Install")
+
+                // this.attachments = new frappe.ui.form.Attachments({
+                //     parent:aThis.addPhotoElement,
+                //     frm:
+                // });
 
                 //timer
                 this.calculateTimer();
@@ -400,29 +478,6 @@ class JobDetail {
                 })
             })
     }
-
-    addComment(message) {
-        frappe.call({
-            method: "frappe.desk.form.utils.add_comment",
-            args: {
-                reference_doctype: "Job",
-                reference_name: this.job_id,
-                content: message,
-                comment_email: frappe.session.user,
-                comment_by: frappe.session.user_fullname
-            },
-            callback: function (r) {
-            }
-        });
-    }
-
-    // make_attachments() {
-    //     var aThis = this;
-    //     this.attachments = new frappe.ui.form.Attachments({
-    //         parent: aThis.addPhotoElement,
-    //         frm: aThis.job_detail
-    //     });
-    // }
 
     saveJob() {
         let aThis = this;
@@ -511,5 +566,4 @@ class JobDetail {
             this.job_detail.timer_min = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2});
         }
     }
-
 }
