@@ -142,7 +142,19 @@ function fillCurrentShortcuts() {
             }
         });
 
-    let pageName = frappe.get_route()[1];
+    let pageName =  frappe.get_route().length > 1 ? frappe.get_route()[1] : '';
+    if (!pageName) {
+        for (let page of frappe.boot.allowed_workspaces) {
+            if (page.selected) {
+                pageName = page.name;
+                break;
+            }
+        }
+    }
+    if (!pageName) {
+        console.log('Cannot determine current page');
+        return;
+    }
 
     frappe.call({
         method: 'frappe.desk.desktop.get_desktop_page',
@@ -153,8 +165,9 @@ function fillCurrentShortcuts() {
             if (Object.keys(workspacePage).length === 0) {
                 return;
             }
-            if (frappe.get_route()[1] !== pageName) {
+            if (frappe.get_route() .length > 1 && frappe.get_route()[1] && frappe.get_route()[1] !== pageName) {
                 // quickly clicked on various items
+                console.log('Page has changed before page data arrived');
                 return;
             }
 
