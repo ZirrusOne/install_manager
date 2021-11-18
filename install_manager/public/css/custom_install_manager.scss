@@ -21,6 +21,7 @@
   --color-job-detail-button: #666666;
   --color-job-container: #232323;
   --color-title-active: #FEFD5D;
+  --color-upload-photo: #FEFD5B;
   --color-switch-button: #81120B;
   --color-green-light: #94FB4A;
   --color-job-detail-title: #E5AD5B;
@@ -402,6 +403,93 @@ body {
         &.active {
           color: var(--color-title-active) !important;
         }
+      }
+    }
+  }
+
+  .filter-modal.custom-file-upload {
+    .file-upload-wrapper {
+      background: var(--color-gray);
+      padding: 20px;
+      border-radius: 8px;
+
+      .filter-modal-wrapper {
+        background: transparent;
+        padding: 0;
+
+        .header-title {
+          color: var(--color-title);
+        }
+
+        .file-uploader {
+          min-height: 90px;
+          max-height: 200px;
+          overflow: auto;
+
+          .file-upload-area {
+            background: transparent;
+            border: none;
+            min-height: unset;
+
+            .text-center {
+              display: none;
+
+              &.mt-2 {
+                display: flex;
+                flex-direction: row-reverse;
+
+                .btn-file-upload {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  margin-left: 10px;
+                  margin-right: 10px;
+
+                  i.fa {
+                    color: var(--color-upload-photo);
+                    font-size: 25px;
+                    margin-bottom: 10px;
+                    margin-right: 0;
+                  }
+
+                  .mt-1 {
+                    color: white;
+                    font-size: 16px;
+                  }
+
+                  &:focus {
+                    outline: none;
+                  }
+                }
+              }
+            }
+          }
+
+          .file-preview-area {
+            .file-preview {
+              padding-left: 0;
+              padding-right: 0;
+            }
+
+            .flex.align-center {
+              position: absolute;
+              top: -999999px;
+              left: -999999px;
+            }
+
+            .ml-2.btn-reset {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .filter-modal-action {
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+        align-items: center;
       }
     }
   }

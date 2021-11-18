@@ -1,0 +1,42 @@
+<div class="modal fade filter-modal filter-for-detail custom-file-upload" id="uploadModal" tabindex="-1"
+     role="dialog"
+     data-backdrop="static" data-keyboard="false"
+     aria-labelledby="uploadModal"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">PHOTO</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="file-upload-wrapper">
+                    <div class="filter-modal-wrapper">
+                        <div class="filter-header">
+                            <div class="header-title">
+                                <span>SELECT</span>
+                            </div>
+                        </div>
+                        <div id="fileUploader" class="file-upload-content"></div>
+                    </div>
+                    <div class="filter-modal-wrapper margin-top-20">
+                        <div class="filter-header">
+                            <div class="header-title">
+                                <i class="fa fa-comments" aria-hidden="true"></i>
+                                <span>COMMENT</span>
+                            </div>
+                        </div>
+                        <div class="filter-content">
+                            <textarea class="input-comment" id="jobPhotoComment" type="text"></textarea>
+                        </div>
+                    </div>
+                    <div class="filter-modal-action">
+                        <a class="btn-action text-uppercase" onclick="job_detail.uploadPhoto()">Submit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
