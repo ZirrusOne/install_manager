@@ -492,6 +492,11 @@ body {
             .file-preview {
               padding-left: 0;
               padding-right: 0;
+
+              .file-icon {
+                height: 60px;
+                width: 60px;
+              }
             }
 
             .flex.align-center {

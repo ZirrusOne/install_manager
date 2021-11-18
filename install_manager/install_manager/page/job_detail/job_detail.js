@@ -388,7 +388,7 @@ class JobDetail {
         let cameraTitle = $(camera).find('div.mt-1');
         let inputFile = $(".mt-2.text-center").find("input[type='file']");
 
-        $(inputFile).attr("multiple", true);
+        $(inputFile).attr("multiple", false);
         $(inputFile).attr("accept", "image/*");
 
         $(gallery).find('svg').remove();
