@@ -4,6 +4,7 @@ from typing import List
 
 import frappe
 
+from install_manager.install_manager.doctype.job import job_status
 from install_manager.install_manager.report.utilities import report_utils
 
 
@@ -24,7 +25,7 @@ def execute(filters=None):
             group by status
         """.format(join_active_schedule=report_utils.join_job_with_active_schedules(),
                    join_schedule_teams=report_utils.join_job_with_schedule_teams()),
-                                    values={},
+                                    values={'current_date': frappe.utils.nowdate()},
                                     debug=False)
     data = []
     for row in db_stats_result:
@@ -67,14 +68,19 @@ def get_chart_data(data: List):
             'labels': labels,
             'datasets': [
                 {
-                    'name': 'Total',
+                    #'name': 'Total',
                     'values': values
                 }
             ]
         },
-        'valuesOverPoints': 1,
+        'valuesOverPoints': True,
         'type': 'bar',
-        'colors': ['#ED7D31'],
+        # different colors for different bars is not supported yet. As of Nov 18th, 2021, this pull request is not yet merged
+        # https://github.com/frappe/charts/pull/179
+        # Also, the "colors" attribute returned here has not effect. It always looks for "colors" attributes in the
+        #   custom_options of the dashboard chart object
+        'colors': ['#8B0000'],
+        'height': 180,
         'truncateLegends': True,
         'barOptions': {
             'stacked': False

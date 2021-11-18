@@ -20,7 +20,7 @@ def execute(filters=None):
             and tabSchedule.docstatus < 2
     """.format(join_active_schedule=report_utils.join_job_with_active_schedules(),
                join_schedule_teams=report_utils.join_job_with_schedule_teams()),
-                                  values={},
+                                  values={'current_date': frappe.utils.nowdate()},
                                   debug=False)
 
     job_completion_statuses = ('Escalation - Vendor', 'Non-compliant', 'Completed')
@@ -37,7 +37,7 @@ def execute(filters=None):
     """.format(join_active_schedule=report_utils.join_job_with_active_schedules(),
                join_schedule_teams=report_utils.join_job_with_schedule_teams(),
                statuses=statuses),
-                                        values={},
+                                        values={'current_date': frappe.utils.nowdate()},
                                         debug=False)
     columns = [
         {
@@ -75,16 +75,21 @@ def execute(filters=None):
             'labels': ['Active Schedules', 'Units in Schedules', 'Completed Jobs'],
             'datasets': [
                 {
-                    'name': 'Total',
+                    #'name': 'Total',
                     'values': [data[0]['total_active_schedules'],
                                data[0]['total_units'],
                                data[0]['total_completed_jobs']]
                 },
             ]
         },
-        'valuesOverPoints': 1,
+        'valuesOverPoints': True,
         'type': 'bar',
-        'colors': ['#169CD8'],
+        # different colors for different bars is not supported yet. As of Nov 18th, 2021, this pull request is not yet merged
+        # https://github.com/frappe/charts/pull/179
+        # Also, the "colors" attribute returned here has not effect. It always looks for "colors" attributes in the
+        #   custom_options of the dashboard chart object
+        'colors': ['#F1C232'],
+        'height': 180,
         'truncateLegends': True,
         'barOptions': {
             'stacked': False

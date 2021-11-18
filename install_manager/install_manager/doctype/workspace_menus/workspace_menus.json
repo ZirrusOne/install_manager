@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "WSMNU-.####",
+ "autoname": "format:{workspace}_{visible_to_role}",
  "creation": "2021-11-17 16:50:01.710175",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -16,7 +16,8 @@
    "in_list_view": 1,
    "label": "Workspace",
    "options": "Workspace",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "default": "Back Office Staff",
@@ -26,11 +27,12 @@
    "label": "Visible To Role",
    "options": "Role",
    "remember_last_selected_value": 1,
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   }
  ],
  "links": [],
- "modified": "2021-11-17 16:50:10.312741",
+ "modified": "2021-11-18 14:31:10.125062",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Workspace Menus",

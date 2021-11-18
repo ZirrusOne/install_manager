@@ -21,13 +21,7 @@ def join_job_with_schedule_teams(job_alias='tabJob',
 def join_job_with_active_schedules(job_alias='tabJob', schedule_alias='tabSchedule') -> str:
     return f"""tabSchedule {schedule_alias} inner join tabJob {job_alias}
             on {job_alias}.schedule = {schedule_alias}.name
-                and {schedule_alias}.status IN {db_utils.in_clause(('Open', 'In Progress', 'On-Hold'))}
+                and {schedule_alias}.start_date <= %(current_date)s
+    		    and {schedule_alias}.status <> 'Completed'
+    		    and {schedule_alias}.status <> 'Cancelled'
             """
-
-
-report_colors = ['#ED7D31', '#0042A0', '#169CD8', '#449CF0', '#39E4A5', '#B4CD29', '#ECAD4B', '#29CD42', '#761ACB',
-                 '#CB2929', '#ED6396', '#4463F0']
-
-
-def pick_color(index: int) -> str:
-    return report_colors[index % len(report_colors)]
