@@ -86,6 +86,12 @@ body {
     text-transform: uppercase;
   }
 
+  // the chart
+  .data-point-value {
+    fill: #F1C232;
+    stroke: #F1C232;
+  }
+
   #page-Workspaces {
     .layout-side-section {
       overflow-y: hidden;
@@ -129,6 +135,10 @@ body {
           color: #666666;
           text-transform: uppercase;
           font-size: 13px;
+        }
+
+        .standard-sidebar-item:hover .sidebar-item-label {
+          color: white;
         }
       }
     }
