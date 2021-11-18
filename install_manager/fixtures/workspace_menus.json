@@ -2,8 +2,19 @@
  {
   "docstatus": 0,
   "doctype": "Workspace Menus",
-  "modified": "2021-11-17 16:57:42.694152",
-  "name": "WSMNU-0001",
+  "modified": "2021-11-18 14:31:55.502868",
+  "name": "Users_Back Office Staff",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "visible_to_role": "Back Office Staff",
+  "workspace": "Users"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workspace Menus",
+  "modified": "2021-11-18 14:32:14.088998",
+  "name": "Support_Back Office Staff",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
@@ -13,12 +24,12 @@
  {
   "docstatus": 0,
   "doctype": "Workspace Menus",
-  "modified": "2021-11-17 16:57:53.254265",
-  "name": "WSMNU-0002",
+  "modified": "2021-11-18 14:32:23.510734",
+  "name": "Install Manager_Back Office Staff",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "visible_to_role": "Back Office Staff",
-  "workspace": "Users"
+  "workspace": "Install Manager"
  }
 ]
