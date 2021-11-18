@@ -2,7 +2,12 @@
 # For license information, please see license.txt
 
 # import frappe
+from typing import Optional
+
 from frappe.model.document import Document
 
 class JobChecklist(Document):
-	pass
+    criterion: str
+    criterion_type: str
+    checklist_type: str
+    result: Optional[str]

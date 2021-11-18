@@ -13,6 +13,7 @@ from frappe.model.document import Document
 from install_manager.install_manager.doctype.escalation_record.escalation_record import EscalationRecord
 from install_manager.install_manager.doctype.job import job_status
 from install_manager.install_manager.doctype.job.job_status import READY, NO_COMPLIANT, IN_PROGRESS
+from install_manager.install_manager.doctype.job_checklist.job_checklist import JobChecklist
 from install_manager.install_manager.doctype.job_timer.job_timer import JobTimer
 from install_manager.install_manager.doctype.team.team import Team
 from install_manager.install_manager.doctype.team.team_type import LEVEL_1
@@ -31,7 +32,7 @@ class Job(Document):
     site_unit: str
     unit_name: str
     assigned_team: str
-    checklist: List[dict]
+    checklist: List[JobChecklist]
 
     def validate(self):
         self._validate_site_unit()
@@ -133,9 +134,9 @@ class Job(Document):
     def _validate_checklist(self):
         if self.checklist is not None:
             for chk in self.checklist:
-                result = chk.get('result')
+                result = chk.result
                 if chk.criterion_type == 'checkbox' and result is not None and result not in ['0', '1', 0, 1]:
-                    frappe.throw(f'Wrong response data for checklist check {chk["criterion"]}')
+                    frappe.throw(f'Wrong response data for checklist check {chk.criterion}')
 
     def _record_escalation(self, old_status: Optional[str]):
         if old_status == self.status \
