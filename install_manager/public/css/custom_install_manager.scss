@@ -132,6 +132,7 @@ body {
         border-radius: var(--border-radius-md);
         height: var(--z1n-panel-height);
         margin-bottom: var(--z1n-panel-margin-bottom);
+        overflow: hidden;
 
         .desk-sidebar {
           margin-bottom: 0;

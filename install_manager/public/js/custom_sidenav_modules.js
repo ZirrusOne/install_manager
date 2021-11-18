@@ -23,32 +23,30 @@ $(document).ready(function () {
     // For F5 from the installer-manage page
     customizeZ1nSidebar();
 
-    frappe.router.on('change', () => {
-        if ($('#page-Workspaces:visible').length) {
-            if ('Workspaces/Install Manager' !== frappe.get_route_str()) {
-                $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').removeClass('selected');
-            } else {
-                $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').addClass('selected');
-            }
-        }
-    });
+    // frappe.router.on('change', () => {
+    //     if ($('#page-Workspaces:visible').length) {
+    //         if ('Workspaces/Install Manager' !== frappe.get_route_str()) {
+    //             $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').removeClass('selected');
+    //         } else {
+    //             $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').addClass('selected');
+    //         }
+    //     }
+    // });
 
     if (!frappe.user.has_role("Administrator")) {
         hideMenus();
     }
-
 })
 
 function customizeZ1nSidebar() {
-    if (!$('#page-Workspaces').length || $('#page-Workspaces .layout-side-section .z1n-panel').length) {
-        return;
-    }
-    // remove the default "Install Manager" item
-    let sidebarModules = $('.standard-sidebar-label:contains("Modules")');
-    sidebarModules.parent().children('a[href^="/app/install-manager"]').remove();
-    sidebarModules.remove();
+    if ($('#page-Workspaces').length && !$('#page-Workspaces .layout-side-section .z1n-panel').length) {
+        let sidebarModules = $('.standard-sidebar-label:contains("Modules")');
+        sidebarModules.remove();
 
-    insertZ1NPanel();
+        insertZ1NPanel();
+    }
+
+    fillCurrentShortcuts();
 }
 
 function insertZ1NPanel() {
@@ -59,11 +57,7 @@ function insertZ1NPanel() {
         '<div class="z1n-panel">',
         '   <div class="desk-sidebar list-unstyled sidebar-menu">',
         '       <div class="standard-sidebar-section">',
-                    getSideBarItemHtml('Dashboard', '/app/install-manager', 'crm',
-                        'Workspaces/Install Manager' === frappe.get_route_str()),
-                    getSideBarItemHtml('Schedules', '/app/schedule', 'calendar', false),
-                    getSideBarItemHtml('Teams', '/app/team', 'users', false),
-                    getSideBarItemHtml('Sites', '/app/site', 'organization', false),
+                    getSideBarItemHtml('Workspace', '#', 'crm', true, 'z1n-panel-workspace'),
         '       </div>',
         '   </div>',
         '</div>'
@@ -71,9 +65,17 @@ function insertZ1NPanel() {
     overlaySideBar.wrap('<div class="overlay-sidebar-wrapper"></div>');
 }
 
-function getSideBarItemHtml(name, uri, icon, selected) {
+function getSideBarItemHtml(name, uri, icon, selected, additionalClass='') {
+    // icon taken from symbol-defs.svg
+
+    // approximately
+    let tooltip = '';
+    if (name.length > 10) {
+        tooltip = ' title="' + name + '" ';
+    }
+
     return [
-        '<a href="', uri, '" class="desk-sidebar-item standard-sidebar-item ', selected ? 'selected' : '', '">',
+        '<a href="', uri, '" ', tooltip, 'class="desk-sidebar-item standard-sidebar-item ', selected ? 'selected' : '', ' ', additionalClass, '">',
         getSideBarItemInner(name, icon),
         '</a>'
     ].join('');
@@ -103,8 +105,6 @@ function hideMenus() {
                 visibleUrls.push('/app/' + frappe.router.slug(w));
             });
 
-            console.log(visibleUrls);
-
             standardSideBarWrapper.find('.standard-sidebar-section')
                 .each(function() {
                    let section = $(this);
@@ -122,4 +122,62 @@ function hideMenus() {
             standardSideBarWrapper.css('display', 'block');
         }
     });
+}
+
+function fillCurrentShortcuts() {
+    if (!$('#page-Workspaces:visible').length) {
+        // not a workspace page
+        return;
+    }
+
+    $('.z1n-panel .standard-sidebar-section').find('.desk-sidebar-item')
+        .each(function() {
+            let item = $(this);
+            if (!item.hasClass('z1n-panel-workspace')) {
+                item.remove();
+            }
+        });
+
+    let pageName = frappe.get_route()[1];
+
+    frappe.call({
+        method: 'frappe.desk.desktop.get_desktop_page',
+        args: {page: pageName},
+        type: 'POST',
+        callback: function (result) {
+            let workspacePage = result.message;
+            if (Object.keys(workspacePage).length === 0) {
+                return;
+            }
+            if (frappe.get_route()[1] !== pageName) {
+                // quickly clicked on various items
+                return;
+            }
+
+            let shortcuts = workspacePage.shortcuts.items.slice(0, 3);
+
+            shortcuts.forEach((shortcut) => {
+                let route = frappe.utils.generate_route({
+                    route: null,
+                    name: shortcut.link_to,
+                    type: shortcut.type,
+                    is_query_report: false,
+                    doctype: null,
+                    doc_view: shortcut.doc_view
+                });
+
+                let icon;
+                if (shortcut.icon) {
+                    icon = shortcut.icon
+                } else {
+                    icon ='arrow-up-right';
+                }
+
+                $('.z1n-panel .standard-sidebar-section').append(
+                    getSideBarItemHtml(shortcut.label, route, icon, false, '')
+                );
+            });
+        }
+    });
+
 }

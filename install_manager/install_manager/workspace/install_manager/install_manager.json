@@ -32,7 +32,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-09-24 04:38:00.455234",
+ "modified": "2021-11-18 13:53:01.403391",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Install Manager",
@@ -43,18 +43,21 @@
  "shortcuts": [
   {
    "doc_view": "List",
+   "icon": "organization",
    "label": "Sites",
    "link_to": "Site",
    "type": "DocType"
   },
   {
    "doc_view": "List",
+   "icon": "users",
    "label": "Teams",
    "link_to": "Team",
    "type": "DocType"
   },
   {
    "doc_view": "List",
+   "icon": "calendar",
    "label": "Schedules",
    "link_to": "Schedule",
    "type": "DocType"
