@@ -44,6 +44,16 @@ function customizeZ1nSidebar() {
         sidebarModules.remove();
 
         insertZ1NPanel();
+
+        $('#page-Workspaces .layout-side-section').on('mouseenter', '.standard-sidebar-item', function() {
+            let menuItem = $(this);
+            if (!menuItem.attr('title')) {
+                let label = menuItem.find('.sidebar-item-label').first();
+                if (label[0].offsetWidth < label[0].scrollWidth) {
+                    menuItem.attr('title', label.text());
+                }
+            }
+        });
     }
 
     fillCurrentShortcuts();
@@ -68,14 +78,8 @@ function insertZ1NPanel() {
 function getSideBarItemHtml(name, uri, icon, selected, additionalClass='') {
     // icon taken from symbol-defs.svg
 
-    // approximately
-    let tooltip = '';
-    if (name.length > 10) {
-        tooltip = ' title="' + name + '" ';
-    }
-
     return [
-        '<a href="', uri, '" ', tooltip, 'class="desk-sidebar-item standard-sidebar-item ', selected ? 'selected' : '', ' ', additionalClass, '">',
+        '<a href="', uri, '" class="desk-sidebar-item standard-sidebar-item ', selected ? 'selected' : '', ' ', additionalClass, '">',
         getSideBarItemInner(name, icon),
         '</a>'
     ].join('');
