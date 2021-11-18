@@ -99,22 +99,7 @@ body {
       --z1n-panel-height: 170px;
       --z1n-panel-margin-bottom: 5px;
 
-      .z1n-panel {
-        border: solid 1px var(--color-gray);
-        border-radius: var(--border-radius-md);
-        height: var(--z1n-panel-height);
-        margin-bottom: var(--z1n-panel-margin-bottom);
-
-        .layout-main .desk-sidebar {
-          margin-bottom: 0;
-        }
-      }
-
-      .overlay-sidebar-wrapper {
-        height: calc(100% - var(--z1n-panel-height) - var(--z1n-panel-margin-bottom));
-        overflow-y: auto;
-      }
-
+      // common
       .desk-sidebar {
         .standard-sidebar-label {
           font-weight: 600;
@@ -139,6 +124,32 @@ body {
 
         .standard-sidebar-item:hover .sidebar-item-label {
           color: white;
+        }
+      }
+
+      .z1n-panel {
+        border: solid 1px var(--color-gray);
+        border-radius: var(--border-radius-md);
+        height: var(--z1n-panel-height);
+        margin-bottom: var(--z1n-panel-margin-bottom);
+
+        .desk-sidebar {
+          margin-bottom: 0;
+
+          .standard-sidebar-item.selected {
+            background-color: var(--sidebar-select-color);
+          }
+        }
+      }
+
+      .overlay-sidebar-wrapper {
+        height: calc(100% - var(--z1n-panel-height) - var(--z1n-panel-margin-bottom));
+        overflow-y: auto;
+
+        .desk-sidebar {
+          .standard-sidebar-item.selected {
+            background-color: transparent;
+          }
         }
       }
     }
