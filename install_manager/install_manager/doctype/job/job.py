@@ -60,7 +60,7 @@ class Job(Document):
         if not self._has_role(username=frappe.session.user, role=FIELD_LEAD) \
                 and not self._has_role(username=frappe.session.user, role=INSTALLER):
             return
-        if self.assigned_team is None or self.assigned_team == '':
+        if common_utils.is_blank(self.assigned_team):
             frappe.throw('This Job is not assigned to your team. You could not work on it')
 
         team = frappe.get_doc('Team', self.assigned_team)
@@ -71,7 +71,7 @@ class Job(Document):
 
     # noinspection PyAttributeOutsideInit
     def db_insert(self):
-        if self.status is None or self.status == '':
+        if common_utils.is_blank(self.status):
             self.status = READY
         self._validate_escalation()
         self._validate_non_compliant()
@@ -126,7 +126,7 @@ class Job(Document):
                          f'the same Site as the Schedule {self.schedule}')
 
     def _validate_team_type(self):
-        if self.assigned_team and self.assigned_team != '':
+        if not common_utils.is_blank(self.assigned_team):
             t_type = frappe.db.get_value('Team', {'name': self.assigned_team}, 'team_type')
             if t_type != LEVEL_1:
                 frappe.throw(f'Team type of team {self.assigned_team} is not {LEVEL_1}')
@@ -149,6 +149,8 @@ class Job(Document):
             escalation_level = job_status.get_escalation_team_type(self.status)
             team = None
             if escalation_level == LEVEL_1:
+                if common_utils.is_blank(self.assigned_team):
+                    frappe.throw(f'Could not escalate to {LEVEL_1} as there is no team assigned to this Job')
                 team = frappe.get_doc('Team', self.assigned_team)
             else:
                 schedule = frappe.get_doc('Schedule', self.schedule)
@@ -483,4 +485,59 @@ def get_job_installer(job_id):
     return {
         'full_name': job.in_progress_installer,
         'user_id': job.in_progress_installer
+    }
+
+
+@frappe.whitelist()
+def generate_jobs(schedule_id):
+    if common_utils.is_blank(schedule_id):
+        frappe.throw('Schedule ID is not provided')
+
+    schedule = frappe.get_doc('Schedule', schedule_id)
+
+    units = frappe.db.sql("""
+                                select name, full_name
+                                from `tabSite Unit`
+                                where site = %(site_id)s
+                                """,
+                          values={'site_id': schedule.site},
+                          debug=False,
+                          as_dict=True
+                          )
+    if len(units) == 0:
+        frappe.throw(f'Site {schedule.site_name} has no Site Unit')
+
+    total_inserts = 0
+    total_duplications = 0
+    for unit in units:
+        existing_job = frappe.db.get(doctype='Job', filters={'schedule': schedule_id, 'site_unit': unit['name']})
+        if existing_job is None:
+            frappe.get_doc({
+                'doctype': 'Job',
+                'schedule': schedule_id,
+                'site_unit': unit['name'],
+                'installation_date': schedule.start_date,
+                'schedule_name': schedule.schedule_name,
+                'unit_name': unit['full_name'],
+                'site_name': schedule.site_name,
+                'status': job_status.READY,
+                'installation_type': 'Standard'
+            }).insert()
+            total_inserts = total_inserts + 1
+        else:
+            total_duplications = total_duplications + 1
+
+    no_start_date_msg = ''
+    if schedule.start_date is None and total_inserts > 0:
+        no_start_date_msg = 'The schedule has no Start Date. Created Jobs will have no Installation Date either'
+
+    if total_duplications == 0:
+        return {
+            'message': f'{total_inserts} new Jobs created for Schedule {schedule.schedule_name} '
+                       f'from Site {schedule.site_name}. {no_start_date_msg}.'
+        }
+
+    return {
+        'message': f'{total_inserts} new Jobs created. {total_duplications} duplicate Jobs were detected and skipped. '
+                   f'{no_start_date_msg}.'
     }

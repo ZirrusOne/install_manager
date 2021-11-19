@@ -7,7 +7,7 @@ frappe.ui.form.on('Site', {
             return;
         }
         siteForm.add_custom_button(__('Site Objects'), function() {
-            if (siteForm.dirty()) {
+            if (siteForm.is_dirty()) {
                 frappe.msgprint('Please save before generating site objects.');
                 return;
             }

@@ -8,5 +8,12 @@ $(document).ready(function () {
     // it will come back to this default "dark" when he presses F5!
     $('html').attr('data-theme', 'dark');
     document.querySelector(':root').style.setProperty('--vh', window.innerHeight + 'px');
+
+    let isLevel1Team = frappe.user && frappe.user.has_role // undefined when not login
+        && (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer"))
+        && !frappe.user.has_role("Back Office Staff");
+    if (isLevel1Team) {
+        $('body').addClass('z1n-field-crew');
+    }
 });
 
