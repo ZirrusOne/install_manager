@@ -357,7 +357,8 @@ class JobDetail {
             on_success: (file_doc) => {
                 let message = $("#jobPhotoComment").val();
                 if (message.length > 0) {
-                    aThis.addComment(message);
+                    let comment = 'PHOTO COMMENT: ' + message;
+                    aThis.addComment(comment);
                 }
                 aThis.getData();
                 $("#uploadModal").modal('hide');

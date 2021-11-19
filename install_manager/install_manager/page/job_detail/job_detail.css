@@ -432,6 +432,10 @@ i.fa {
     width: 100%;
 }
 
+.header-wrapper .item-content .header-item.item-action:last-child {
+    margin-bottom: 10px !important;
+}
+
 .header-wrapper .item-content .header-item.building-wrapper {
     justify-items: flex-start;
 }
@@ -486,6 +490,10 @@ i.fa {
 
     .job-container .item-title {
         padding-bottom: 10px;
+    }
+
+    .job-container .item-content .item-action {
+        margin-bottom: 15px !important;
     }
 
     .job-container .job-tab-wrapper .job-tab-header {
