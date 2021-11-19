@@ -525,6 +525,26 @@ body {
       }
     }
   }
+
+  .z1n-field-crew {
+    #page-user-profile {
+      .page-head-content {
+        // Hide the "Switch User" button
+        .page-actions {
+          display: none;
+        }
+      }
+      .leaderboard-link {
+        display: none;
+      }
+    }
+    #page-User {
+      .form-assignments {
+        // !important to override the style attribute which is added by an unknown script!
+        display: none !important;
+      }
+    }
+  }
 }
 
 
