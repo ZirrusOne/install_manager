@@ -415,6 +415,12 @@ class JobDetail {
             this.installation_types = meta.fields.find(item => item.fieldname === "installation_type").options.split("\n");
         });
 
+        // avoid confusing for installers due to cache
+        // don't cache at all
+        if (locals['Job'] && locals['Job'][this.job_id]) {
+            delete locals['Job'][this.job_id];
+        }
+
         frappe.model.with_doc("Job", this.job_id)
             .then((result) => {
                 this.job_detail = result
