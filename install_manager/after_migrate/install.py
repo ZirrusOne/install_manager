@@ -16,7 +16,7 @@ def _setup_website():
     frappe.db.set_value('Website Settings', None, 'hide_footer_signup', 1)
     frappe.db.set_value('Website Settings', None, 'footer', '')
     frappe.db.set_value('Website Settings', None, 'copyright', '')
-    frappe.db.delete('Top Bar Item', '1=1')
+    frappe.db.delete('Top Bar Item', {'parent': 'Website Settings'})
 
 
 def _set_logo_width():
