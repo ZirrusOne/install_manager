@@ -306,7 +306,7 @@ i.fa {
     background: var(--background-gray);
     overflow: auto;
     padding: 20px;
-    height: 125px;
+    height: 140px;
 }
 
 .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
@@ -360,7 +360,7 @@ i.fa {
     align-items: center;
 }
 
-.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install .btn-action {
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane .btn-action {
     margin-bottom: 20px;
 }
 
@@ -374,8 +374,13 @@ i.fa {
     top: 0;
     left: 0;
     padding-top: 20px;
+    padding-bottom: 20px;
     background: black;
     z-index: 1;
+}
+
+.header-wrapper .job-container {
+    margin-bottom: 0;
 }
 
 .header-wrapper .item-header {
@@ -387,6 +392,7 @@ i.fa {
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 0;
 }
 
 .header-wrapper .item-header .header-title {
@@ -469,6 +475,10 @@ i.fa {
 }
 
 @media screen and (max-width: 540px) {
+    header-wrapper {
+        padding-bottom: 15px;
+    }
+
     .job-container {
         padding: 10px;
         margin-bottom: 15px;
@@ -487,6 +497,10 @@ i.fa {
     }
 
     .job-container .job-tab-wrapper .job-tab-content .job-tab-pane .item {
+        margin-bottom: 15px;
+    }
+
+    .job-container .job-tab-wrapper .job-tab-content .job-tab-pane .btn-action {
         margin-bottom: 15px;
     }
 }

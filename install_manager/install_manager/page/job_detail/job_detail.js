@@ -100,6 +100,11 @@ class JobDetail {
         this.customUI();
     }
 
+    onCloseJobDetail() {
+        this.saveJob();
+        window.location.href = "/app/job-management";
+    }
+
     onChangeChecklistType(element) {
         let value = $(element).attr('view-for');
         if (this.current_checkList !== value)
