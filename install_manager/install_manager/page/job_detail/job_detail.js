@@ -425,6 +425,7 @@ class JobDetail {
             aThis.attachment_activities = result.docinfo.attachment_logs;
             aThis.comment_activities = result.docinfo.comments;
             aThis.version_activities = result.docinfo.versions;
+            aThis.buildActivities();
 
             aThis.selectedInstallationType = aThis.job_detail.installation_type;
             aThis.selectedJobStatus = aThis.job_detail.status;
@@ -528,9 +529,27 @@ class JobDetail {
         return job_detail;
     }
 
+    buildActivities() {
+        // build attachment activities
+        this.all_activities = [];
+        this.attachment_activities = this.attachment_activities.filter(item => item.content.startsWith("<img class="));
+        this.attachment_activities.forEach(item => {
+            item.title = "<div class='activity-owner'>" + this.getUserName(item.owner) + "</div>" +
+                "<div class='actitiy-title'> added a photo " + comment_when(item.creation) + "</div>"
+        });
+
+        this.comment_activities.forEach(item => {
+            item.title = "<div class='activity-owner'>" + this.getUserName(item.owner) + "</div>" +
+                "<div class='actitiy-title'> commented " + comment_when(item.creation) + "</div>"
+        })
+
+        this.all_activities = this.all_activities.concat(this.attachment_activities);
+        this.all_activities = this.all_activities.concat(this.comment_activities);
+        this.all_activities.sort((item1, item2) => new Date(item2.creation) - new Date(item1.creation));
+    }
+
     renderJobDetail() {
         $(this.jobDetailElement).empty();
-        this.buildActivities();
         $(frappe.render_template('result', {
             isInstaller: frappe.user.has_role("Field Installer"),
             result: this.job_detail,
@@ -546,19 +565,6 @@ class JobDetail {
         })).appendTo($(this.jobDetailElement));
     }
 
-    buildActivities() {
-        // build attachment activities
-        this.attachment_activities = this.attachment_activities.filter(item => item.content.startsWith("<img class="));
-        this.attachment_activities.forEach(item => {
-            item.display_time = comment_when(item.creation);
-            item.owner_display_name = this.getUserName(item.owner);
-        });
-
-        this.comment_activities.forEach(item => {
-            item.display_time = comment_when(item.creation);
-            item.owner_display_name = this.getUserName(item.owner);
-        })
-    }
 
     resetVariable() {
         this.previousSelectedJobStatus = '';

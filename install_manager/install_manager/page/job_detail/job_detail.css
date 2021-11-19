@@ -123,7 +123,6 @@ i.fa {
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 0 0 20px;
     font-size: 14px;
 }
 
@@ -310,7 +309,7 @@ i.fa {
 }
 
 .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
-    height: 250px;
+    height: calc(var(--vh) - 475px);
 }
 
 .job-container .job-tab-wrapper .job-tab-content .job-tab-pane {
@@ -368,6 +367,47 @@ i.fa {
     margin-bottom: 0;
 }
 
+.job-container .job-tab-wrapper .job-tab-content.activity-pane {
+    background: black;
+}
+
+.activity-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    color: white;
+    position: relative;
+}
+
+.activity-item-wrapper:after {
+    content: '';
+    position: absolute;
+    border-bottom: 2px solid var(--color-diver);
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100px
+}
+
+.activity-item-wrapper .activity-item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.activity-item-wrapper .activity-item-header .activity-owner {
+    font-weight: 700;
+    margin-right: 20px;
+}
+
+.activity-item-wrapper .activity-item-content p {
+    margin-bottom: 0;
+}
 
 .header-wrapper {
     position: sticky;
@@ -479,7 +519,7 @@ i.fa {
 }
 
 @media screen and (max-width: 540px) {
-    header-wrapper {
+    .header-wrapper {
         padding-bottom: 15px;
     }
 
@@ -510,5 +550,9 @@ i.fa {
 
     .job-container .job-tab-wrapper .job-tab-content .job-tab-pane .btn-action {
         margin-bottom: 15px;
+    }
+
+    .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
+        height: calc(var(--vh) - 388px);
     }
 }
