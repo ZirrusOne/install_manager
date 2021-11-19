@@ -35,9 +35,13 @@
                         <span class="bold uppercase">ADDL. SERVICES</span>
                     </div>
                     <div class="action-content additional-services">
+                        {%if result.additional_services.length >0 %}
                         {% for item in result.additional_services %}
                         <span class="text-capitalize color-yellow">{{item.service}}</span>
                         {% endfor %}
+                        {%else%}
+                        <span class="text-capitalize color-yellow">None</span>
+                        {%endif%}
                     </div>
                 </a>
                 {% if result.in_progress_installer %}
