@@ -32,7 +32,6 @@ class JobDetail {
     additional_services = [];
     check_list_pre_install = [];
     check_list_post_install = [];
-
     reasonMessage = '';
     selectedInstallationType = '';
     selectedJobStatus = '';
@@ -320,16 +319,6 @@ class JobDetail {
         $('.layout-main-section').find('.page-form').remove();
     }
 
-    resetVariable() {
-        this.previousSelectedJobStatus = '';
-        this.selectedNonComplaintReason = '';
-        this.selectedEscalationReason = '';
-        this.reasonMessage = '';
-        this.isAdditionalServiceChanged = false;
-        this.isStatusChanged = false;
-    }
-
-
     addComment(message) {
         frappe.call({
             method: "frappe.desk.form.utils.add_comment",
@@ -415,68 +404,67 @@ class JobDetail {
             this.installation_types = meta.fields.find(item => item.fieldname === "installation_type").options.split("\n");
         });
 
-        frappe.model.with_doc("Job", this.job_id)
-            .then((result) => {
-                this.job_detail = result
-                this.selectedInstallationType = this.job_detail.installation_type;
-                this.selectedJobStatus = this.job_detail.status;
-                if (this.job_detail.escalation_reason) {
-                    this.selectedEscalationReason = this.job_detail.escalation_reason;
+        frappe.call({
+            type: "GET",
+            method: "frappe.desk.form.load.getdoc",
+            args: {
+                doctype: "Job",
+                name: this.job_id
+            },
+            callback: function (result) {
+                aThis.job_detail = result.docs[0];
+                aThis.selectedInstallationType = aThis.job_detail.installation_type;
+                aThis.selectedJobStatus = aThis.job_detail.status;
+                if (aThis.job_detail.escalation_reason) {
+                    aThis.selectedEscalationReason = aThis.job_detail.escalation_reason;
                 }
 
-                if (this.job_detail.non_compliant_reasons) {
-                    this.selectedNonComplaintReason = this.job_detail.non_compliant_reasons;
+                if (aThis.job_detail.non_compliant_reasons) {
+                    aThis.selectedNonComplaintReason = aThis.job_detail.non_compliant_reasons;
                 }
 
                 //checklist
-                this.check_list_pre_install = this.job_detail.checklist.filter(preItem => preItem.checklist_type === "Pre-Install")
-                this.check_list_post_install = this.job_detail.checklist.filter(preItem => preItem.checklist_type === "Post-Install")
-
-                // this.attachments = new frappe.ui.form.Attachments({
-                //     parent:aThis.addPhotoElement,
-                //     frm:
-                // });
+                aThis.check_list_pre_install = aThis.job_detail.checklist.filter(preItem => preItem.checklist_type === "Pre-Install")
+                aThis.check_list_post_install = aThis.job_detail.checklist.filter(preItem => preItem.checklist_type === "Post-Install")
 
                 //timer
-                this.calculateTimer();
-                if (this.job_detail.status === "In Progress") {
+                aThis.calculateTimer();
+                if (aThis.job_detail.status === "In Progress") {
                     setInterval(function () {
                         aThis.calculateTimer();
                         $("#timer_hours").text(aThis.job_detail.timer_hours);
                         $("#timer_min").text(aThis.job_detail.timer_min);
                     }, 30000);
                 }
-                if (this.job_detail.additional_services.length > 0) {
-                    this.job_detail.additional_services.forEach(item => {
-                        let foundItem = this.additional_services.find(service => service.name === item.service);
+                if (aThis.job_detail.additional_services.length > 0) {
+                    aThis.job_detail.additional_services.forEach(item => {
+                        let foundItem = aThis.additional_services.find(service => service.name === item.service);
                         if (foundItem)
                             foundItem.isSelected = true;
                     })
                 }
-                if (this.job_detail.in_progress_installer && this.job_detail.in_progress_installer.length > 0) {
-                    frappe.call({
-                        type: "GET",
-                        method: "install_manager.install_manager.doctype.job.job.get_job_installer",
-                        args: {job_id: this.job_id},
-                        callback: function (result) {
-                            aThis.job_detail.full_name = result.message.full_name;
-                        }
-                    })
-
-                    aThis.job_detail.start_at = moment(this.job_detail.in_progress_start_time).format('MMM. DD,YYYY')
+                if (aThis.job_detail.in_progress_installer && aThis.job_detail.in_progress_installer.length > 0) {
+                    aThis.job_detail.in_progress_installer_full_name = aThis.getUserName(aThis.job_detail.in_progress_installer);
+                    aThis.job_detail.start_at = moment(aThis.job_detail.in_progress_start_time).format('MMM. DD,YYYY')
                 }
-                let siteUnit = frappe.model.with_doc("Site Unit", this.job_detail.site_unit)
-                let schedule = frappe.model.with_doc("Schedule", this.job_detail.schedule)
+
+                aThis.attachment_activities = result.docinfo.attachment_logs;
+                aThis.comment_activities = result.docinfo.comments;
+                aThis.version_activities = result.docinfo.versions;
+
+                let siteUnit = frappe.model.with_doc("Site Unit", aThis.job_detail.site_unit)
+                let schedule = frappe.model.with_doc("Schedule", aThis.job_detail.schedule)
                 Promise.all([siteUnit, schedule]).then((result) => {
-                    this.site_unit = result[0];
-                    this.schedule = result[1];
-                    let site = frappe.model.with_doc("Site", this.schedule.site)
+                    aThis.site_unit = result[0];
+                    aThis.schedule = result[1];
+                    let site = frappe.model.with_doc("Site", aThis.schedule.site)
                     Promise.all([site]).then((siteResult) => {
-                        this.site = siteResult[0];
-                        this.renderJobDetail();
+                        aThis.site = siteResult[0];
+                        aThis.renderJobDetail();
                     })
-                })
-            })
+                });
+            }
+        })
     }
 
     saveJob() {
@@ -533,6 +521,7 @@ class JobDetail {
 
     renderJobDetail() {
         $(this.jobDetailElement).empty();
+        // this.buildActivities();
         $(frappe.render_template('result', {
             isInstaller: frappe.user.has_role("Field Installer"),
             result: this.job_detail,
@@ -541,8 +530,24 @@ class JobDetail {
             check_list_post_install: this.check_list_post_install,
             current_checkList: this.current_checkList,
             current_activity: this.current_activity,
+            all_activities: this.all_activities,
+            comment_activities: this.comment_activities,
+            attachment_activities: this.attachment_activities,
             site: this.site
         })).appendTo($(this.jobDetailElement));
+    }
+
+    getUserName(user) {
+        return frappe.user_info(user).fullname || '';
+    }
+
+    resetVariable() {
+        this.previousSelectedJobStatus = '';
+        this.selectedNonComplaintReason = '';
+        this.selectedEscalationReason = '';
+        this.reasonMessage = '';
+        this.isAdditionalServiceChanged = false;
+        this.isStatusChanged = false;
     }
 
     calculateTimer() {

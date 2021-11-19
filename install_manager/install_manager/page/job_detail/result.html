@@ -4,7 +4,7 @@
             <div class="item-header">
                 <div class="header-title">
                     <i class="fa fa-globe color-orange-light" aria-hidden="true"></i>
-                    <span class="bold">{{result.site_name}} {{result.schedule_name}}</span>
+                    <span class="bold">{{result.schedule_name}}</span>
                 </div>
                 <a class="btn-close">
                     <i class="fa fa-times-circle" aria-hidden="true"></i>
@@ -18,7 +18,7 @@
                         Building {{site_unit.building_number}}
                     </div>
                     <div class="item unit"><i class="fa fa-sign-in color-orange-light" aria-hidden="true"></i>
-                        Unit {{site_unit.floor_number}}
+                        {{result.unit_name}}
                     </div>
                 </div>
                 <a class="header-item item-action" onclick="job_detail.openJobTypeModal()">
@@ -43,7 +43,7 @@
                 {% if result.in_progress_installer %}
                 <div class="header-item installer">
                     <span class="bold uppercase">INSTALLER:&nbsp;</span><span
-                        class="color-yellow">{{result.full_name}}</span><span
+                        class="color-yellow">{{result.in_progress_installer_full_name}}</span><span
                         class="bold">&nbsp;on&nbsp; </span><span class="color-yellow">{{result.start_at}}</span>
                 </div>
                 {% endif%}
