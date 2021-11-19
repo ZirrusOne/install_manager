@@ -56,7 +56,9 @@ body {
     align-items: center;
     margin-right: 30px;
 }
-
+.filter-wrapper .filter-by-team a {
+    height: 32px;
+}
 .filter-wrapper .filter-by-team label {
     color: var(--color-title);
     border: 1px solid var(--color-diver);
