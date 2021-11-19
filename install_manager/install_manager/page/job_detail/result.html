@@ -62,6 +62,7 @@
                 <div class="action-content">
                     <span class="text-uppercase {{result.status ==="In Progress"?"color-in-progress":
                     result.status === "Resolved - Ready"?"color-status-resolved":
+                    result.status === "Completed"?"color-status-completed":
                     result.status === "Non-compliant"?"color-non-compliant":
                     (result.status === "Escalation - Field Lead" ||
                     result.status === "Escalation - Back Office" ||
@@ -81,6 +82,7 @@
                 <div class="time-icon">
                     <i class="fa fa-clock-o {{result.status ==="In Progress"?"color-in-progress":
                     result.status === "Resolved - Ready"?"color-status-resolved":
+                    result.status === "Completed"?"color-status-completed":
                     result.status === "Non-compliant"?"color-non-compliant":
                     (result.status === "Escalation - Field Lead" ||
                     result.status === "Escalation - Back Office" ||

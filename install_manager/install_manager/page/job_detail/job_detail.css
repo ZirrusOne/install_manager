@@ -38,6 +38,10 @@
     color: var(--color-green-light) !important;
 }
 
+.color-status-completed {
+    color: var(--color-complete) !important;
+}
+
 .margin-top-20 {
     margin-top: 20px;
 }
