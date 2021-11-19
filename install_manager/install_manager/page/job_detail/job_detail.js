@@ -296,7 +296,8 @@ class JobDetail {
         let foundItem = this.job_detail.checklist.find(item => item.criterion === fieldName && item.criterion_type === checklistType)
         if (foundItem) {
             if (foundItem.result !== value) {
-                foundItem.result = value
+                foundItem.result = value;
+                this.saveJob();
             }
         }
     }
