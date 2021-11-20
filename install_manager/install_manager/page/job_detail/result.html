@@ -253,36 +253,27 @@
                 <div id="allActivity" class="tab-pane {{current_activity === "all"?"active":""}}">
                 {% for item in all_activities %}
                     <div class="activity-item-wrapper">
-                        <div class="activity-item-header">
-                            {{item.title}}
-                        </div>
+                        {%if item.timelineType === "version"%}
                         <div class="activity-item-content">
                             {{item.content}}
                         </div>
+                        {%else%}
+                            {{item.content}}
+                        {%endif%}
                     </div>
                 {%endfor%}
                 </div>
                 <div id="commentActivity" class="tab-pane {{current_activity === "comment"?"active":""}}">
                 {% for item in comment_activities %}
                     <div class="activity-item-wrapper">
-                        <div class="activity-item-header">
-                            {{item.title}}
-                        </div>
-                        <div class="activity-item-content">
-                            {{item.content}}
-                        </div>
+                        {{item.content}}
                     </div>
                 {%endfor%}
                 </div>
                 <div id="photoActivity" class="tab-pane {{current_activity === "photo"?"active":""}}">
                 {% for item in attachment_activities %}
                     <div class="activity-item-wrapper">
-                        <div class="activity-item-header">
-                            {{item.title}}
-                        </div>
-                        <div class="activity-item-content">
-                            {{item.content}}
-                        </div>
+                        {{item.content}}
                     </div>
                 {%endfor%}
                 </div>

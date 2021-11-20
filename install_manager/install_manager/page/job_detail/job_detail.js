@@ -431,23 +431,9 @@ class JobDetail {
             aThis.job_detail = result.docs[0];
 
             let timelines = new JobDetailTimelines(result.docinfo);
-            console.log("Tab All");
-            for (let tl of timelines.getTimelines(['all'])) {
-                console.log(tl);
-            }
-            console.log("Tab Comment");
-            for (let tl of timelines.getTimelines(['comment'])) {
-                console.log(tl);
-            }
-            console.log("Tab Attachment");
-            for (let tl of timelines.getTimelines(['comment', 'attachment'])) {
-                console.log(tl);
-            }
-
-            aThis.attachment_activities = result.docinfo.attachment_logs;
-            aThis.comment_activities = result.docinfo.comments;
-            aThis.version_activities = result.docinfo.versions;
-            aThis.buildActivities();
+            aThis.all_activities = timelines.getTimelines(['all']);
+            aThis.comment_activities = timelines.getTimelines(['comment']);
+            aThis.attachment_activities = timelines.getTimelines(['comment', 'attachment'], true);
 
             aThis.selectedInstallationType = aThis.job_detail.installation_type;
             aThis.selectedJobStatus = aThis.job_detail.status;
@@ -552,25 +538,6 @@ class JobDetail {
         return job_detail;
     }
 
-    buildActivities() {
-        // build attachment activities
-        this.all_activities = [];
-        this.attachment_activities = this.attachment_activities.filter(item => item.content.startsWith("<img class="));
-        this.attachment_activities.forEach(item => {
-            item.title = "<div class='activity-owner'>" + this.getUserName(item.owner) + "</div>" +
-                "<div class='actitiy-title'> added a photo " + comment_when(item.creation) + "</div>"
-        });
-
-        this.comment_activities.forEach(item => {
-            item.title = "<div class='activity-owner'>" + this.getUserName(item.owner) + "</div>" +
-                "<div class='actitiy-title'> commented " + comment_when(item.creation) + "</div>"
-        })
-
-        this.all_activities = this.all_activities.concat(this.attachment_activities);
-        this.all_activities = this.all_activities.concat(this.comment_activities);
-        this.all_activities.sort((item1, item2) => new Date(item2.creation) - new Date(item1.creation));
-    }
-
     renderJobDetail() {
         $(this.jobDetailElement).empty();
         $(frappe.render_template('result', {
@@ -636,14 +603,20 @@ class JobDetailTimelines {
         this.prepareTimelineContents();
     }
 
-    getTimelines(types) {
+    getTimelines(types, photoCommentOnly = false) {
         if (!types || types[0] === 'all') {
             return this.timelineItems;
         }
         let results = [];
         for (let item of this.timelineItems) {
             if (types.indexOf(item.timelineType) >= 0) {
-                results.push(item);
+                if (item.timelineType === 'comment' && photoCommentOnly) {
+                    if (item.content.includes("PHOTO COMMENT:")) {
+                        results.push(item);
+                    }
+                } else {
+                    results.push(item);
+                }
             }
         }
         return results;
@@ -700,7 +673,15 @@ class JobDetailTimelines {
     getCommentTimelineContent(doc) {
         doc.content = frappe.dom.remove_script_and_style(doc.content);
         // based on timeline_message_box.html
-        return frappe.render_template('job_detail_timeline', {doc});
+        return `<div class="activity-item-header">
+                        <div class='activity-owner'>
+                            ${this.getUserFullName(doc.owner)}
+                        </div>
+                        <div class='activity-title'> commented <div class="text-muted">${comment_when(doc.creation)}</div></div>
+                    </div>
+                     <div class="activity-item-content">
+                        ${doc.content}
+                     </div>`
     }
 
     getVersionTimelineContents() {
@@ -720,7 +701,7 @@ class JobDetailTimelines {
                 versionContents.push({
                     timelineType: 'version',
                     creation: version.creation,
-                    content: content,
+                    content: `${content} <span class="text-muted">${comment_when(version.creation)}</span>`,
                 });
             });
         });
@@ -884,14 +865,26 @@ class JobDetailTimelines {
     getAttachmentTimelineContents() {
         let contents = [];
         (this.docInfo.attachment_logs || []).forEach(attachmentLog => {
+
             let is_file_upload = attachmentLog.comment_type === 'Attachment';
-            contents.push({
-                timelineType: 'attachment',
-                icon: is_file_upload ? 'upload' : 'delete',
-                icon_size: 'sm',
-                creation: attachmentLog.creation,
-                content: `${this.getUserFullName(attachmentLog.owner)} ${attachmentLog.content}`,
-            });
+            if (attachmentLog.content.startsWith("<img class=")) {
+                contents.push({
+                    timelineType: 'attachment',
+                    icon: is_file_upload ? 'upload' : 'delete',
+                    icon_size: 'sm',
+                    creation: attachmentLog.creation,
+                    content:
+                        `<div class="activity-item-header">
+                        <div class='activity-owner'>
+                            ${this.getUserFullName(attachmentLog.owner)}
+                        </div>
+                        <div class='activity-title'> added a photo <div class="text-muted">${comment_when(attachmentLog.creation)}</div></div>
+                    </div>
+                     <div class="activity-item-content">
+                        ${attachmentLog.content}
+                     </div>`,
+                });
+            }
         });
         return contents;
     }

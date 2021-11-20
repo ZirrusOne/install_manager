@@ -402,7 +402,16 @@ i.fa {
 
 .activity-item-wrapper .activity-item-header .activity-owner {
     font-weight: 700;
-    margin-right: 20px;
+    margin-right: 3px;
+}
+
+.activity-item-wrapper .activity-item-header .activity-title {
+    display: flex;
+    flex-direction: row;
+}
+
+.activity-item-wrapper .activity-item-header .activity-title .text-muted {
+    margin-left: var(--margin-sm);
 }
 
 .activity-item-wrapper .activity-item-content p {
