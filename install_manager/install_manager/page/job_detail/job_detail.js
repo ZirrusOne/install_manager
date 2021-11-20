@@ -425,6 +425,20 @@ class JobDetail {
         frappe.model.with_doc("Job", this.job_id, (id, result) => {
             aThis.job_detail = result.docs[0];
 
+            let timelines = new JobDetailTimelines(result.docinfo);
+            console.log("Tab All");
+            for (let tl of timelines.getTimelines(['all'])) {
+                console.log(tl);
+            }
+            console.log("Tab Comment");
+            for (let tl of timelines.getTimelines(['comment'])) {
+                console.log(tl);
+            }
+            console.log("Tab Attachment");
+            for (let tl of timelines.getTimelines(['comment', 'attachment'])) {
+                console.log(tl);
+            }
+
             aThis.attachment_activities = result.docinfo.attachment_logs;
             aThis.comment_activities = result.docinfo.comments;
             aThis.version_activities = result.docinfo.versions;
@@ -603,4 +617,277 @@ class JobDetail {
     getUserName(user) {
         return frappe.user_info(user).fullname || '';
     }
+}
+
+
+class JobDetailTimelines {
+
+    constructor(docInfo) {
+        this.docInfo = docInfo;
+        this.timelineItems = [];
+        this.fieldsDict = {};
+        this.buildFieldDict();
+        this.prepareTimelineContents();
+    }
+
+    getTimelines(types) {
+        if (!types || types[0] === 'all') {
+            return this.timelineItems;
+        }
+        let results = [];
+        for (let item of this.timelineItems) {
+            if (types.indexOf(item.timelineType) >= 0) {
+                results.push(item);
+            }
+        }
+        return results;
+    }
+
+    buildFieldDict() {
+        for (let field of frappe.get_meta("Job").fields) {
+            this.fieldsDict[field['fieldname']] = {
+                label: field.label,
+                link_doctype: field.fieldtype === 'Link' || field.fieldtype === 'Table' ? field.options : null
+            }
+        }
+    }
+
+    prepareTimelineContents() {
+        // based on form_timeline.js
+
+        // skip the following as they are not relevant in Installer Manager
+        // - get_communication_timeline_contents
+        // - get_auto_messages_timeline_contents
+        // - get_view_timeline_contents
+        // - get_energy_point_timeline_contents
+        // - get_share_timeline_contents
+        // - get_workflow_timeline_contents
+        // - get_like_timeline_contents
+        // - get_custom_timeline_contents
+        // - get_assignment_timeline_contents
+        // - get_info_timeline_contents
+        // - get_milestone_timeline_contents
+        this.timelineItems.push(...this.getCommentTimelineContents());
+        this.timelineItems.push(...this.getVersionTimelineContents());
+        this.timelineItems.push(...this.getAttachmentTimelineContents());
+
+        this.timelineItems.sort((item1, item2) =>  new Date(item2.creation) - new Date(item1.creation));
+    }
+
+    getCommentTimelineContents() {
+        let contents = [];
+        (this.docInfo.comments || []).forEach(comment => {
+            contents.push(this.getCommentTimelineItem(comment));
+        });
+        return contents;
+    }
+
+    getCommentTimelineItem(comment) {
+        return {
+            timelineType: 'comment',
+            icon: 'small-message',
+            creation: comment.creation,
+            content: this.getCommentTimelineContent(comment),
+        };
+    }
+
+    getCommentTimelineContent(doc) {
+        doc.content = frappe.dom.remove_script_and_style(doc.content);
+        // based on timeline_message_box.html
+        return frappe.render_template('job_detail_timeline', { doc });
+    }
+
+    getVersionTimelineContents() {
+        let jobDocTypeInfo = {
+            doctype: "Job",
+            docname: 'TODO',
+            perm: {
+                0: {read: 1}
+            },
+            fields_dict: this.fieldsDict
+        }
+
+        let versionContents = [];
+        (this.docInfo.versions || []).forEach(version => {
+            const contents = this.getVersionTimelineContent(version, jobDocTypeInfo);
+            contents.forEach((content) => {
+                versionContents.push({
+                    timelineType: 'version',
+                    creation: version.creation,
+                    content: content,
+                });
+            });
+        });
+        return versionContents;
+    }
+
+    // based on version_timeline_content_builder.js but no hyperlink at all as hyperlinks are not relevant for field crew views
+    getVersionTimelineContent(versionDoc, frm) {
+        if (!versionDoc.data) {
+            return [];
+        }
+        const data = JSON.parse(versionDoc.data);
+
+        // comment
+        if (data.comment) {
+            return [data.comment];
+        }
+
+        let out = [];
+
+        let updaterReferenceLink = null;
+        let updaterReference = data.updater_reference;
+        if (!$.isEmptyObject(updaterReference)) {
+            updaterReferenceLink = updaterReference.label || __('via {0}', [updaterReference.doctype]);
+        }
+
+        let getUserFullName = this.getUserFullName;
+
+        function formatContentForTimeline(content) {
+            // text to HTML
+            // limits content to 40 characters
+            // escapes HTML
+            // and makes it bold
+            content = frappe.utils.html2text(content);
+            content = frappe.ellipsis(content, 40) || '""';
+            content = frappe.utils.escape_html(content);
+            return content.bold();
+        }
+
+        // value changed in parent
+        if (data.changed && data.changed.length) {
+            let parts = [];
+            data.changed.every(function(p) {
+                if (p[0] === 'docstatus') {
+                    if (p[2] === 1) {
+                        let message = updaterReferenceLink
+                            ? __('{0} submitted this document {1}', [getUserFullName(versionDoc), updaterReferenceLink])
+                            : __('{0} submitted this document', [getUserFullName(versionDoc)]);
+                        out.push(message);
+                    } else if (p[2] === 2) {
+                        let message = updaterReferenceLink
+                            ? __('{0} cancelled this document {1}', [getUserFullName(versionDoc), updaterReferenceLink])
+                            : __('{0} cancelled this document', [getUserFullName(versionDoc)]);
+                        out.push(message);
+                    }
+                } else {
+                    const df = frappe.meta.get_docfield(frm.doctype, p[0], frm.docname);
+                    if (df && !df.hidden) {
+                        const field_display_status = frappe.perm.get_field_display_status(df, null,
+                            frm.perm);
+                        if (field_display_status === 'Read' || field_display_status === 'Write') {
+                            parts.push(__('{0} from {1} to {2}', [
+                                __(df.label),
+                                formatContentForTimeline(p[1]),
+                                formatContentForTimeline(p[2])
+                            ]));
+                        }
+                    }
+                }
+                return parts.length < 3;
+            });
+            if (parts.length) {
+                let message;
+                if (updaterReferenceLink) {
+                    message = __("{0} changed value of {1} {2}", [getUserFullName(versionDoc), parts.join(', '), updaterReferenceLink]);
+                } else {
+                    message = __("{0} changed value of {1}", [getUserFullName(versionDoc), parts.join(', ')]);
+                }
+                out.push(message);
+            }
+        }
+
+        // value changed in table field
+        if (data.row_changed && data.row_changed.length) {
+            let parts = [];
+            data.row_changed.every(function(row) {
+                row[3].every(function(p) {
+                    let df = frm.fields_dict[row[0]] &&
+                        frappe.meta.get_docfield(frm.fields_dict[row[0]].link_doctype,
+                            p[0], frm.docname);
+
+                    if (df && !df.hidden) {
+                        let field_display_status = frappe.perm.get_field_display_status(df,
+                            null, frm.perm);
+
+                        if (field_display_status === 'Read' || field_display_status === 'Write') {
+                            parts.push(__('{0} from {1} to {2} in row #{3}', [
+                                frappe.meta.get_label(frm.fields_dict[row[0]].link_doctype,
+                                    p[0]),
+                                formatContentForTimeline(p[1]),
+                                formatContentForTimeline(p[2]),
+                                row[1]
+                            ]));
+                        }
+                    }
+                    return parts.length < 3;
+                });
+                return parts.length < 3;
+            });
+            if (parts.length) {
+                let message;
+                if (updaterReferenceLink) {
+                    message = __("{0} changed values for {1} {2}", [getUserFullName(versionDoc), parts.join(', '), updaterReferenceLink]);
+                } else {
+                    message = __("{0} changed values for {1}", [getUserFullName(versionDoc), parts.join(', ')]);
+                }
+                out.push(message);
+            }
+        }
+
+        // rows added / removed
+        // __('added'), __('removed') # for translation, don't remove
+        ['added', 'removed'].forEach(function(key) {
+            if (data[key] && data[key].length) {
+                let parts = (data[key] || []).map(function(p) {
+                    let df = frappe.meta.get_docfield(frm.doctype, p[0], frm.docname);
+                    if (df && !df.hidden) {
+                        let field_display_status = frappe.perm.get_field_display_status(df, null,
+                            frm.perm);
+
+                        if (field_display_status === 'Read' || field_display_status === 'Write') {
+                            return frappe.meta.get_label(frm.doctype, p[0]);
+                        }
+                    }
+                });
+                parts = parts.filter(function(p) {
+                    return p;
+                });
+                if (parts.length) {
+                    let message = '';
+
+                    if (key === 'added') {
+                        message = __("added rows for {0}", [parts.join(', ')]);
+                    } else if (key === 'removed') {
+                        message = __("removed rows for {0}", [parts.join(', ')]);
+                    }
+
+                    out.push(`${getUserFullName(versionDoc)} ${message}`);
+                }
+            }
+        });
+
+        return out;
+    }
+
+    getUserFullName(doc) {
+        const user = doc.owner;
+        return (frappe.user_info(user).fullname || '').bold();
+    }
+
+    getAttachmentTimelineContents() {
+        let contents = [];
+        (this.docInfo.attachment_logs || []).forEach(attachmentLog => {
+            let is_file_upload = attachmentLog.comment_type === 'Attachment';
+            contents.push({
+                timelineType: 'attachment',
+                icon: is_file_upload ? 'upload' : 'delete',
+                icon_size: 'sm',
+                creation: attachmentLog.creation,
+                content: `${this.getUserFullName(attachmentLog.owner)} ${attachmentLog.content}`,
+            });
+        });
+        return contents;
+    }
+
 }
