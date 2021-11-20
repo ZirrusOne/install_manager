@@ -6,7 +6,7 @@
                     <i class="fa fa-globe color-orange-light" aria-hidden="true"></i>
                     <span class="bold">{{result.schedule_name}}</span>
                 </div>
-                <a class="btn-close">
+                <a class="btn-close" onclick="job_detail.onCloseJobDetail()">
                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                 </a>
             </div>
@@ -35,9 +35,13 @@
                         <span class="bold uppercase">ADDL. SERVICES</span>
                     </div>
                     <div class="action-content additional-services">
+                        {%if result.additional_services.length >0 %}
                         {% for item in result.additional_services %}
                         <span class="text-capitalize color-yellow">{{item.service}}</span>
                         {% endfor %}
+                        {%else%}
+                        <span class="text-capitalize color-yellow">None</span>
+                        {%endif%}
                     </div>
                 </a>
                 {% if result.in_progress_installer %}
@@ -245,15 +249,42 @@
                        class="nav-link {{current_activity === "photo"?"active":""}}">PHOTOS</a>
                 </li>
             </ul>
-            <div class="tab-content job-tab-content">
+            <div class="tab-content job-tab-content activity-pane">
                 <div id="allActivity" class="tab-pane {{current_activity === "all"?"active":""}}">
-                    All activity
+                {% for item in all_activities %}
+                    <div class="activity-item-wrapper">
+                        <div class="activity-item-header">
+                            {{item.title}}
+                        </div>
+                        <div class="activity-item-content">
+                            {{item.content}}
+                        </div>
+                    </div>
+                {%endfor%}
                 </div>
                 <div id="commentActivity" class="tab-pane {{current_activity === "comment"?"active":""}}">
-                    Comments Activity
+                {% for item in comment_activities %}
+                    <div class="activity-item-wrapper">
+                        <div class="activity-item-header">
+                            {{item.title}}
+                        </div>
+                        <div class="activity-item-content">
+                            {{item.content}}
+                        </div>
+                    </div>
+                {%endfor%}
                 </div>
                 <div id="photoActivity" class="tab-pane {{current_activity === "photo"?"active":""}}">
-                    Photo Activity
+                {% for item in attachment_activities %}
+                    <div class="activity-item-wrapper">
+                        <div class="activity-item-header">
+                            {{item.title}}
+                        </div>
+                        <div class="activity-item-content">
+                            {{item.content}}
+                        </div>
+                    </div>
+                {%endfor%}
                 </div>
             </div>
         </div>

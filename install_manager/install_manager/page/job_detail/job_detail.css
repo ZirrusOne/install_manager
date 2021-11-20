@@ -123,7 +123,6 @@ i.fa {
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 0 0 20px;
     font-size: 14px;
 }
 
@@ -306,11 +305,11 @@ i.fa {
     background: var(--background-gray);
     overflow: auto;
     padding: 20px;
-    height: 125px;
+    height: 140px;
 }
 
 .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
-    height: 250px;
+    height: calc(var(--vh) - 475px);
 }
 
 .job-container .job-tab-wrapper .job-tab-content .job-tab-pane {
@@ -360,7 +359,7 @@ i.fa {
     align-items: center;
 }
 
-.job-container .job-tab-wrapper .job-tab-content .job-tab-pane.post-install .btn-action {
+.job-container .job-tab-wrapper .job-tab-content .job-tab-pane .btn-action {
     margin-bottom: 20px;
 }
 
@@ -368,14 +367,60 @@ i.fa {
     margin-bottom: 0;
 }
 
+.job-container .job-tab-wrapper .job-tab-content.activity-pane {
+    background: black;
+}
+
+.activity-item-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    color: white;
+    position: relative;
+}
+
+.activity-item-wrapper:after {
+    content: '';
+    position: absolute;
+    border-bottom: 2px solid var(--color-diver);
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100px
+}
+
+.activity-item-wrapper .activity-item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.activity-item-wrapper .activity-item-header .activity-owner {
+    font-weight: 700;
+    margin-right: 20px;
+}
+
+.activity-item-wrapper .activity-item-content p {
+    margin-bottom: 0;
+}
 
 .header-wrapper {
     position: sticky;
     top: 0;
     left: 0;
     padding-top: 20px;
+    padding-bottom: 20px;
     background: black;
     z-index: 1;
+}
+
+.header-wrapper .job-container {
+    margin-bottom: 0;
 }
 
 .header-wrapper .item-header {
@@ -387,6 +432,7 @@ i.fa {
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 0;
 }
 
 .header-wrapper .item-header .header-title {
@@ -424,6 +470,10 @@ i.fa {
     display: flex;
     flex-direction: row;
     width: 100%;
+}
+
+.header-wrapper .item-content .header-item.item-action:last-child {
+    margin-bottom: 10px !important;
 }
 
 .header-wrapper .item-content .header-item.building-wrapper {
@@ -469,6 +519,10 @@ i.fa {
 }
 
 @media screen and (max-width: 540px) {
+    .header-wrapper {
+        padding-bottom: 15px;
+    }
+
     .job-container {
         padding: 10px;
         margin-bottom: 15px;
@@ -476,6 +530,10 @@ i.fa {
 
     .job-container .item-title {
         padding-bottom: 10px;
+    }
+
+    .job-container .item-content .item-action {
+        margin-bottom: 15px !important;
     }
 
     .job-container .job-tab-wrapper .job-tab-header {
@@ -488,5 +546,13 @@ i.fa {
 
     .job-container .job-tab-wrapper .job-tab-content .job-tab-pane .item {
         margin-bottom: 15px;
+    }
+
+    .job-container .job-tab-wrapper .job-tab-content .job-tab-pane .btn-action {
+        margin-bottom: 15px;
+    }
+
+    .job-container.activity-wrapper .job-tab-wrapper .job-tab-content {
+        height: calc(var(--vh) - 388px);
     }
 }
