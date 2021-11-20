@@ -493,10 +493,10 @@ class JobDetail {
             method: "frappe.desk.form.save.savedocs",
             args: {doc: job_detail, action: "Save"},
             callback: function () {
-                if (aThis.selectedJobStatus === "Escalation - Field Lead" ||
+                if (aThis.isStatusChanged && (aThis.selectedJobStatus === "Escalation - Field Lead" ||
                     aThis.selectedJobStatus === "Escalation - Back Office" ||
                     aThis.selectedJobStatus === "Escalation - Vendor" ||
-                    aThis.selectedJobStatus === "Non-compliant") {
+                    aThis.selectedJobStatus === "Non-compliant")) {
                     aThis.addComment(aThis.reasonMessage);
                 }
                 aThis.getData()

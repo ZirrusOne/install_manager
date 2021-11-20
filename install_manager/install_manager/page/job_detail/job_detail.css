@@ -392,6 +392,10 @@ i.fa {
     width: 100px
 }
 
+.activity-item-wrapper:last-child:after {
+    display: none;
+}
+
 .activity-item-wrapper .activity-item-header {
     display: flex;
     flex-direction: row;
