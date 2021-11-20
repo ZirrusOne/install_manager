@@ -18,7 +18,7 @@ $(document).ready(function () {
     let isLevel1Team = !frappe.user.has_role("Administrator")
         && (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer"))
         && !frappe.user.has_role("Back Office Staff");
-    if (!isLevel1Team) {
+    if (isLevel1Team) {
         return;
     }
 
