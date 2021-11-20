@@ -16,6 +16,7 @@ class JobDetail {
     statusNonComplaintElement;
     statusEscalateElement;
     addCommentElement;
+    photoViewerElement;
     addPhotoElement;
     jobDetailElement;
 
@@ -76,6 +77,7 @@ class JobDetail {
         this.statusEscalateElement = $(this.page.main).find('#statusEscalate');
         this.addCommentElement = $(this.page.main).find('#addComment');
         this.addPhotoElement = $(this.page.main).find('#addPhoto');
+        this.photoViewerElement = $(this.page.main).find('#photoViewer');
         this.jobDetailElement = $(this.page.main).find('.job-detail-wrapper');
         const aThis = this;
         //get additional services
@@ -328,6 +330,15 @@ class JobDetail {
             this.getData();
         }
         $('#commentModal').modal('hide');
+    }
+
+    openPhotoViewModal(element) {
+        this.photoViewerElement.empty();
+        let image = $(element).html();
+        $(frappe.render_template('photo_viewer', {
+            image: image
+        })).appendTo($(this.photoViewerElement));
+        $('#photoViewerModal').modal('show');
     }
 
     customUI() {
@@ -886,7 +897,7 @@ class JobDetailTimelines {
                         <div class='activity-title'> added a photo <div class="text-muted">${comment_when(attachmentLog.creation)}</div></div>
                     </div>
                      <div class="activity-item-content">
-                        ${attachmentLog.content}
+                            <a onclick="job_detail.openPhotoViewModal(this)">${attachmentLog.content}</a>   
                      </div>`,
                 });
             }
