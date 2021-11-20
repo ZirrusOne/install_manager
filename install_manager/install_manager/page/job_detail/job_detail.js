@@ -445,7 +445,7 @@ class JobDetail {
         frappe.model.with_doc("Job", this.job_id, (id, result) => {
             aThis.job_detail = result.docs[0];
 
-            let timelines = new JobDetailTimelines(result.docinfo);
+            let timelines = new JobDetailTimelines(result.docinfo, result.docs[0]);
             aThis.all_activities = timelines.getTimelines(['all']);
             aThis.comment_activities = timelines.getTimelines(['comment']);
             aThis.attachment_activities = timelines.getTimelines(['comment', 'attachment'], true);
@@ -611,8 +611,9 @@ class JobDetail {
 
 class JobDetailTimelines {
 
-    constructor(docInfo) {
+    constructor(docInfo, docData) {
         this.docInfo = docInfo;
+        this.docData = docData;
         this.timelineItems = [];
         this.fieldsDict = {};
         this.buildFieldDict();
@@ -711,6 +712,22 @@ class JobDetailTimelines {
         }
 
         let versionContents = [];
+
+        let creation_message = __("{0} created this {1}", [
+            this.getUserFullName(this.docData.owner),
+            comment_when(this.docData.creation)
+        ]);
+        let modified_message =  __("{0} edited this {1}", [
+            this.getUserFullName(this.docData.modified_by),
+            comment_when(this.docData.modified),
+        ])
+
+        versionContents.push({
+            timelineType: 'version',
+            creation: this.docData.creation,
+            content: `${creation_message} • ${modified_message}`
+        });
+
         (this.docInfo.versions || []).forEach(version => {
             const contents = this.getVersionTimelineContent(version, jobDocTypeInfo);
             contents.forEach((content) => {
@@ -764,13 +781,13 @@ class JobDetailTimelines {
                 if (p[0] === 'docstatus') {
                     if (p[2] === 1) {
                         let message = updaterReferenceLink
-                            ? __('{0} submitted this document {1}', [getUserFullName(versionDoc), updaterReferenceLink])
-                            : __('{0} submitted this document', [getUserFullName(versionDoc)]);
+                            ? __('{0} submitted this document {1}', [getUserFullName(versionDoc.owner), updaterReferenceLink])
+                            : __('{0} submitted this document', [getUserFullName(versionDoc.owner)]);
                         out.push(message);
                     } else if (p[2] === 2) {
                         let message = updaterReferenceLink
-                            ? __('{0} cancelled this document {1}', [getUserFullName(versionDoc), updaterReferenceLink])
-                            : __('{0} cancelled this document', [getUserFullName(versionDoc)]);
+                            ? __('{0} cancelled this document {1}', [getUserFullName(versionDoc.owner), updaterReferenceLink])
+                            : __('{0} cancelled this document', [getUserFullName(versionDoc.owner)]);
                         out.push(message);
                     }
                 } else {
@@ -792,9 +809,9 @@ class JobDetailTimelines {
             if (parts.length) {
                 let message;
                 if (updaterReferenceLink) {
-                    message = __("{0} changed value of {1} {2}", [getUserFullName(versionDoc), parts.join(', '), updaterReferenceLink]);
+                    message = __("{0} changed value of {1} {2}", [getUserFullName(versionDoc.owner), parts.join(', '), updaterReferenceLink]);
                 } else {
-                    message = __("{0} changed value of {1}", [getUserFullName(versionDoc), parts.join(', ')]);
+                    message = __("{0} changed value of {1}", [getUserFullName(versionDoc.owner), parts.join(', ')]);
                 }
                 out.push(message);
             }
@@ -830,9 +847,9 @@ class JobDetailTimelines {
             if (parts.length) {
                 let message;
                 if (updaterReferenceLink) {
-                    message = __("{0} changed values for {1} {2}", [getUserFullName(versionDoc), parts.join(', '), updaterReferenceLink]);
+                    message = __("{0} changed values for {1} {2}", [getUserFullName(versionDoc.owner), parts.join(', '), updaterReferenceLink]);
                 } else {
-                    message = __("{0} changed values for {1}", [getUserFullName(versionDoc), parts.join(', ')]);
+                    message = __("{0} changed values for {1}", [getUserFullName(versionDoc.owner), parts.join(', ')]);
                 }
                 out.push(message);
             }
@@ -865,7 +882,7 @@ class JobDetailTimelines {
                         message = __("removed rows for {0}", [parts.join(', ')]);
                     }
 
-                    out.push(`${getUserFullName(versionDoc)} ${message}`);
+                    out.push(`${getUserFullName(versionDoc.owner)} ${message}`);
                 }
             }
         });
@@ -873,9 +890,10 @@ class JobDetailTimelines {
         return out;
     }
 
-    getUserFullName(doc) {
-        const user = doc.owner;
-        return (frappe.user_info(user).fullname || '').bold();
+    getUserFullName(user) {
+        return (
+            (frappe.session.user === user ? __("You") : frappe.user_info(user).fullname) || ''
+        ).bold();
     }
 
     getAttachmentTimelineContents() {
