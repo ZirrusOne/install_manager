@@ -15,6 +15,13 @@
 // Each page is a frappe/public/js/frappe/ui/page.js
 
 $(document).ready(function () {
+    let isLevel1Team = !frappe.user.has_role("Administrator")
+        && (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer"))
+        && !frappe.user.has_role("Back Office Staff");
+    if (!isLevel1Team) {
+        return;
+    }
+
     // emitted by container.js#change_to
     $('#body').on('show', '.page-container', ()=> {
         customizeZ1nSidebar();
