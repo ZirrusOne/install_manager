@@ -1,5 +1,5 @@
 .navbar {
-    background: black;
+    background: var(--bg-color)  ;
 }
 
 
@@ -18,11 +18,11 @@
 }
 
 body {
-    background: black;
+    background: var(--bg-color)  ;
 }
 
 .main-section {
-    background: black;
+    background: var(--bg-color)  ;
 }
 
 .layout-main-section-wrapper {
@@ -31,7 +31,7 @@ body {
 }
 
 .page-container {
-    background: black;
+    background: var(--bg-color)  ;
     height: 100%;
 }
 
