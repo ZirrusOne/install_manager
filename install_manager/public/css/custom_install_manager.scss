@@ -60,6 +60,11 @@ body {
     }
   }
 
+  // shown when session expires
+  .modal-backdrop {
+    background-color: var(--bg-color) !important; // !important to override the style attribute
+  }
+
   .btn.btn-primary {
     background-color: var(--primary-button-background);
     color: #444;
