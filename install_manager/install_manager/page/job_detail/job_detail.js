@@ -37,6 +37,7 @@ class JobDetail {
     comment_activities = [];
     all_activities = [];
     reasonMessage = '';
+    escalationNote = '';
     selectedInstallationType = '';
     selectedJobStatus = '';
     selectedEscalationReason = '';
@@ -220,6 +221,7 @@ class JobDetail {
     }
 
     renderEscalationModal() {
+        this.statusEscalateElement.empty();
         $(frappe.render_template('escalation_reason', {
             escalations_reasons: this.escalations_reasons,
             selectedEscalationReason: this.selectedEscalationReason
@@ -255,6 +257,7 @@ class JobDetail {
     }
 
     renderNonComplaintModal() {
+        this.statusNonComplaintElement.empty();
         $(frappe.render_template('non_complaint_reason', {
             non_compliant_reasons: this.non_compliant_reasons,
             selectedNonComplaintReason: this.selectedNonComplaintReason
@@ -279,6 +282,7 @@ class JobDetail {
             let message = 'NON-COMPLIANT NOTE: ';
             message += comment === '' ? '-' : comment;
             this.reasonMessage = message;
+            this.escalationNote = comment === '' ? '-' : comment;
             this.saveJob();
         }
         $('#nonComplaintReasonModal').modal('hide');
@@ -308,6 +312,7 @@ class JobDetail {
     }
 
     openCommentModal() {
+        this.addCommentElement.empty();
         $(frappe.render_template('comment', {})).appendTo($(this.addCommentElement));
         $('#commentModal').modal('show');
     }
@@ -509,6 +514,7 @@ class JobDetail {
                 this.selectedJobStatus === "Escalation - Back Office" ||
                 this.selectedJobStatus === "Escalation - Vendor") {
                 job_detail.escalation_reason = this.selectedEscalationReason;
+                job_detail.escalation_note = this.escalationNote;
             } else if (this.selectedJobStatus === "Non-compliant") {
                 job_detail.non_compliant_reasons = this.selectedNonComplaintReason;
             }
