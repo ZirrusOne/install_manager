@@ -16,6 +16,7 @@ class JobDetail {
     statusNonComplaintElement;
     statusEscalateElement;
     addCommentElement;
+    photoViewerElement;
     addPhotoElement;
     jobDetailElement;
 
@@ -76,6 +77,7 @@ class JobDetail {
         this.statusEscalateElement = $(this.page.main).find('#statusEscalate');
         this.addCommentElement = $(this.page.main).find('#addComment');
         this.addPhotoElement = $(this.page.main).find('#addPhoto');
+        this.photoViewerElement = $(this.page.main).find('#photoViewer');
         this.jobDetailElement = $(this.page.main).find('.job-detail-wrapper');
         const aThis = this;
         //get additional services
@@ -243,9 +245,12 @@ class JobDetail {
             this.isStatusChanged = false;
             this.selectedJobStatus = this.previousSelectedJobStatus;
         } else {
-            let message = 'ESCALATION NOTE: ';
-            message += comment === '' ? '-' : comment;
-            this.reasonMessage = message;
+            if (comment.length > 0) {
+                this.reasonMessage = 'ESCALATION NOTE: ' + comment;
+            } else {
+                this.reasonMessage = '';
+            }
+            this.escalationNote = comment;
             this.saveJob();
         }
         $('#escalationReasonModal').modal('hide');
@@ -279,10 +284,11 @@ class JobDetail {
             this.isStatusChanged = false;
             this.selectedJobStatus = this.previousSelectedJobStatus;
         } else {
-            let message = 'NON-COMPLIANT NOTE: ';
-            message += comment === '' ? '-' : comment;
-            this.reasonMessage = message;
-            this.escalationNote = comment === '' ? '-' : comment;
+            if (comment.length > 0) {
+                this.reasonMessage = 'NON-COMPLIANT NOTE: ' + comment;
+            } else {
+                this.reasonMessage = '';
+            }
             this.saveJob();
         }
         $('#nonComplaintReasonModal').modal('hide');
@@ -324,6 +330,15 @@ class JobDetail {
             this.getData();
         }
         $('#commentModal').modal('hide');
+    }
+
+    openPhotoViewModal(element) {
+        this.photoViewerElement.empty();
+        let image = $(element).html();
+        $(frappe.render_template('photo_viewer', {
+            image: image
+        })).appendTo($(this.photoViewerElement));
+        $('#photoViewerModal').modal('show');
     }
 
     customUI() {
@@ -493,11 +508,12 @@ class JobDetail {
             method: "frappe.desk.form.save.savedocs",
             args: {doc: job_detail, action: "Save"},
             callback: function () {
-                if (aThis.isStatusChanged && (aThis.selectedJobStatus === "Escalation - Field Lead" ||
+                if (aThis.selectedJobStatus === "Escalation - Field Lead" ||
                     aThis.selectedJobStatus === "Escalation - Back Office" ||
                     aThis.selectedJobStatus === "Escalation - Vendor" ||
-                    aThis.selectedJobStatus === "Non-compliant")) {
-                    aThis.addComment(aThis.reasonMessage);
+                    aThis.selectedJobStatus === "Non-compliant") {
+                    if (aThis.reasonMessage.length > 0)
+                        aThis.addComment(aThis.reasonMessage);
                 }
                 aThis.getData()
             }
@@ -881,7 +897,7 @@ class JobDetailTimelines {
                         <div class='activity-title'> added a photo <div class="text-muted">${comment_when(attachmentLog.creation)}</div></div>
                     </div>
                      <div class="activity-item-content">
-                        ${attachmentLog.content}
+                            <a onclick="job_detail.openPhotoViewModal(this)">${attachmentLog.content}</a>   
                      </div>`,
                 });
             }

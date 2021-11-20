@@ -183,7 +183,7 @@ body {
   }
 
   .hide-item {
-    display: none!important;
+    display: none !important;
   }
 
   .page-head {
@@ -235,7 +235,7 @@ body {
     color: black;
   }
 
-  .status-completed{
+  .status-completed {
     background-color: var(--color-complete);
     border-color: var(--color-complete);
     color: white;
@@ -418,6 +418,7 @@ body {
           border: 1px solid var(--color-gray);
           border-radius: 8px;
           padding: 5px 10px;
+          background: white;
 
           &:focus {
             outline: none;
@@ -559,10 +560,12 @@ body {
           display: none;
         }
       }
+
       .leaderboard-link {
         display: none;
       }
     }
+
     #page-User {
       .form-assignments {
         // !important to override the style attribute which is added by an unknown script!
