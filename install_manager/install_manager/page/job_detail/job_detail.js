@@ -53,6 +53,7 @@ class JobDetail {
     }
 
     initData(wrapper) {
+        sessionStorage.setItem('request_from', 'job_detail')
         var url = window.location.pathname;
         this.job_id = url.substring(url.lastIndexOf('/') + 1);
         if (this.job_id === '' || !this.job_id.startsWith('JOB-')) {
@@ -102,7 +103,6 @@ class JobDetail {
     }
 
     onCloseJobDetail() {
-        this.saveJob();
         window.location.href = "/app/job-management";
     }
 
@@ -677,7 +677,7 @@ class JobDetailTimelines {
         this.timelineItems.push(...this.getVersionTimelineContents());
         this.timelineItems.push(...this.getAttachmentTimelineContents());
 
-        this.timelineItems.sort((item1, item2) =>  new Date(item2.creation) - new Date(item1.creation));
+        this.timelineItems.sort((item1, item2) => new Date(item2.creation) - new Date(item1.creation));
     }
 
     getCommentTimelineContents() {
@@ -700,7 +700,7 @@ class JobDetailTimelines {
     getCommentTimelineContent(doc) {
         doc.content = frappe.dom.remove_script_and_style(doc.content);
         // based on timeline_message_box.html
-        return frappe.render_template('job_detail_timeline', { doc });
+        return frappe.render_template('job_detail_timeline', {doc});
     }
 
     getVersionTimelineContents() {
@@ -763,7 +763,7 @@ class JobDetailTimelines {
         // value changed in parent
         if (data.changed && data.changed.length) {
             let parts = [];
-            data.changed.every(function(p) {
+            data.changed.every(function (p) {
                 if (p[0] === 'docstatus') {
                     if (p[2] === 1) {
                         let message = updaterReferenceLink
@@ -806,8 +806,8 @@ class JobDetailTimelines {
         // value changed in table field
         if (data.row_changed && data.row_changed.length) {
             let parts = [];
-            data.row_changed.every(function(row) {
-                row[3].every(function(p) {
+            data.row_changed.every(function (row) {
+                row[3].every(function (p) {
                     let df = frm.fields_dict[row[0]] &&
                         frappe.meta.get_docfield(frm.fields_dict[row[0]].link_doctype,
                             p[0], frm.docname);
@@ -843,9 +843,9 @@ class JobDetailTimelines {
 
         // rows added / removed
         // __('added'), __('removed') # for translation, don't remove
-        ['added', 'removed'].forEach(function(key) {
+        ['added', 'removed'].forEach(function (key) {
             if (data[key] && data[key].length) {
-                let parts = (data[key] || []).map(function(p) {
+                let parts = (data[key] || []).map(function (p) {
                     let df = frappe.meta.get_docfield(frm.doctype, p[0], frm.docname);
                     if (df && !df.hidden) {
                         let field_display_status = frappe.perm.get_field_display_status(df, null,
@@ -856,7 +856,7 @@ class JobDetailTimelines {
                         }
                     }
                 });
-                parts = parts.filter(function(p) {
+                parts = parts.filter(function (p) {
                     return p;
                 });
                 if (parts.length) {

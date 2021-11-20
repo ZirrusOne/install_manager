@@ -19,6 +19,7 @@ class JobManagement {
     teamFilterElement;
     allFilterElement;
 
+    isBackFromJobDetail;
     isEscalationView;
     teams = [];
     job_statuses = [];
@@ -31,6 +32,7 @@ class JobManagement {
     }
 
     initData(wrapper) {
+
         $(wrapper).empty();
         this.page = frappe.ui.make_app_page({
             parent: wrapper,
@@ -38,7 +40,20 @@ class JobManagement {
             single_column: true
         });
 
-        this.isEscalationView = false;
+        let fromDetail = sessionStorage.getItem('request_from');
+        if (fromDetail && fromDetail === 'job_detail') {
+            this.isBackFromJobDetail = true;
+            sessionStorage.removeItem('request_from');
+        } else {
+            this.isBackFromJobDetail = false;
+            sessionStorage.clear();
+        }
+
+        if (this.isBackFromJobDetail) {
+            this.isEscalationView = this.getIsEscalationView();
+        } else {
+            this.isEscalationView = false;
+        }
 
         $(frappe.render_template('job_management', {
             isInstaller: frappe.user.has_role("Field Installer")
@@ -64,6 +79,7 @@ class JobManagement {
     changeView() {
         if (!frappe.user.has_role("Field Installer")) {
             this.isEscalationView = !this.isEscalationView;
+            this.setAllFilter();
             this.setTitleView();
             this.getFilters();
             if (this.isEscalationView) {
@@ -88,9 +104,16 @@ class JobManagement {
 
                 if (this.teams.length > 0) {
                     this.selectedTeam = this.teams[0];
+                    if (this.isBackFromJobDetail) {
+                        let teamFilter = this.getTeamFilter();
+                        if (teamFilter) {
+                            this.selectedTeam = JSON.parse(teamFilter);
+                        }
+                    }
                 } else {
                     this.selectedTeam = null;
                 }
+
                 if (this.selectedTeam) {
                     $(this.teamTitleElement).text(this.selectedTeam.label);
                 } else {
@@ -101,6 +124,12 @@ class JobManagement {
                     this.job_statuses.forEach(item => {
                         item.isSelected = true;
                     })
+                    if (this.isBackFromJobDetail) {
+                        let job_statuses = this.getJobStatusFilter();
+                        if (job_statuses) {
+                            this.job_statuses = JSON.parse(job_statuses);
+                        }
+                    }
                 }
 
                 if (this.schedules.length > 0) {
@@ -114,15 +143,31 @@ class JobManagement {
 
                         this.buildings = this.buildings.concat(schedule.buildings)
                     })
+                    if (this.isBackFromJobDetail) {
+                        let schedules = this.getScheduleFilter();
+                        if (schedules) {
+                            this.schedules = JSON.parse(schedules);
+                        }
+                    }
                 }
 
                 this.buildings = this.buildings.filter((building, index, tempBuilding) => tempBuilding.findIndex(tempBuildingItem => tempBuildingItem.id === building.id) === index)
+                if (this.isBackFromJobDetail) {
+                    let buildings = this.getBuildingFilter();
+                    if (buildings) {
+                        this.buildings = JSON.parse(buildings);
+                    }
+                }
+
+                this.setAllFilter();
 
                 if (this.job_statuses.length === 0) {
                     this.renderResult([]);
                 } else {
                     this.getData();
                 }
+
+                this.isBackFromJobDetail = false;
             }
         });
     }
@@ -165,10 +210,10 @@ class JobManagement {
 
     onChangeTeam(element) {
         let teamId = $(element).attr('data-value');
-        if (!this.selectedTeam.id === teamId) {
+        if (this.selectedTeam.id !== teamId) {
             this.selectedTeam = this.teams.find(item => item.id === teamId)
             $(this.teamTitleElement).text(this.selectedTeam.label);
-            this.onResetAllFilter();
+            this.onResetAllFilter(true);
             this.getData();
         }
         $('#teamFilterModal').modal('hide');
@@ -205,14 +250,15 @@ class JobManagement {
                 })
                 break;
         }
-
+        this.setAllFilter();
         this.renderAllFilter();
     }
 
-    onResetAllFilter() {
-        this.job_statuses.forEach(item => item.isSelected = false);
-        this.schedules.forEach(item => item.isSelected = false);
-        this.buildings.forEach(item => item.isSelected = false);
+    onResetAllFilter(defaultValue = false) {
+        this.job_statuses.forEach(item => item.isSelected = defaultValue);
+        this.schedules.forEach(item => item.isSelected = defaultValue);
+        this.buildings.forEach(item => item.isSelected = defaultValue);
+        this.setAllFilter();
         this.renderAllFilter();
     }
 
@@ -229,6 +275,7 @@ class JobManagement {
                 this.buildings.forEach(item => item.isSelected = false);
                 break;
         }
+        this.setAllFilter();
         this.renderAllFilter();
     }
 
@@ -319,5 +366,33 @@ class JobManagement {
             isEscalation: this.isEscalationView,
             result: data
         })).appendTo($(this.resultWrapperElement));
+    }
+
+    getTeamFilter() {
+        return sessionStorage.getItem('select_team');
+    }
+
+    getJobStatusFilter() {
+        return sessionStorage.getItem('job_statuses');
+    }
+
+    getScheduleFilter() {
+        return sessionStorage.getItem('schedules');
+    }
+
+    getBuildingFilter() {
+        return sessionStorage.getItem('buildings');
+    }
+
+    getIsEscalationView() {
+        return JSON.parse(sessionStorage.getItem('is_escalation_view'));
+    }
+
+    setAllFilter() {
+        sessionStorage.setItem('is_escalation_view', this.isEscalationView);
+        sessionStorage.setItem('select_team', JSON.stringify(this.selectedTeam));
+        sessionStorage.setItem('job_statuses', JSON.stringify(this.job_statuses));
+        sessionStorage.setItem('schedules', JSON.stringify(this.schedules));
+        sessionStorage.setItem('buildings', JSON.stringify(this.buildings));
     }
 }
