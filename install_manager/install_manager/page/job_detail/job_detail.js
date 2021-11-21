@@ -105,7 +105,7 @@ class JobDetail {
     }
 
     onCloseJobDetail() {
-        window.location.href = "/app/job-management";
+        frappe.router.push_state('/app/job-management');
     }
 
     onChangeChecklistType(element) {
