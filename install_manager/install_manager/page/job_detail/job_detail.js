@@ -97,10 +97,12 @@ class JobDetail {
                         isSelected: false
                     }
                     aThis.additional_services.push(additional_service);
-                })
+                });
+
+                aThis.getData();
             }
         });
-        this.getData();
+
         this.customUI();
     }
 
@@ -434,14 +436,19 @@ class JobDetail {
             this.non_compliant_reasons = meta.fields.find(item => item.fieldname === "non_compliant_reason").options.split("\n");
             this.non_compliant_reasons = this.non_compliant_reasons.filter(item => item !== "");
             this.installation_types = meta.fields.find(item => item.fieldname === "installation_type").options.split("\n");
-        });
 
+            aThis.loadJobData();
+        });
+    }
+
+    loadJobData() {
         // avoid confusing for installers due to cache
         // don't cache at all
         if (locals['Job'] && locals['Job'][this.job_id]) {
             delete locals['Job'][this.job_id];
         }
 
+        let aThis = this;
         frappe.model.with_doc("Job", this.job_id, (id, result) => {
             aThis.job_detail = result.docs[0];
 
@@ -497,7 +504,7 @@ class JobDetail {
                     aThis.renderJobDetail();
                 })
             });
-        })
+        });
     }
 
     saveJob() {
