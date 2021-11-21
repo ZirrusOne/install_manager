@@ -22,7 +22,7 @@ document.body.addEventListener('click', () => {
 }, true);
 
 function checkLevel1TeamWhiteList() {
-    const level_1_team_url_white_list = [
+    const level1TeamUrlWhitelist = [
         "app/user-profile",
         "app/job-management",
         "app/user/",
@@ -30,14 +30,18 @@ function checkLevel1TeamWhiteList() {
     ]
     if ((frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Back Office Staff")) {
         let inWhiteListUrl = false;
-        level_1_team_url_white_list.forEach(item => {
-            if (location.href.includes(item)) {
+        for (let item of level1TeamUrlWhitelist) {
+            let currentPath = location.pathname;
+            if (currentPath === '/app' || currentPath === '/app/' // home_page will be use which is controll by boot.py
+                || currentPath.includes(item)) {
+
                 inWhiteListUrl = true;
+                break;
             }
-        })
+        }
 
         if (!inWhiteListUrl) {
-            window.location.href = "/app/job-management"
+            frappe.router.push_state('/app/job-management');
         }
     }
 }

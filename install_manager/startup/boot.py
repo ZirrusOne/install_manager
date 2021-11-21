@@ -11,6 +11,6 @@ def boot_session(bootinfo):
     if "System Manager" in roles:
         return
     elif "Back Office Staff" in roles:
-        return  # bootinfo['home_page'] = "field-lead"
-    elif "Field Installer" or "Field Lead" in roles:
+        bootinfo['home_page'] = "install-manager"
+    elif "Field Installer" in roles or "Field Lead" in roles:
         bootinfo['home_page'] = "job-management"
