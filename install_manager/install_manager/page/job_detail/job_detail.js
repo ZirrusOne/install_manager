@@ -58,7 +58,7 @@ class JobDetail {
         var url = window.location.pathname;
         this.job_id = url.substring(url.lastIndexOf('/') + 1);
         if (this.job_id === '' || !this.job_id.startsWith('JOB-')) {
-            window.location.href = '/app/job-management';
+            frappe.router.push_state('/app/job-management');
         }
         $(wrapper).empty();
 
