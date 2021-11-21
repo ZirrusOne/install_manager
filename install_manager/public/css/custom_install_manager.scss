@@ -44,6 +44,7 @@ body {
   body {
     background-color: var(--bg-color);
   }
+
   // on the login page
   .navbar-light {
     background-color: transparent;
@@ -339,6 +340,8 @@ body {
 
         .filter-content {
           margin-bottom: 10px;
+          display: block;
+          max-height: 145px;
         }
       }
     }
@@ -429,8 +432,11 @@ body {
         .team-item {
           width: 100%;
           text-align: center;
-          margin-bottom: 20px;
-          padding: 10px 20px;
+          margin-bottom: 15px;
+          display: flex;
+          height: 35px;
+          justify-content: center;
+          align-items: center;
           color: var(--color-diver);
           font-weight: 700;
           border-radius: 8px;
