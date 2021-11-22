@@ -297,7 +297,7 @@ i.fa {
 
 .job-container .job-tab-wrapper .job-tab-header .nav-item .nav-link.active {
     color: var(--color-title-active);
-    background: black;
+    background: var(--bg-color);
 }
 
 .job-container .job-tab-wrapper .job-tab-header .nav-item:first-child .nav-link {
@@ -384,7 +384,7 @@ i.fa {
 }
 
 .job-container .job-tab-wrapper .job-tab-content.activity-pane {
-    background: black;
+    background: var(--bg-color);
 }
 
 .activity-item-wrapper {
@@ -547,6 +547,7 @@ i.fa {
 .record-wrapper .item-content .btn-action {
     width: 49%;
     padding: 5px 10px;
+    background: var(--color-gray);
 }
 
 .photo-viewer-modal .photo-wrapper {
