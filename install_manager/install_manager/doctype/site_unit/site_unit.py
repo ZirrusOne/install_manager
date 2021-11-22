@@ -16,11 +16,17 @@ class SiteUnit(Document):
         self.full_name = f'{self.label} {self.unit_name}'
         self.unique_key = f'{self.site}__{self.full_name}'
         is_full_name_changed = self.full_name != self.get_db_value('full_name')
+        is_building_number_changed = self.building_number != self.get_db_value('building_number')
+        is_floor_number_changed = self.floor_number != self.get_db_value('floor_number')
 
         super(SiteUnit, self).db_update()
 
         if is_full_name_changed:
             self._update_parent_site_unit_name()
+        if is_building_number_changed:
+            self._update_job_building_number()
+        if is_floor_number_changed:
+            self._update_job_floor_number()
 
     def _update_parent_site_unit_name(self):
         conditions, values = frappe.db.build_conditions({'parent_site_unit': ('=', self.name)})
@@ -32,6 +38,22 @@ class SiteUnit(Document):
         conditions, values = frappe.db.build_conditions({'site_unit': ('=', self.name)})
         values['full_name'] = self.full_name
         frappe.db.sql("UPDATE `tabJob` SET unit_name =  %(full_name)s WHERE {conditions}".format(
+            conditions=conditions
+        ), values, debug=False)
+
+    def _update_job_building_number(self):
+        conditions, values = frappe.db.build_conditions({'site_unit': ('=', self.name)})
+        values['building_number'] = self.building_number
+
+        frappe.db.sql("UPDATE `tabJob` SET building_number =  %(building_number)s WHERE {conditions}".format(
+            conditions=conditions
+        ), values, debug=False)
+
+    def _update_job_floor_number(self):
+        conditions, values = frappe.db.build_conditions({'site_unit': ('=', self.name)})
+        values['floor_number'] = self.floor_number
+
+        frappe.db.sql("UPDATE `tabJob` SET floor_number =  %(floor_number)s WHERE {conditions}".format(
             conditions=conditions
         ), values, debug=False)
 

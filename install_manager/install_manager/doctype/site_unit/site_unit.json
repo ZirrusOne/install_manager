@@ -146,6 +146,8 @@
    "allow_in_quick_entry": 1,
    "fieldname": "building_number",
    "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Building Number"
   },
   {
@@ -164,7 +166,7 @@
  ],
  "is_tree": 1,
  "links": [],
- "modified": "2021-11-16 14:02:27.151785",
+ "modified": "2021-11-22 15:03:47.388027",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Site Unit",
