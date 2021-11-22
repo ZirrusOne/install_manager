@@ -71,5 +71,6 @@ fixtures = [
 ]
 
 override_whitelisted_methods = {
-    "frappe.desk.form.load.getdoctype": "install_manager.install_manager.desk.form.load.getdoctype"
+    "frappe.desk.form.load.getdoctype": "install_manager.install_manager.desk.form.load.getdoctype",
+    "frappe.desk.search.search_link": "install_manager.install_manager.desk.search.search_link",
 }
