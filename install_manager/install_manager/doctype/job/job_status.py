@@ -8,7 +8,7 @@ IN_PROGRESS='In Progress'
 ESCALATE_LEVEL_1='Escalation - Field Lead'
 ESCALATE_LEVEL_2='Escalation - Level II'
 ESCALATE_LEVEL_3='Escalation - Level III'
-NO_COMPLIANT='Non-compliant'
+NON_COMPLIANT='Non-compliant'
 COMPLETED='Completed'
 
 def is_escalation_status(status) -> bool:

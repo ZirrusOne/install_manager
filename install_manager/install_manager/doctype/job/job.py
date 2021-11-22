@@ -12,7 +12,7 @@ from frappe.model.document import Document
 
 from install_manager.install_manager.doctype.escalation_record.escalation_record import EscalationRecord
 from install_manager.install_manager.doctype.job import job_status
-from install_manager.install_manager.doctype.job.job_status import READY, NO_COMPLIANT, IN_PROGRESS
+from install_manager.install_manager.doctype.job.job_status import READY, NON_COMPLIANT, IN_PROGRESS
 from install_manager.install_manager.doctype.job_checklist.job_checklist import JobChecklist
 from install_manager.install_manager.doctype.job_timer.job_timer import JobTimer
 from install_manager.install_manager.doctype.team.team import Team
@@ -94,8 +94,10 @@ class Job(Document):
             self.in_progress_installer = None
 
     def _validate_non_compliant(self):
-        if not self.status.startswith(NO_COMPLIANT):
+        if self.status != NON_COMPLIANT:
             self.non_compliant_reason = ''
+        elif common_utils.is_blank(self.non_compliant_reason):
+            frappe.throw('Missing Non-compliant reason')
 
     def _validate_escalation(self):
         if not self._is_escalating():
