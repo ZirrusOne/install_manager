@@ -11,6 +11,8 @@ def boot_session(bootinfo):
     if "System Manager" in roles:
         return
     elif "Back Office Staff" in roles:
-        bootinfo['home_page'] = "install-manager"
+        # Don't be misled by "home_page". Don't set it to any Workspace page because they are not Page!!!!
+        # Page is something you create on the doctype Page
+        return
     elif "Field Installer" in roles or "Field Lead" in roles:
         bootinfo['home_page'] = "job-management"

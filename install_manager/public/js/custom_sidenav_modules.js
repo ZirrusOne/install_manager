@@ -30,16 +30,6 @@ $(document).ready(function () {
     // For F5 from the installer-manage page
     customizeZ1nSidebar();
 
-    // frappe.router.on('change', () => {
-    //     if ($('#page-Workspaces:visible').length) {
-    //         if ('Workspaces/Install Manager' !== frappe.get_route_str()) {
-    //             $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').removeClass('selected');
-    //         } else {
-    //             $('#page-Workspaces .z1n-panel a[href^="/app/install-manager"]').addClass('selected');
-    //         }
-    //     }
-    // });
-
     if (!frappe.user.has_role("Administrator")) {
         hideMenus();
     }
@@ -111,9 +101,13 @@ function hideMenus() {
         type: 'GET',
         callback: function (result) {
             let visibleWorkspaces = result.message;
+            let last_visit_workspace_now_visible = false;
             let visibleUrls = [];
             visibleWorkspaces.forEach((w) => {
                 visibleUrls.push('/app/' + frappe.router.slug(w));
+                if (localStorage.current_workspace && localStorage.current_workspace === w) {
+                    last_visit_workspace_now_visible = true;
+                }
             });
 
             standardSideBarWrapper.find('.standard-sidebar-section')
@@ -131,6 +125,14 @@ function hideMenus() {
                     }
                 });
             standardSideBarWrapper.css('display', 'block');
+
+            if (!last_visit_workspace_now_visible) {
+                if (!frappe.user.has_role("Administrator") && frappe.user.has_role("Back Office Staff")) {
+                    frappe.router.push_state('/app/' + frappe.router.slug('Install Manager'));
+                } else if (visibleWorkspaces.length) {
+                    frappe.router.push_state('/app/' + frappe.router.slug(visibleWorkspaces.get(0)));
+                }
+            }
         }
     });
 }
