@@ -83,10 +83,14 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    border: 1px solid var(--color-border-red);
+    border: 1px solid var(--color-border-yellow);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 50px;
+}
+
+.result-wrapper.escalation{
+    border-color: var(--color-border-red);
 }
 
 .result-wrapper .job-item {

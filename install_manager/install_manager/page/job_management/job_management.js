@@ -191,6 +191,12 @@ class JobManagement {
 
     setTitleView() {
         let title = this.isEscalationView ? "Escalations" : "Jobs";
+        if (this.isEscalationView) {
+            $('.result-wrapper').addClass('escalation');
+        } else {
+            $('.result-wrapper').removeClass('escalation');
+
+        }
         let element = $('.navbar .container').find('.job-title');
         if (element.length > 0) {
             $('.navbar .container .job-title').text(title);
