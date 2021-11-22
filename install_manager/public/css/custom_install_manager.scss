@@ -121,9 +121,14 @@ body {
     color: #FAAC4D;
     font-size: 18px;
     text-transform: uppercase;
+    padding: 8px 5px;
   }
 
   // the chart
+  .widget-group.widget-charts{
+    margin-top: 0;
+  }
+
   .data-point-value {
     fill: #F1C232;
     stroke: #F1C232;
@@ -133,7 +138,7 @@ body {
     .layout-side-section {
       overflow-y: hidden;
 
-      --z1n-panel-height: 170px;
+      --z1n-panel-height: 182px;
       --z1n-panel-margin-bottom: 5px;
 
       // common
@@ -143,7 +148,11 @@ body {
         }
 
         .standard-sidebar-item {
-          margin: 0 5px;
+          margin: 0 5px 5px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
 
         .standard-sidebar-item.selected {
