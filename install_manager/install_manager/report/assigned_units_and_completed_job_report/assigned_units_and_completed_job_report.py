@@ -23,7 +23,7 @@ def execute(filters=None):
                                   values={'current_date': frappe.utils.nowdate()},
                                   debug=False)
 
-    job_completion_statuses = ('Escalation - Vendor', 'Non-compliant', 'Completed')
+    job_completion_statuses = ('Non-compliant', 'Completed')
     statuses = db_utils.in_clause(job_completion_statuses)
 
     total_completed_job = frappe.db.sql("""

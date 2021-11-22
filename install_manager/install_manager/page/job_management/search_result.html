@@ -11,16 +11,16 @@
                 item.job_status === "Resolved - Ready"?"resolved":
                 item.job_status === "Non-compliant"?"non-compliant":
                 (item.job_status === "Escalation - Field Lead" ||
-                item.job_status === "Escalation - Back Office" ||
-                item.job_status === "Escalation - Vendor") ?"escalate":""}}">{{item.timer_hours}}</span> Hours
+                item.job_status === "Escalation - Level II" ||
+                item.job_status === "Escalation - Level III") ?"escalate":""}}">{{item.timer_hours}}</span> Hours
                 <span class="{{item.job_status ==="In Progress"?"in-progress":
                 item.job_status === "Ready"?"ready":
                 item.job_status === "Completed"?"completed":
                 item.job_status === "Resolved - Ready"?"resolved":
                 item.job_status === "Non-compliant"?"non-compliant":
                 (item.job_status === "Escalation - Field Lead" ||
-                item.job_status === "Escalation - Back Office" ||
-                item.job_status === "Escalation - Vendor") ?"escalate":""}}"> {{item.timer_min}}</span> Mins
+                item.job_status === "Escalation - Level II" ||
+                item.job_status === "Escalation - Level III") ?"escalate":""}}"> {{item.timer_min}}</span> Mins
               </div>
         {% endif %}
     </div>
@@ -30,8 +30,8 @@
     item.job_status === "Resolved - Ready"?"status-resolved":
     item.job_status === "Non-compliant"?"status-non-compliant":
     (item.job_status === "Escalation - Field Lead" ||
-    item.job_status === "Escalation - Back Office" ||
-    item.job_status === "Escalation - Vendor") ?"status-escalate":""}}">{{item.job_status}}
+    item.job_status === "Escalation - Level II" ||
+    item.job_status === "Escalation - Level III") ?"status-escalate":""}}">{{item.job_status}}
 </div>
 {%if item.job_status === "Escalation - Field Lead" %}
 <div class="job-reason">

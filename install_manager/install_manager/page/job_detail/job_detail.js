@@ -187,7 +187,7 @@ class JobDetail {
         $(this.jobStatusElement).empty();
 
         if (frappe.user.has_role("Field Installer")) {
-            job_statuses = this.job_statuses.filter(item => item !== "Escalation - Back Office" && item !== "Escalation - Vendor")
+            job_statuses = this.job_statuses.filter(item => item !== "Escalation - Level II" && item !== "Escalation - Level III")
         } else if (frappe.user.has_role("Field Lead")) {
             job_statuses = this.job_statuses.filter(item => item !== "Escalation - Field Lead")
         }
@@ -205,8 +205,8 @@ class JobDetail {
         if (value !== this.selectedJobStatus) {
             this.selectedJobStatus = value;
             if (this.selectedJobStatus === "Escalation - Field Lead" ||
-                this.selectedJobStatus === "Escalation - Back Office" ||
-                this.selectedJobStatus === "Escalation - Vendor") {
+                this.selectedJobStatus === "Escalation - Level II" ||
+                this.selectedJobStatus === "Escalation - Level III") {
                 this.selectedEscalationReason = '';
                 this.openEscalationModal();
             } else if (this.selectedJobStatus === "Non-compliant") {
@@ -516,8 +516,8 @@ class JobDetail {
             args: {doc: job_detail, action: "Save"},
             callback: function () {
                 if (aThis.selectedJobStatus === "Escalation - Field Lead" ||
-                    aThis.selectedJobStatus === "Escalation - Back Office" ||
-                    aThis.selectedJobStatus === "Escalation - Vendor" ||
+                    aThis.selectedJobStatus === "Escalation - Level II" ||
+                    aThis.selectedJobStatus === "Escalation - Level III" ||
                     aThis.selectedJobStatus === "Non-compliant") {
                     if (aThis.reasonMessage.length > 0)
                         aThis.addComment(aThis.reasonMessage);
@@ -534,8 +534,8 @@ class JobDetail {
         if (this.isStatusChanged) {
             job_detail.status = this.selectedJobStatus;
             if (this.selectedJobStatus === "Escalation - Field Lead" ||
-                this.selectedJobStatus === "Escalation - Back Office" ||
-                this.selectedJobStatus === "Escalation - Vendor") {
+                this.selectedJobStatus === "Escalation - Level II" ||
+                this.selectedJobStatus === "Escalation - Level III") {
                 job_detail.escalation_reason = this.selectedEscalationReason;
                 job_detail.escalation_note = this.escalationNote;
             } else if (this.selectedJobStatus === "Non-compliant") {
