@@ -94,7 +94,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Installation Type",
-   "options": "Standard\nPull Wire\nConnect Wire\nRelocate Thermostat\nAdd Wire\nInstall Thermostat Only\nService Visit",
+   "options": "Standard\nRework",
    "reqd": 1
   },
   {
@@ -207,7 +207,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-22 13:39:19.420363",
+ "modified": "2021-11-22 14:35:59.490057",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",
