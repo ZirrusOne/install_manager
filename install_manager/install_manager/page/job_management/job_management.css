@@ -136,8 +136,8 @@ body {
     color: var(--color-resolve-ready)
 }
 
-.result-wrapper .job-item .job-header .job-timer .non-complaint {
-    color: var(--color-non-complaint);
+.result-wrapper .job-item .job-header .job-timer .compliant {
+    color: var(--color-non-compliant);
 }
 
 .result-wrapper .job-item .job-header .job-timer .resolved {

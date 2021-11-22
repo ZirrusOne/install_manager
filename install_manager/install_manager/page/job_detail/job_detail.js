@@ -13,7 +13,7 @@ class JobDetail {
     jobTypeElement;
     additionalServiceElement;
     jobStatusElement;
-    statusNonComplaintElement;
+    statusNonCompliantElement;
     statusEscalateElement;
     addCommentElement;
     photoViewerElement;
@@ -42,7 +42,7 @@ class JobDetail {
     selectedInstallationType = '';
     selectedJobStatus = '';
     selectedEscalationReason = '';
-    selectedNonComplaintReason = '';
+    selectedNonCompliantReason = '';
     previousSelectedJobStatus = '';
     isAdditionalServiceChanged = false;
     isStatusChanged = false;
@@ -73,7 +73,7 @@ class JobDetail {
         this.jobTypeElement = $(this.page.main).find('#jobType');
         this.additionalServiceElement = $(this.page.main).find('#additionalService');
         this.jobStatusElement = $(this.page.main).find('#jobStatus');
-        this.statusNonComplaintElement = $(this.page.main).find('#statusNonComplaint');
+        this.statusNonCompliantElement = $(this.page.main).find('#statusNonCompliant');
         this.statusEscalateElement = $(this.page.main).find('#statusEscalate');
         this.addCommentElement = $(this.page.main).find('#addComment');
         this.addPhotoElement = $(this.page.main).find('#addPhoto');
@@ -210,8 +210,8 @@ class JobDetail {
                 this.selectedEscalationReason = '';
                 this.openEscalationModal();
             } else if (this.selectedJobStatus === "Non-compliant") {
-                this.selectedNonComplaintReason = ''
-                this.openNonComplaintModal();
+                this.selectedNonCompliantReason = ''
+                this.openNonCompliantModal();
             } else {
                 this.saveJob();
             }
@@ -258,31 +258,31 @@ class JobDetail {
         $('#escalationReasonModal').modal('hide');
     }
 
-    openNonComplaintModal() {
-        this.renderNonComplaintModal();
-        $('#nonComplaintReasonModal').modal('show');
+    openNonCompliantModal() {
+        this.renderNonCompliantModal();
+        $('#nonCompliantReasonModal').modal('show');
     }
 
-    renderNonComplaintModal() {
-        this.statusNonComplaintElement.empty();
-        $(frappe.render_template('non_complaint_reason', {
+    renderNonCompliantModal() {
+        this.statusNonCompliantElement.empty();
+        $(frappe.render_template('non_compliant_reason', {
             non_compliant_reasons: this.non_compliant_reasons,
-            selectedNonComplaintReason: this.selectedNonComplaintReason
-        })).appendTo($(this.statusNonComplaintElement));
+            selectedNonCompliantReason: this.selectedNonCompliantReason
+        })).appendTo($(this.statusNonCompliantElement));
     }
 
-    onChangeNonComplaintReason(element) {
+    onChangeNonCompliantReason(element) {
         let value = $(element).attr('data-value');
-        if (value !== this.selectedNonComplaintReason) {
-            $("a[data-target='non-complaint']").removeClass('active');
-            this.selectedNonComplaintReason = value;
+        if (value !== this.selectedNonCompliantReason) {
+            $("a[data-target='non-compliant']").removeClass('active');
+            this.selectedNonCompliantReason = value;
             $(element).addClass('active');
         }
     }
 
-    onCloseNonComplaint() {
-        let comment = $('#nonComplaintComment').val();
-        if (this.selectedNonComplaintReason === '') {
+    onCloseNonCompliant() {
+        let comment = $('#nonCompliantComment').val();
+        if (this.selectedNonCompliantReason === '') {
             this.isStatusChanged = false;
             this.selectedJobStatus = this.previousSelectedJobStatus;
         } else {
@@ -293,7 +293,7 @@ class JobDetail {
             }
             this.saveJob();
         }
-        $('#nonComplaintReasonModal').modal('hide');
+        $('#nonCompliantReasonModal').modal('hide');
     }
 
     onChangeCheckboxCheckList(element) {
@@ -464,7 +464,7 @@ class JobDetail {
             }
 
             if (aThis.job_detail.non_compliant_reasons) {
-                aThis.selectedNonComplaintReason = aThis.job_detail.non_compliant_reasons;
+                aThis.selectedNonCompliantReason = aThis.job_detail.non_compliant_reasons;
             }
 
             //checklist
@@ -539,7 +539,7 @@ class JobDetail {
                 job_detail.escalation_reason = this.selectedEscalationReason;
                 job_detail.escalation_note = this.escalationNote;
             } else if (this.selectedJobStatus === "Non-compliant") {
-                job_detail.non_compliant_reasons = this.selectedNonComplaintReason;
+                job_detail.non_compliant_reason = this.selectedNonCompliantReason;
             }
         }
 
@@ -581,7 +581,7 @@ class JobDetail {
 
     resetVariable() {
         this.previousSelectedJobStatus = '';
-        this.selectedNonComplaintReason = '';
+        this.selectedNonCompliantReason = '';
         this.selectedEscalationReason = '';
         this.reasonMessage = '';
         this.isAdditionalServiceChanged = false;

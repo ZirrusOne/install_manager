@@ -27,7 +27,7 @@
 }
 
 .color-non-compliant {
-    color: var(--color-non-complaint) !important;
+    color: var(--color-non-compliant) !important;
 }
 
 .color-status-escalate {

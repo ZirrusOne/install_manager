@@ -8,7 +8,7 @@
   --color-title: #E3C14F;
   --color-in-progress: #FAAC4D;
   --color-resolve-ready: rgb(255, 255, 51);
-  --color-non-complaint: #743EE2;
+  --color-non-compliant: #743EE2;
   --color-resolved: #FFFF33;
   --color-escalate: #FF5858;
   --color-complete: #0D54A8;
@@ -212,9 +212,9 @@ body {
     color: black;
   }
 
-  .status-non-complaint {
-    background-color: var(--color-non-complaint);
-    border-color: var(--color-non-complaint);
+  .status-non-compliant {
+    background-color: var(--color-non-compliant);
+    border-color: var(--color-non-compliant);
     color: white;
   }
 

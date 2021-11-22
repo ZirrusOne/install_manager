@@ -1,13 +1,13 @@
-<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="nonComplaintReasonModal" tabindex="-1"
+<div class="modal fade filter-modal filter-for-detail job-status-filter-modal" id="nonCompliantReasonModal" tabindex="-1"
      role="dialog"
      data-backdrop="static" data-keyboard="false"
-     aria-labelledby="nonComplaintReasonModal"
+     aria-labelledby="nonCompliantReasonModal"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">NON-COMPLAINT</h5>
-                <button type="button" class="close" onclick="job_detail.onCloseNonComplaint()" aria-label="Close">
+                <h5 class="modal-title">NON-COMPLIANT</h5>
+                <button type="button" class="close" onclick="job_detail.onCloseNonCompliant()" aria-label="Close">
                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                 </button>
             </div>
@@ -21,9 +21,9 @@
                     </div>
                     <div class="filter-content">
                         {% for item in non_compliant_reasons %}
-                        <a onclick="job_detail.onChangeNonComplaintReason(this)"
-                           class="team-item {{selectedNonComplaintReason === item?" active":""}}"
-                        data-target="non-complaint"
+                        <a onclick="job_detail.onChangeNonCompliantReason(this)"
+                           class="team-item {{selectedNonCompliantReason === item?" active":""}}"
+                        data-target="non-compliant"
                         data-value="{{item}}">{{item}}</a>
                         {% endfor %}
                     </div>
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="filter-content">
-                        <textarea class="input-comment" id="nonComplaintComment" type="text"></textarea>
+                        <textarea class="input-comment" id="nonCompliantComment" type="text"></textarea>
                     </div>
                 </div>
             </div>
