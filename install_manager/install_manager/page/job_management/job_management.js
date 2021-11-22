@@ -296,6 +296,11 @@ class JobManagement {
             args.statuses = this.job_statuses.map(item => item.id);
         } else {
             args.statuses = this.job_statuses.filter(item => item.isSelected).map(item => item.id);
+            if (args.statuses.length === this.job_statuses.length) {
+                // if everything is selected, send empty array, so that job with new statuses (changed by other users
+                // in the meantime) can appear in the list
+                args.statuses = [];
+            }
         }
 
         args.schedule_ids = this.schedules.filter(item => item.isSelected).map(item => item.id);
