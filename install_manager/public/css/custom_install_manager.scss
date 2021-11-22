@@ -46,8 +46,15 @@ body {
     background-color: var(--bg-color);
   }
 
-  // on the login page
+  .form-links .document-link .btn-new:hover {
+    background: var(--color-complete);
 
+    svg.icon-sm {
+      color: white;
+    }
+  }
+
+  // on the login page
   .login-content {
     background: transparent;
     box-shadow: none;
@@ -71,6 +78,31 @@ body {
       display: none; // nothing to show this hamburger button
     }
   }
+
+  #page-message {
+    .page-card {
+      background: var(--card-bg);
+      border: 1px solid #666666;
+
+      .page-card-head {
+        color: #F7FAFB;
+        border-bottom: 1px solid #666666;
+
+        .indicator {
+          color: #F7FAFB;
+
+          &::before {
+            background: #f1c232;
+          }
+        }
+      }
+
+      .page-card-body {
+        color: #F7FAFB;
+      }
+    }
+  }
+
 
   // shown when session expires
   .modal-backdrop {
@@ -118,15 +150,21 @@ body {
     }
   }
 
-  .page-head .page-head-content .title-text {
-    color: #FAAC4D;
-    font-size: 18px;
-    text-transform: uppercase;
-    padding: 8px 5px;
+  .page-head .page-head-content .title-area {
+    div.flex {
+      align-items: center;
+    }
+
+    .title-text {
+      color: #FAAC4D;
+      font-size: 18px;
+      text-transform: uppercase;
+      padding: 8px 5px;
+    }
   }
 
   // the chart
-  .widget-group.widget-charts{
+  .widget-group.widget-charts {
     margin-top: 0;
   }
 
