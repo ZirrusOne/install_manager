@@ -10,10 +10,12 @@
   "section_break_2",
   "schedule",
   "site_unit",
+  "building_number",
   "installation_date",
   "column_break_13",
   "schedule_name",
   "unit_name",
+  "floor_number",
   "site_name",
   "section_break_3",
   "status",
@@ -203,11 +205,25 @@
    "fieldtype": "Table",
    "label": "Checklist",
    "options": "Job Checklist"
+  },
+  {
+   "fetch_from": "site_unit.building_number",
+   "fieldname": "building_number",
+   "fieldtype": "Read Only",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Building Number"
+  },
+  {
+   "fetch_from": "site_unit.floor_number",
+   "fieldname": "floor_number",
+   "fieldtype": "Read Only",
+   "label": "Floor Number"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-22 14:35:59.490057",
+ "modified": "2021-11-22 15:04:36.619884",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",

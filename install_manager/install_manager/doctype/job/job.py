@@ -498,7 +498,7 @@ def generate_jobs(schedule_id):
     schedule = frappe.get_doc('Schedule', schedule_id)
 
     units = frappe.db.sql("""
-                                select name, full_name
+                                select name, full_name, building_number, floor_number
                                 from `tabSite Unit`
                                 where site = %(site_id)s
                                 """,
@@ -523,7 +523,9 @@ def generate_jobs(schedule_id):
                 'unit_name': unit['full_name'],
                 'site_name': schedule.site_name,
                 'status': job_status.READY,
-                'installation_type': 'Standard'
+                'installation_type': 'Standard',
+                'building_number': unit['building_number'],
+                'floor_number': unit['floor_number']
             }).insert()
             total_inserts = total_inserts + 1
         else:
