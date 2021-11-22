@@ -431,6 +431,7 @@ class JobDetail {
         frappe.model.with_doctype("Job", () => {
             let meta = frappe.get_meta("Job");
             this.job_statuses = meta.fields.find(item => item.fieldname === "status").options.split("\n");
+            this.job_statuses = this.job_statuses.filter(item => item !== "Ready");
             this.escalations_reasons = meta.fields.find(item => item.fieldname === "escalation_reason").options.split("\n");
             this.escalations_reasons = this.escalations_reasons.filter(item => item !== "");
             this.non_compliant_reasons = meta.fields.find(item => item.fieldname === "non_compliant_reason").options.split("\n");
@@ -724,7 +725,7 @@ class JobDetailTimelines {
             this.getUserFullName(this.docData.owner),
             comment_when(this.docData.creation)
         ]);
-        let modified_message =  __("{0} edited this {1}", [
+        let modified_message = __("{0} edited this {1}", [
             this.getUserFullName(this.docData.modified_by),
             comment_when(this.docData.modified),
         ])

@@ -15,6 +15,7 @@
   --color-ready: #569627;
   --color-diver: rgb(102, 102, 102);
   --color-border-red: rgb(153, 0, 0);
+  --color-border-yellow: #f1c232;
   --color-orange: #DE6D28;
   --color-gray: #363636;
   --background-gray: #333333;
@@ -45,7 +46,24 @@ body {
     background-color: var(--bg-color);
   }
 
+  .form-links .document-link .btn-new:hover {
+    background: var(--color-complete);
+
+    svg.icon-sm {
+      color: white;
+    }
+  }
+
   // on the login page
+  .login-content {
+    background: transparent;
+    box-shadow: none;
+
+    .page-card-head h4 {
+      display: none;
+    }
+  }
+
   .navbar-light {
     background-color: transparent;
     border-bottom-color: var(--color-header-navbar-border);
@@ -60,6 +78,31 @@ body {
       display: none; // nothing to show this hamburger button
     }
   }
+
+  #page-message {
+    .page-card {
+      background: var(--card-bg);
+      border: 1px solid #666666;
+
+      .page-card-head {
+        color: #F7FAFB;
+        border-bottom: 1px solid #666666;
+
+        .indicator {
+          color: #F7FAFB;
+
+          &::before {
+            background: #f1c232;
+          }
+        }
+      }
+
+      .page-card-body {
+        color: #F7FAFB;
+      }
+    }
+  }
+
 
   // shown when session expires
   .modal-backdrop {
@@ -107,13 +150,24 @@ body {
     }
   }
 
-  .page-head .page-head-content .title-text {
-    color: #FAAC4D;
-    font-size: 18px;
-    text-transform: uppercase;
+  .page-head .page-head-content .title-area {
+    div.flex {
+      align-items: center;
+    }
+
+    .title-text {
+      color: #FAAC4D;
+      font-size: 18px;
+      text-transform: uppercase;
+      padding: 8px 5px;
+    }
   }
 
   // the chart
+  .widget-group.widget-charts {
+    margin-top: 0;
+  }
+
   .data-point-value {
     fill: #F1C232;
     stroke: #F1C232;
@@ -123,7 +177,7 @@ body {
     .layout-side-section {
       overflow-y: hidden;
 
-      --z1n-panel-height: 170px;
+      --z1n-panel-height: 182px;
       --z1n-panel-margin-bottom: 5px;
 
       // common
@@ -133,7 +187,11 @@ body {
         }
 
         .standard-sidebar-item {
-          margin: 0 5px;
+          margin: 0 5px 5px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
 
         .standard-sidebar-item.selected {
@@ -587,6 +645,7 @@ body {
     width: 80px;
     height: 80px;
   }
+
   .lds-ripple div {
     position: absolute;
     border: 4px solid #fff;
@@ -594,9 +653,11 @@ body {
     border-radius: 50%;
     animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
   }
+
   .lds-ripple div:nth-child(2) {
     animation-delay: -0.5s;
   }
+
   @keyframes lds-ripple {
     0% {
       top: 36px;
