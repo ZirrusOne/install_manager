@@ -451,6 +451,11 @@ class JobDetail {
 
         let aThis = this;
         frappe.model.with_doc("Job", this.job_id, (id, result) => {
+            if (!result || !result.docs || !result.docinfo) {
+                frappe.show_alert('Job not found. ID: ' + aThis.job_id);
+                frappe.router.push_state('/app/job-management');
+                return;
+            }
             aThis.job_detail = result.docs[0];
 
             let timelines = new JobDetailTimelines(result.docinfo, result.docs[0]);
