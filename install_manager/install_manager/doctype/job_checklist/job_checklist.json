@@ -8,7 +8,8 @@
   "criterion",
   "criterion_type",
   "checklist_type",
-  "result"
+  "result",
+  "enabled"
  ],
  "fields": [
   {
@@ -41,11 +42,19 @@
    "label": "Checklist type",
    "options": "Pre-Install\nPost-Install",
    "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled",
+   "reqd": 1
   }
  ],
  "istable": 1,
  "links": [],
- "modified": "2021-11-19 16:32:02.808673",
+ "modified": "2021-11-23 09:35:39.361425",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job Checklist",

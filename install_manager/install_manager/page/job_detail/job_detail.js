@@ -469,8 +469,10 @@ class JobDetail {
             }
 
             //checklist
-            aThis.check_list_pre_install = aThis.job_detail.checklist.filter(preItem => preItem.checklist_type === "Pre-Install")
-            aThis.check_list_post_install = aThis.job_detail.checklist.filter(preItem => preItem.checklist_type === "Post-Install")
+            aThis.check_list_pre_install = aThis.job_detail.checklist.filter(
+                item => (item.checklist_type === "Pre-Install") && (item.enabled));
+            aThis.check_list_post_install = aThis.job_detail.checklist.filter(
+                item => (item.checklist_type === "Post-Install") && (item.enabled));
 
             //timer
             aThis.calculateTimer();
