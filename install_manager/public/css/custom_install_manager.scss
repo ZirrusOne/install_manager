@@ -234,7 +234,10 @@ body {
       }
 
       .overlay-sidebar-wrapper {
-        height: calc(100% - var(--z1n-panel-height) - var(--z1n-panel-margin-bottom));
+        --wrapper-margin-top: 5px;
+
+        margin-top: var(--wrapper-margin-top);
+        height: calc(100% - var(--z1n-panel-height) - var(--z1n-panel-margin-bottom) - var(--wrapper-margin-top));
         overflow-y: auto;
 
         .desk-sidebar {
