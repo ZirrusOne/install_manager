@@ -196,7 +196,7 @@ function fillCurrentShortcuts() {
                 if (shortcut.icon) {
                     icon = shortcut.icon
                 } else {
-                    icon ='arrow-up-right';
+                    icon ='project';
                 }
 
                 $('.z1n-panel .standard-sidebar-section').append(
