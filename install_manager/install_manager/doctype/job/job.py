@@ -76,9 +76,25 @@ class Job(Document):
         self._validate_escalation()
         self._validate_non_compliant()
         self._update_progress_start_time()
+        self._add_checklist()
         super(Job, self).db_insert()
         self._update_timer(old_status=None)
         self._record_escalation(old_status=None)
+
+    def _add_checklist(self):
+        schedule = frappe.get_doc('Schedule', self.schedule)
+        checklist = None
+        if common_utils.is_not_blank(schedule.checklist):
+            checklist = frappe.get_doc('Checklist', schedule.checklist)
+
+        existing_checks = {}
+        for check in self.checklist:
+            existing_checks[f'{check.criterion}__{check.criterion_type}'] = check
+
+        for check in checklist.checks:
+            key = f'{check.criterion}__{check.criterion_type}'
+            if key not in existing_checks:
+                _append_check_to_job_checklist(check, self)
 
     def _update_progress_start_time(self):
         # update denormalize field
@@ -599,13 +615,7 @@ def update_checklist(checklist_id):
             has_update = True
             for key in new_checks:
                 total_check_added = total_check_added + 1
-                job.append('checklist', {
-                    "criterion": standard_checks[key].criterion,
-                    "criterion_type": standard_checks[key].criterion_type,
-                    "checklist_type": standard_checks[key].checklist_type,
-                    "result": None,
-                    "enabled": True
-                })
+                _append_check_to_job_checklist(standard_checks[key], job)
         if has_update:
             job.save()
             number_jobs_updated = number_jobs_updated + 1
@@ -614,3 +624,14 @@ def update_checklist(checklist_id):
         'message': f'{number_jobs_updated} Jobs updated. {total_check_added} checks added. '
                    f'{total_checks_updated} checks updated. {total_checks_disabled} checks disabled'
     }
+
+
+def _append_check_to_job_checklist(check, job):
+    job.append('checklist', {
+        "criterion": check.criterion,
+        "criterion_type": check.criterion_type,
+        "checklist_type": check.checklist_type,
+        "result": None,
+        "enabled": True
+    })
+
