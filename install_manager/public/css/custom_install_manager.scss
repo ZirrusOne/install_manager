@@ -187,7 +187,8 @@ body {
         }
 
         .standard-sidebar-item {
-          margin: 0 5px 5px;
+          margin: 0 5px;
+          padding: 8px 5px;
 
           &:last-child {
             margin-bottom: 0;
@@ -221,6 +222,10 @@ body {
 
         .desk-sidebar {
           margin-bottom: 0;
+
+          .standard-sidebar-item {
+            margin-bottom: 5px;
+          }
 
           .standard-sidebar-item.selected {
             background-color: var(--sidebar-select-color);
