@@ -12,7 +12,7 @@ from frappe.model.document import Document
 
 from install_manager.install_manager.doctype.escalation_record.escalation_record import EscalationRecord
 from install_manager.install_manager.doctype.job import job_status
-from install_manager.install_manager.doctype.job.job_status import READY, NON_COMPLIANT, IN_PROGRESS
+from install_manager.install_manager.doctype.job.job_status import READY, NON_COMPLIANT, IN_PROGRESS, COMPLETED
 from install_manager.install_manager.doctype.job_checklist.job_checklist import JobChecklist
 from install_manager.install_manager.doctype.job_timer.job_timer import JobTimer
 from install_manager.install_manager.doctype.team.team import Team
@@ -544,4 +544,73 @@ def generate_jobs(schedule_id):
     return {
         'message': f'{total_inserts} new Jobs created. {total_duplications} duplicate Jobs were detected and skipped. '
                    f'{no_start_date_msg}.'
+    }
+
+
+@frappe.whitelist()
+def update_checklist(checklist_id):
+    if common_utils.is_blank(checklist_id):
+        frappe.throw('The Checklist to update is not provided')
+
+    checklist = frappe.get_doc('Checklist', checklist_id)
+
+    result_list = frappe.db.sql(f"""
+            select job.name as job_id
+            from `tabJob` job 
+            inner join `tabSchedule` schedule on job.schedule = schedule.name
+    		where 
+    		    schedule.status <> 'Completed' and schedule.status <> 'Cancelled'
+    		    and job.status <> '{COMPLETED}' and job.status <> '{NON_COMPLIANT}'
+    		    and schedule.checklist = %(checklist_id)s
+        """,
+                                values={'checklist_id': checklist_id},
+                                debug=False,
+                                as_dict=True)
+
+    total_checks_disabled = 0
+    total_checks_updated = 0
+    total_check_added = 0
+    number_jobs_updated = 0
+
+    standard_checks = {}
+    for check in checklist.checks:
+        standard_checks[f'{check.criterion}__{check.criterion_type}'] = check
+
+    for row in result_list:
+        job = frappe.get_doc('Job', row['job_id'])
+
+        has_update = False
+        existing_checks = []
+        for job_check in job.checklist:
+            key = f'{job_check.criterion}__{job_check.criterion_type}'
+            if key not in standard_checks:
+                job_check.enabled = False
+                has_update = True
+                total_checks_disabled = total_checks_disabled + 1
+            else:
+                existing_checks.append(key)
+                if job_check.checklist_type != standard_checks[key].checklist_type:
+                    job_check.checklist_type = standard_checks[key].checklist_type
+                    total_checks_updated = total_checks_updated + 1
+                    has_update = True
+
+        new_checks = standard_checks.keys() - existing_checks
+        if len(new_checks) > 0:
+            has_update = True
+            for key in new_checks:
+                total_check_added = total_check_added + 1
+                job.append('checklist', {
+                    "criterion": standard_checks[key].criterion,
+                    "criterion_type": standard_checks[key].criterion_type,
+                    "checklist_type": standard_checks[key].checklist_type,
+                    "result": None,
+                    "enabled": True
+                })
+        if has_update:
+            job.save()
+            number_jobs_updated = number_jobs_updated + 1
+
+    return {
+        'message': f'{number_jobs_updated} Jobs updated. {total_check_added} checks added. '
+                   f'{total_checks_updated} checks updated. {total_checks_disabled} checks disabled'
     }
