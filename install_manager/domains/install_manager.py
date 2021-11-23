@@ -13,7 +13,7 @@ data = {
     'restricted_roles': [
         'Field Installer',
         'Field Lead',
-        'Back Office Staff'
+        'Field Manager'
     ],
     'modules': [
         'Selling',

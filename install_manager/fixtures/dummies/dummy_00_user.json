@@ -131,7 +131,7 @@
         "parent": "powner_1@example.com",
         "parentfield": "roles",
         "parenttype": "User",
-        "role": "Back Office Staff"
+        "role": "Field Manager"
       }
     ],
     "send_me_a_copy": 0,
@@ -209,7 +209,7 @@
     "parent": "backoffice1@example.com",
     "parentfield": "roles",
     "parenttype": "User",
-    "role": "Back Office Staff"
+    "role": "Field Manager"
    }
   ],
   "send_me_a_copy": 0,
@@ -287,7 +287,7 @@
     "parent": "backoffice2@example.com",
     "parentfield": "roles",
     "parenttype": "User",
-    "role": "Back Office Staff"
+    "role": "Field Manager"
    }
   ],
   "send_me_a_copy": 0,

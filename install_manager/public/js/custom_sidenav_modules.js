@@ -17,7 +17,7 @@
 $(document).ready(function () {
     let isLevel1Team = !frappe.user.has_role("Administrator")
         && (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer"))
-        && !frappe.user.has_role("Back Office Staff");
+        && !frappe.user.has_role("Field Manager");
     if (isLevel1Team) {
         return;
     }
@@ -127,7 +127,7 @@ function hideMenus() {
             standardSideBarWrapper.css('display', 'block');
 
             if (!last_visit_workspace_now_visible) {
-                if (!frappe.user.has_role("Administrator") && frappe.user.has_role("Back Office Staff")) {
+                if (!frappe.user.has_role("Administrator") && frappe.user.has_role("Field Manager")) {
                     frappe.router.push_state('/app/' + frappe.router.slug('Install Manager'));
                 } else if (visibleWorkspaces.length) {
                     frappe.router.push_state('/app/' + frappe.router.slug(visibleWorkspaces.get(0)));

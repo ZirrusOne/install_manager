@@ -10,7 +10,7 @@ def boot_session(bootinfo):
     roles = frappe.get_roles(frappe.session.user)
     if "System Manager" in roles:
         return
-    elif "Back Office Staff" in roles:
+    elif "Field Manager" in roles:
         # Don't be misled by "home_page". Don't set it to any Workspace page because they are not Page!!!!
         # Page is something you create on the doctype Page
         return

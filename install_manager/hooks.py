@@ -58,14 +58,14 @@ fixtures = [
     {"dt": "Role", "filters": [
         [
             "name", "in", [
-            "Back Office Staff",
+            "Field Manager",
             "Field Lead",
             "Field Installer"
         ]
         ]
     ]},
     {"dt": "Custom DocPerm", "filters": [
-        ["role", "in", ["Back Office Staff"]]
+        ["role", "in", ["Field Manager"]]
     ]},
     {"dt": "Workspace Menus"},
 ]

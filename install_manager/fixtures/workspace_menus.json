@@ -3,33 +3,33 @@
   "docstatus": 0,
   "doctype": "Workspace Menus",
   "modified": "2021-11-18 14:31:55.502868",
-  "name": "Users_Back Office Staff",
+  "name": "Users_Field Manager",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "visible_to_role": "Back Office Staff",
+  "visible_to_role": "Field Manager",
   "workspace": "Users"
  },
  {
   "docstatus": 0,
   "doctype": "Workspace Menus",
   "modified": "2021-11-18 14:32:14.088998",
-  "name": "Support_Back Office Staff",
+  "name": "Support_Field Manager",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "visible_to_role": "Back Office Staff",
+  "visible_to_role": "Field Manager",
   "workspace": "Support"
  },
  {
   "docstatus": 0,
   "doctype": "Workspace Menus",
   "modified": "2021-11-18 14:32:23.510734",
-  "name": "Install Manager_Back Office Staff",
+  "name": "Install Manager_Field Manager",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "visible_to_role": "Back Office Staff",
+  "visible_to_role": "Field Manager",
   "workspace": "Install Manager"
  }
 ]

@@ -14,6 +14,7 @@
    "fieldname": "workspace",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Workspace",
    "options": "Workspace",
    "reqd": 1,
@@ -24,6 +25,7 @@
    "fieldname": "visible_to_role",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Visible To Role",
    "options": "Role",
    "remember_last_selected_value": 1,
@@ -32,7 +34,7 @@
   }
  ],
  "links": [],
- "modified": "2021-11-18 14:31:10.125062",
+ "modified": "2021-11-23 13:35:34.281118",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Workspace Menus",
@@ -63,7 +65,7 @@
    "write": 1
   }
  ],
- "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_field": "workspace",
+ "sort_order": "ASC",
  "track_changes": 1
 }

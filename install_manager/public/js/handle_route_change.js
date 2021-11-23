@@ -28,7 +28,7 @@ function checkLevel1TeamWhiteList() {
         "app/user/",
         "app/job-detail/",
     ]
-    if ((frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Back Office Staff")) {
+    if ((frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Field Manager")) {
         let inWhiteListUrl = false;
         for (let item of level1TeamUrlWhitelist) {
             let currentPath = location.pathname;

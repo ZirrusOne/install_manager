@@ -44,7 +44,7 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
+   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Field Manager');",
    "fieldname": "site_unit",
    "fieldtype": "Link",
    "label": "Unit ID",
@@ -82,7 +82,7 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
+   "depends_on": "eval: frappe.user.has_role(\"Field Manager\") ||\n(frappe.user.has_role(\"Field Manager\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
    "fieldname": "assigned_team",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -102,7 +102,7 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Back Office Staff');",
+   "depends_on": "eval: frappe.user.has_role('System Manager') || frappe.user.has_role('Administrator') || frappe.user.has_role('Field Manager');",
    "fieldname": "schedule",
    "fieldtype": "Link",
    "label": "Schedule ID",
@@ -144,7 +144,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval: frappe.user.has_role(\"Back Office Staff\") ||\n(frappe.user.has_role(\"Back Office Staff\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
+   "depends_on": "eval: frappe.user.has_role(\"Field Manager\") ||\n(frappe.user.has_role(\"Field Manager\") &&(!frappe.user.has_role(\"Field Lead\") || !frappe.user.has_role(\"Field Installer\")));",
    "fieldname": "section_break_2",
    "fieldtype": "Section Break"
   },
@@ -251,7 +251,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Back Office Staff",
+   "role": "Field Manager",
    "select": 1,
    "share": 1,
    "write": 1

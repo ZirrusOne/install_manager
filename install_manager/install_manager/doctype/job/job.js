@@ -18,7 +18,7 @@ frappe.ui.form.on('Job', {
     },
 
     onload: function (jobForm) {
-        let is_level_1_team = (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Back Office Staff");
+        let is_level_1_team = (frappe.user.has_role("Field Lead") || frappe.user.has_role("Field Installer")) && !frappe.user.has_role("Field Manager");
 
         if (is_level_1_team) {
             $('#navbar-breadcrumbs').addClass('hide-item');
