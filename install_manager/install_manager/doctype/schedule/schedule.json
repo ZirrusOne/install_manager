@@ -19,8 +19,10 @@
   "assigned_teams",
   "pct_completion_method",
   "schedule_color",
+  "checklist",
   "customer_details_section",
   "customer",
+  "column_break_15",
   "sales_order",
   "organization_section",
   "parent_company"
@@ -150,6 +152,16 @@
    "fieldtype": "Table MultiSelect",
    "label": "Assigned Teams",
    "options": "Schedule Teams"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "checklist",
+   "fieldtype": "Link",
+   "label": "Checklist",
+   "options": "Checklist"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -160,7 +172,7 @@
    "link_fieldname": "schedule"
   }
  ],
- "modified": "2021-11-15 14:32:48.016624",
+ "modified": "2021-11-23 10:27:45.213920",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Schedule",

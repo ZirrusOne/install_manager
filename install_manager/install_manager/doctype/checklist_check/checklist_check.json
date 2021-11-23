@@ -1,0 +1,50 @@
+{
+ "actions": [],
+ "creation": "2021-11-23 09:58:30.578607",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "criterion",
+  "criterion_type",
+  "checklist_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "criterion",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Criterion",
+   "reqd": 1
+  },
+  {
+   "default": "checkbox",
+   "fieldname": "criterion_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Criterion Type",
+   "options": "checkbox\ndata\nphoto",
+   "reqd": 1
+  },
+  {
+   "default": "Pre-Install",
+   "fieldname": "checklist_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Checklist type",
+   "options": "Pre-Install\nPost-Install",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2021-11-23 09:59:05.755181",
+ "modified_by": "Administrator",
+ "module": "Install Manager",
+ "name": "Checklist check",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
