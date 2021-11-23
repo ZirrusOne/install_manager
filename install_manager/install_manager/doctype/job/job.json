@@ -61,7 +61,8 @@
    "in_standard_filter": 1,
    "label": "Status",
    "options": "Ready\nResolved - Ready\nIn Progress\nEscalation - Field Lead\nEscalation - Level II\nEscalation - Level III\nNon-compliant\nCompleted",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "depends_on": "eval: doc.status && doc.status.startsWith('Escalation');",
@@ -107,7 +108,8 @@
    "label": "Schedule ID",
    "options": "Schedule",
    "remember_last_selected_value": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "columns": 2,
@@ -223,7 +225,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-22 15:04:36.619884",
+ "modified": "2021-11-23 10:58:01.359051",
  "modified_by": "Administrator",
  "module": "Install Manager",
  "name": "Job",
