@@ -61,6 +61,13 @@
    "label": "Schedules",
    "link_to": "Schedule",
    "type": "DocType"
+  },
+  {
+   "doc_view": "Report",
+   "icon": "equity",
+   "label": "Jobs",
+   "link_to": "Job",
+   "type": "DocType"
   }
  ]
 }
