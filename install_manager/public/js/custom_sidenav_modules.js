@@ -22,6 +22,9 @@ $(document).ready(function () {
         return;
     }
 
+    // Change the "Home" workspace to Install Manager when clicking on the logo on the top navbar.
+    $('.main-section a.navbar-brand').attr('href', '/app/install-manager');
+
     // emitted by container.js#change_to
     $('#body').on('show', '.page-container', ()=> {
         customizeZ1nSidebar();
