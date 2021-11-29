@@ -7,6 +7,11 @@ $(document).ready(function () {
     }
     $("a.navbar-brand").append('<img src ="/assets/install_manager/images/z1n-logo.png"/>');
 
+    if (!frappe.user || Object.keys(frappe.user).length === 0) {
+        // when not login
+        $('.navbar .navbar-nav').remove();
+    }
+
     $("#toolbar-user .dropdown-item:contains('View Website')").remove();
 
     //remove footer
