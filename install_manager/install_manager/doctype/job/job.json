@@ -152,6 +152,7 @@
    "default": "0",
    "fieldname": "finished_timer_minutes",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "hidden": 1,
    "label": "Finished Timer",
    "non_negative": 1,

@@ -3,18 +3,13 @@
     "public/css/custom_install_manager.scss"
   ],
   "css/custom_install_manager_website.css": [
-    "public/css/custom_install_manager.scss",
-    "public/css/custom_website.scss"
+    "public/css/custom_install_manager.scss"
   ],
   "js/custom_install_manager.js": [
-    "public/js/custom_theme.js",
     "public/js/handle_route_change.js",
-    "public/js/custom_user_toolbar.js",
-    "public/js/custom_sidenav_modules.js",
     "public/js/custom_user.js"
   ],
   "js/custom_install_manager_website.js": [
-    "public/js/custom_theme.js",
-    "public/js/custom_website.js"
+    "public/js/custom_theme.js"
   ]
 }

@@ -9,26 +9,21 @@ app_description = "An application for the management of Field Installation techn
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "info@zirrusone.com"
-app_license = "GNU General Public License (v3)"
+app_license = "MIT"
 app_logo_url = "/assets/install_manager/images/z1n-logo.png"
 setup_wizard_requires = "/assets/install_manager/js/setup_wizard.js"
 
 after_migrate = ["install_manager.after_migrate.install.execute"]
-home_page = "login"
 
-website_context = {
-    "favicon": "/assets/install_manager/images/z1n-logo.png",
-    "splash_image": "/assets/install_manager/images/z1n-logo.png"
-}
+# home_page = "login"
+
 boot_session = "install_manager.startup.boot.boot_session"
-
-app_include_css = "/assets/css/custom_install_manager.css"
-
-web_include_css = "/assets/css/custom_install_manager_website.css"
 
 app_include_js = [
     "/assets/js/custom_install_manager.js"
 ]
+
+app_include_css = "/assets/css/custom_install_manager.css"
 
 web_include_js = [
     "/assets/js/custom_install_manager_website.js"
