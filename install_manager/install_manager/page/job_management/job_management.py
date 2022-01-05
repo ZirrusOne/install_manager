@@ -9,7 +9,7 @@ from typing import Optional, List, Dict, Set
 import frappe
 import json
 
-from install_manager.install_manager.doctype.job.job_status import READY, RESOLVED, IN_PROGRESS, ESCALATE_LEVEL_1, \
+from install_manager.install_manager.doctype.job.job_status import COMPLETED, READY, RESOLVED, IN_PROGRESS, ESCALATE_LEVEL_1, \
     NON_COMPLIANT
 from install_manager.install_manager.doctype.team.team import Team
 from install_manager.install_manager.doctype.team.team_type import LEVEL_1
@@ -210,6 +210,7 @@ def _get_default_statuses() -> List[str]:
     if FIELD_LEAD in current_roles:
         default_statuses.append(ESCALATE_LEVEL_1)
         default_statuses.append(NON_COMPLIANT)
+        default.statuses.append(COMPLETED)
     return default_statuses
 
 def _get_default_team_ids() -> List[str]:
