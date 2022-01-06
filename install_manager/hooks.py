@@ -61,8 +61,7 @@ fixtures = [
     ]},
     {"dt": "Custom DocPerm", "filters": [
         ["role", "in", ["Field Manager"]]
-    ]},
-    {"dt": "Workspace Menus"},
+    ]}
 ]
 
 override_whitelisted_methods = {
