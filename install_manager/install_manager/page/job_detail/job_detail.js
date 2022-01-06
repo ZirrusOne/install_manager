@@ -416,7 +416,7 @@ class JobDetail {
         $(gallery).find('svg').remove();
         $(galleryTitle.addClass('text-uppercase'));
         $(galleryTitle).text('Gallery');
-        $(galleryTitle).before("<i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i>")
+        $(galleryTitle).before("<i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i>");
 
         $(camera).find('svg').remove();
         $(cameraTitle.addClass('text-uppercase'));
