@@ -15,8 +15,6 @@ setup_wizard_requires = "/assets/install_manager/js/setup_wizard.js"
 
 after_migrate = ["install_manager.after_migrate.install.execute"]
 
-# home_page = "login"
-
 boot_session = "install_manager.startup.boot.boot_session"
 
 app_include_js = [
