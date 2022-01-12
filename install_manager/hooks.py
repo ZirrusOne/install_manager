@@ -27,7 +27,7 @@ web_include_js = [
     "/assets/js/custom_install_manager_website.js"
 ]
 
-required_apps = ['erpnext']
+required_apps = ['erpnext', 'z1n']
 
 # this is to override default filter of a doctype
 standard_queries = {
