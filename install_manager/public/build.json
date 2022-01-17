@@ -10,7 +10,6 @@
     "public/js/custom_theme.js",
     "public/js/handle_route_change.js",
     "public/js/custom_user_toolbar.js",
-    "public/js/custom_sidenav_modules.js",
     "public/js/custom_user.js"
   ],
   "js/custom_install_manager_website.js": [
