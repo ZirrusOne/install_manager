@@ -10,7 +10,6 @@ app_icon = "octicon octicon-file-directory"
 app_color = "grey"
 app_email = "info@zirrusone.com"
 app_license = "MIT"
-app_logo_url = "/assets/install_manager/images/z1n-logo.png"
 setup_wizard_requires = "/assets/install_manager/js/setup_wizard.js"
 
 after_migrate = ["install_manager.after_migrate.install.execute"]

@@ -210,7 +210,7 @@ def _get_default_statuses() -> List[str]:
     if FIELD_LEAD in current_roles:
         default_statuses.append(ESCALATE_LEVEL_1)
         default_statuses.append(NON_COMPLIANT)
-        default.statuses.append(COMPLETED)
+        default_statuses.append(COMPLETED)
     return default_statuses
 
 def _get_default_team_ids() -> List[str]:

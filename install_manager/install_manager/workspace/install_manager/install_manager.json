@@ -63,7 +63,7 @@
    "type": "DocType"
   },
   {
-   "doc_view": "Report",
+   "doc_view": "Report Builder",
    "icon": "equity",
    "label": "Jobs",
    "link_to": "Job",
